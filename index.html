@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="Hệ thống giám sát và dự báo chất lượng không khí thời gian thực khu vực ASEAN">
+    <title>AirWatch ASEAN | Giám Sát & Dự Báo Chất Lượng Không Khí</title>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(20, 20, 30, 0.9);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-primary: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f1f5f9;
+            --bg-secondary: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --glass: rgba(0, 0, 0, 0.02);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        #map {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .leaflet-container {
+            background: var(--bg-primary);
+        }
+
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .panel {
+            position: fixed;
+            z-index: 1000;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .stats-bar {
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 16px 28px;
+            border-radius: 50px;
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 36px;
+            background: var(--glass-border);
+        }
+
+        .control-panel {
+            top: 90px;
+            left: 20px;
+            width: 340px;
+            max-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 20px 20px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--accent-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .brand h1 {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .panel-content {
+            padding: 16px 20px 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 44px 12px 16px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .health-card {
+            display: none;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .health-card.active {
+            display: block;
+        }
+
+        .health-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .health-item {
+            display: flex;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .toggle-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .toggle-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+        }
+
+        .toggle-icon.idw {
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+        }
+
+        .toggle-icon.ai {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        }
+
+        .toggle-icon.theme {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        .toggle-text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+            inset: 0;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .switch-slider:before {
+            content: "";
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 2px;
+            bottom: 2px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        input:checked+.switch-slider {
+            background: var(--accent-gradient);
+            border-color: transparent;
+        }
+
+        input:checked+.switch-slider:before {
+            transform: translateX(20px);
+            background: white;
+        }
+
+        .opacity-control {
+            display: none;
+            padding: 12px 14px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .opacity-control.active {
+            display: block;
+        }
+
+        .opacity-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .opacity-slider {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--glass-border);
+            border-radius: 3px;
+        }
+
+        .opacity-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .ranking-panel {
+            top: 90px;
+            right: 20px;
+            width: 300px;
+            max-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ranking-header {
+            padding: 18px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ranking-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .ranking-header h2 {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .ranking-header p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .ranking-list {
+            padding: 12px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--glass);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .rank-num {
+            width: 24px;
+            height: 24px;
+            background: var(--glass);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .ranking-item:nth-child(1) .rank-num {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a1a;
+        }
+
+        .rank-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .rank-name {
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-aqi {
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .legend-panel {
+            bottom: 20px;
+            right: 20px;
+            padding: 16px;
+            border-radius: 14px;
+            display: none;
+        }
+
+        .legend-panel.active {
+            display: block;
+        }
+
+        .legend-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .legend-bar {
+            width: 200px;
+            height: 16px;
+            border-radius: 8px;
+            background: linear-gradient(to right, #00e400, #ffff00, #ff7e00, #ff0000, #8f3f97, #7e0023);
+            margin-bottom: 8px;
+        }
+
+        .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+            width: 280px !important;
+        }
+
+        .leaflet-popup-tip {
+            background: var(--bg-card);
+        }
+
+        .popup-header {
+            padding: 14px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .popup-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .popup-body {
+            padding: 14px;
+            background: var(--bg-secondary);
+        }
+
+        .popup-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .popup-metric {
+            text-align: center;
+            padding: 10px;
+            background: var(--glass);
+            border-radius: 10px;
+        }
+
+        .popup-metric-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .popup-metric-value {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .popup-chart {
+            height: 80px;
+            margin-top: 8px;
+        }
+
+        .marker-cluster-small,
+        .marker-cluster-medium,
+        .marker-cluster-large {
+            background: rgba(99, 102, 241, 0.3) !important;
+        }
+
+        .marker-cluster div {
+            background: var(--accent-primary) !important;
+            color: white !important;
+            font-weight: 600 !important;
+        }
+
+        @media (max-width: 1100px) {
+
+            .stats-bar,
+            .ranking-panel {
+                display: none;
+            }
+
+            .control-panel {
+                top: 20px;
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .control-panel {
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                max-height: 50vh;
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <div id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loader-text">Đang kết nối hệ thống...</div>
+    </div>
+    <div id="map"></div>
+    <div id="toast">Thông báo</div>
+
+    <div class="panel stats-bar">
+        <div class="stat-item">
+            <div class="stat-value" id="statTotal">--</div>
+            <div class="stat-label">Trạm hoạt động</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <div class="stat-value" id="statAvg">--</div>
+            <div class="stat-label">AQI Trung bình</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <div class="stat-value" id="statGood">--</div>
+            <div class="stat-label">Trạm tốt</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <div class="stat-value" id="statBad">--</div>
+            <div class="stat-label">Trạm xấu</div>
+        </div>
+    </div>
+
+    <div class="panel control-panel">
+        <div class="panel-header">
+            <div class="brand">
+                <div class="brand-icon"><i class="fas fa-wind"></i></div>
+                <div>
+                    <h1>AirWatch ASEAN</h1>
+                    <p>Giám sát không khí thời gian thực</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Tìm thành phố hoặc trạm..."
+                    onkeyup="if(event.key==='Enter')handleSearch()">
+                <button class="search-btn" onclick="handleSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            <div id="healthCard" class="health-card">
+                <div class="health-header"><i class="fas fa-heart-pulse"></i> Lời khuyên sức khỏe</div>
+                <div id="healthContent"></div>
+            </div>
+            <div class="toggle-group">
+                <div class="toggle-item" onclick="document.getElementById('idwToggle').click()">
+                    <div class="toggle-info">
+                        <div class="toggle-icon idw"><i class="fas fa-map"></i></div><span class="toggle-text">Bản đồ
+                            AQI (IDW)</span>
+                    </div>
+                    <label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="idwToggle"
+                            onchange="toggleIDWLayer()"><span class="switch-slider"></span></label>
+                </div>
+                <div class="toggle-item" onclick="document.getElementById('aiToggle').click()">
+                    <div class="toggle-info">
+                        <div class="toggle-icon ai"><i class="fas fa-brain"></i></div><span class="toggle-text">Chế độ
+                            AI Dự báo</span>
+                    </div>
+                    <label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="aiToggle"
+                            onchange="toggleAIMode()"><span class="switch-slider"></span></label>
+                </div>
+                <div class="toggle-item" onclick="document.getElementById('themeToggle').click()">
+                    <div class="toggle-info">
+                        <div class="toggle-icon theme"><i class="fas fa-sun"></i></div><span class="toggle-text">Chế độ
+                            sáng</span>
+                    </div>
+                    <label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="themeToggle"
+                            onchange="toggleTheme()"><span class="switch-slider"></span></label>
+                </div>
+            </div>
+            <div id="opacityControl" class="opacity-control">
+                <div class="opacity-label"><span>Độ trong suốt</span><span id="opacityValue">70%</span></div>
+                <input type="range" class="opacity-slider" id="opacitySlider" min="20" max="100" value="70"
+                    oninput="updateIDWOpacity(this.value)">
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="loadStations()"><i class="fas fa-rotate"></i> Cập nhật dữ
+                    liệu</button>
+                <button class="btn btn-secondary" onclick="locateUser()"><i class="fas fa-location-crosshairs"></i> Vị
+                    trí của tôi</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel ranking-panel">
+        <div class="ranking-header">
+            <div class="ranking-icon"><i class="fas fa-smog"></i></div>
+            <div>
+                <h2>Top Ô Nhiễm</h2>
+                <p>10 trạm AQI cao nhất</p>
+            </div>
+        </div>
+        <div id="rankingList" class="ranking-list"></div>
+    </div>
+
+    <div class="panel legend-panel" id="legendPanel">
+        <div class="legend-title"><i class="fas fa-palette"></i> Thang AQI</div>
+        <div class="legend-bar"></div>
+        <div class="legend-labels">
+            <span>0</span><span>50</span><span>100</span><span>150</span><span>200</span><span>300+</span></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const API_URL = "http://localhost:8000/api";
+        const map = L.map('map', { zoomControl: false }).setView([14.0, 108.0], 5);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        let tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+        const markersCluster = L.markerClusterGroup({ maxClusterRadius: 50 });
+
+        let allStations = [];
+        let markerMap = {};
+        let currentChart = null;
+        let isAIMode = false;
+        let userMarker = null;
+        let idwCanvas = null;
+        let idwEnabled = false;
+        let idwOpacity = 0.7;
+
+        // ===== IDW CANVAS - HIGH QUALITY =====
+        function createIDWCanvas() {
+            if (!idwCanvas) {
+                idwCanvas = document.createElement('canvas');
+                idwCanvas.id = 'idwCanvas';
+                idwCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;';
+                document.body.appendChild(idwCanvas);
+            }
+            return idwCanvas;
+        }
+
+        function removeIDWCanvas() {
+            if (idwCanvas) { idwCanvas.remove(); idwCanvas = null; }
+        }
+
+        function renderIDWLayer() {
+            if (!idwEnabled || allStations.length < 2) return;
+
+            const canvas = createIDWCanvas();
+            const ctx = canvas.getContext('2d');
+
+            const scale = 0.2;
+            const renderWidth = Math.ceil(window.innerWidth * scale);
+            const renderHeight = Math.ceil(window.innerHeight * scale);
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.opacity = idwOpacity;
+
+            const stations = allStations.filter(s => typeof s.aqi === 'number' && s.aqi >= 0);
+            if (stations.length < 2) { ctx.clearRect(0, 0, canvas.width, canvas.height); return; }
+
+            const stationsToUse = isAIMode
+                ? stations.map(s => ({ ...s, aqi: typeof s.prediction === 'number' ? s.prediction : s.aqi }))
+                : stations;
+
+            const offscreen = document.createElement('canvas');
+            offscreen.width = renderWidth;
+            offscreen.height = renderHeight;
+            const offCtx = offscreen.getContext('2d');
+            const imageData = offCtx.createImageData(renderWidth, renderHeight);
+            const data = imageData.data;
+
+            for (let y = 0; y < renderHeight; y++) {
+                for (let x = 0; x < renderWidth; x++) {
+                    const px = x / scale;
+                    const py = y / scale;
+                    const latlng = map.containerPointToLatLng([px, py]);
+                    const aqi = idwCalc(latlng.lat, latlng.lng, stationsToUse);
+
+                    const idx = (y * renderWidth + x) * 4;
+                    if (aqi !== null) {
+                        const color = aqiToHSL(aqi);
+                        data[idx] = color.r;
+                        data[idx + 1] = color.g;
+                        data[idx + 2] = color.b;
+                        data[idx + 3] = 200;
+                    }
+                }
+            }
+
+            offCtx.putImageData(imageData, 0, 0);
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(offscreen, 0, 0, canvas.width, canvas.height);
+        }
+
+        function idwCalc(lat, lng, stations) {
+            const power = 2.0, maxDist = 800;
+            let num = 0, den = 0, hasNearby = false;
+            for (const s of stations) {
+                const dist = distKm(lat, lng, s.lat, s.lng);
+                if (dist > maxDist) continue;
+                hasNearby = true;
+                if (dist < 1) return s.aqi;
+                const w = 1 / Math.pow(dist, power);
+                num += s.aqi * w;
+                den += w;
+            }
+            return (!hasNearby || den === 0) ? null : num / den;
+        }
+
+        function distKm(lat1, lng1, lat2, lng2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        // HSL color for vibrant, clean gradients
+        function aqiToHSL(aqi) {
+            let h, s, l;
+            if (aqi <= 50) { h = 120; s = 80; l = 45; }
+            else if (aqi <= 100) { h = 120 - ((aqi - 50) / 50) * 60; s = 85; l = 50; }
+            else if (aqi <= 150) { h = 60 - ((aqi - 100) / 50) * 30; s = 90; l = 50; }
+            else if (aqi <= 200) { h = 30 - ((aqi - 150) / 50) * 30; s = 85; l = 45; }
+            else if (aqi <= 300) { h = 360 - ((aqi - 200) / 100) * 60; s = 70; l = 40; }
+            else { h = 280; s = 60; l = 30; }
+            return hslToRgb(h, s, l);
+        }
+
+        function hslToRgb(h, s, l) {
+            s /= 100; l /= 100;
+            const k = n => (n + h / 30) % 12;
+            const a = s * Math.min(l, 1 - l);
+            const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+            return { r: Math.round(255 * f(0)), g: Math.round(255 * f(8)), b: Math.round(255 * f(4)) };
+        }
+
+        map.on('moveend zoomend', () => { if (idwEnabled) renderIDWLayer(); });
+        window.addEventListener('resize', () => { if (idwEnabled) renderIDWLayer(); });
+
+        // ===== IDW CONTROLS =====
+        function toggleIDWLayer() {
+            idwEnabled = document.getElementById('idwToggle').checked;
+            document.getElementById('opacityControl').classList.toggle('active', idwEnabled);
+            document.getElementById('legendPanel').classList.toggle('active', idwEnabled);
+            if (idwEnabled) { renderIDWLayer(); showToast('🗺️ Bản đồ AQI đã bật'); }
+            else { removeIDWCanvas(); showToast('Bản đồ AQI đã tắt'); }
+        }
+
+        function updateIDWOpacity(value) {
+            idwOpacity = value / 100;
+            document.getElementById('opacityValue').textContent = value + '%';
+            if (idwCanvas) idwCanvas.style.opacity = idwOpacity;
+        }
+
+        // ===== THEME =====
+        function toggleTheme() {
+            const isDark = document.body.dataset.theme === 'dark';
+            document.body.dataset.theme = isDark ? 'light' : 'dark';
+            map.removeLayer(tileLayer);
+            tileLayer = L.tileLayer(isDark ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png' : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+            showToast(isDark ? '☀️ Chế độ sáng' : '🌙 Chế độ tối');
+        }
+
+        // ===== AI MODE =====
+        function toggleAIMode() {
+            isAIMode = document.getElementById('aiToggle').checked;
+            renderMap(allStations);
+            if (idwEnabled) renderIDWLayer();
+            showToast(isAIMode ? '🔮 Chế độ AI Dự báo' : '🌍 Chế độ Thực tế');
+        }
+
+        // ===== HELPERS =====
+        function getAQIColor(aqi) {
+            if (!aqi || aqi === 'N/A') return '#6b7280';
+            if (aqi <= 50) return '#00e400';
+            if (aqi <= 100) return '#ffff00';
+            if (aqi <= 150) return '#ff7e00';
+            if (aqi <= 200) return '#ff0000';
+            if (aqi <= 300) return '#8f3f97';
+            return '#7e0023';
+        }
+
+        function updateHealth(aqi) {
+            const card = document.getElementById('healthCard');
+            const content = document.getElementById('healthContent');
+            if (!aqi || aqi === 'N/A') { card.classList.remove('active'); return; }
+            let html = '';
+            if (aqi <= 50) html = '<div class="health-item"><i class="fas fa-face-smile" style="color:#00e400"></i><span>Không khí tuyệt vời!</span></div>';
+            else if (aqi <= 100) html = '<div class="health-item"><i class="fas fa-face-meh" style="color:#ffff00"></i><span>Chất lượng trung bình.</span></div>';
+            else if (aqi <= 150) html = '<div class="health-item"><i class="fas fa-mask-face" style="color:#ff7e00"></i><span><strong>Đeo khẩu trang</strong> khi ra ngoài.</span></div>';
+            else html = '<div class="health-item"><i class="fas fa-triangle-exclamation" style="color:#ff0000"></i><span><strong>CẢNH BÁO:</strong> Hạn chế ra ngoài.</span></div>';
+            content.innerHTML = html;
+            card.classList.add('active');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        // ===== LOAD DATA =====
+        async function loadStations() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            try {
+                const [stationsRes, statsRes] = await Promise.all([fetch(`${API_URL}/stations`), fetch(`${API_URL}/stats`)]);
+                allStations = await stationsRes.json();
+                const stats = await statsRes.json();
+
+                document.getElementById('statTotal').textContent = stats.total_stations;
+                document.getElementById('statAvg').textContent = stats.avg_aqi;
+                document.getElementById('statGood').textContent = stats.good + stats.moderate;
+                document.getElementById('statBad').textContent = stats.unhealthy + stats.very_unhealthy + stats.hazardous;
+
+                renderMap(allStations);
+                updateRanking(allStations);
+                if (idwEnabled) renderIDWLayer();
+
+                document.getElementById('loadingOverlay').style.display = 'none';
+                showToast('✅ Dữ liệu đã cập nhật!');
+            } catch (e) {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                showToast('❌ Lỗi kết nối server');
+            }
+        }
+
+        // ===== RENDER MAP =====
+        function renderMap(stations) {
+            markersCluster.clearLayers();
+            markerMap = {};
+
+            stations.forEach(st => {
+                const displayVal = isAIMode ? st.prediction : st.aqi;
+                const color = getAQIColor(displayVal);
+
+                const marker = L.circleMarker([st.lat, st.lng], {
+                    radius: 8, fillColor: color, color: '#ffffff', weight: 2, fillOpacity: 0.9
+                });
+
+                markerMap[st.uid] = marker;
+                const popup = `<div class="popup-header" style="background:${color}"><div class="popup-name">${st.name}</div></div>
+                    <div class="popup-body"><div class="popup-metrics">
+                        <div class="popup-metric"><div class="popup-metric-label">Hiện tại</div><div class="popup-metric-value">${st.aqi}</div></div>
+                        <div class="popup-metric"><div class="popup-metric-label">Dự báo 1h</div><div class="popup-metric-value">${st.prediction}</div></div>
+                    </div><div class="popup-chart"><canvas id="chart-${st.uid}"></canvas></div></div>`;
+
+                marker.bindPopup(popup, { maxWidth: 300 });
+                marker.on('click', () => updateHealth(st.aqi));
+                marker.on('popupopen', async () => {
+                    if (currentChart) currentChart.destroy();
+                    try {
+                        const res = await fetch(`${API_URL}/history/${st.uid}`);
+                        const data = await res.json();
+                        const canvas = document.getElementById(`chart-${st.uid}`);
+                        if (!canvas) return;
+                        currentChart = new Chart(canvas.getContext('2d'), {
+                            type: 'line',
+                            data: { labels: data.map(d => new Date(d.timestamp).getHours() + 'h'), datasets: [{ data: data.map(d => d.aqi), borderColor: color, borderWidth: 2, pointRadius: 0, tension: 0.4 }] },
+                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
+                        });
+                    } catch (e) { }
+                });
+                markersCluster.addLayer(marker);
+            });
+            map.addLayer(markersCluster);
+        }
+
+        // ===== RANKING =====
+        function updateRanking(stations) {
+            const valid = stations.filter(s => typeof s.aqi === 'number').sort((a, b) => b.aqi - a.aqi).slice(0, 10);
+            document.getElementById('rankingList').innerHTML = valid.map((st, i) => {
+                const color = getAQIColor(st.aqi);
+                return `<div class="ranking-item" onclick="focusStation(${st.uid},${st.lat},${st.lng})">
+                    <div class="rank-num">${i + 1}</div>
+                    <div class="rank-info"><div class="rank-name">${st.name.split(',')[0]}</div></div>
+                    <div class="rank-aqi" style="background:${color}">${st.aqi}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function focusStation(uid, lat, lng) {
+            map.flyTo([lat, lng], 14);
+            map.once('moveend', () => { const m = markerMap[uid]; if (m) markersCluster.zoomToShowLayer(m, () => m.openPopup()); });
+        }
+
+        // ===== SEARCH & LOCATION =====
+        async function handleSearch() {
+            const q = document.getElementById('searchInput').value.trim();
+            if (!q) return;
+            const found = allStations.find(s => s.name.toLowerCase().includes(q.toLowerCase()));
+            if (found) { focusStation(found.uid, found.lat, found.lng); return; }
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`);
+                const data = await res.json();
+                if (data.length) map.flyTo([+data[0].lat, +data[0].lon], 13);
+                else showToast('⚠️ Không tìm thấy');
+            } catch { showToast('❌ Lỗi kết nối'); }
+        }
+
+        function locateUser() {
+            if (!navigator.geolocation) return showToast('❌ GPS không khả dụng');
+            showToast('🛰️ Đang định vị...');
+            navigator.geolocation.getCurrentPosition(p => {
+                map.flyTo([p.coords.latitude, p.coords.longitude], 13);
+            }, () => showToast('❌ Không thể lấy vị trí'));
+        }
+
+        // ===== INIT =====
+        loadStations();
+        setInterval(loadStations, 60000);
+    </script>
+</body>
+
+</html>
