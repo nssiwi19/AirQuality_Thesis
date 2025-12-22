@@ -3,9 +3,10 @@ AirWatch ASEAN API - Entry Point
 Air Quality Monitoring for ASEAN region
 """
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import Response
 from threading import Thread
 
 # App modules
@@ -28,12 +29,25 @@ init_user_db()     # Init User database (PostgreSQL/SQLite)
 
 # Create FastAPI app
 app = FastAPI(title="AirWatch ASEAN API", version="2.0")
+
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware, 
     allow_origins=["*"], 
     allow_methods=["*"], 
     allow_headers=["*"]
 )
+
+
+# Middleware to add security headers that allow inline scripts
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    # Allow inline scripts and eval for the app to work
+    response.headers["Content-Security-Policy"] = "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline';"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    return response
+
 
 # Include routers
 app.include_router(stations.router)
