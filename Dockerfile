@@ -18,8 +18,11 @@ RUN pip install --upgrade pip && \
 # Copy application code
 COPY . .
 
-# Expose port
-EXPOSE 8080
+# Railway provides PORT env variable
+ENV PORT=8080
 
-# Run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Expose port
+EXPOSE $PORT
+
+# Run the application - use shell form to expand PORT variable
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT
