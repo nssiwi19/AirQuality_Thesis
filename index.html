@@ -2371,9 +2371,26 @@
         async function loadStations() {
             document.getElementById('loadingOverlay').style.display = 'flex';
             try {
-                const [stationsRes, statsRes] = await Promise.all([fetch(`${API_URL}/stations`), fetch(`${API_URL}/stats`)]);
+                console.log('🔄 Loading stations from:', `${API_URL}/stations`);
+                console.log('🔄 Loading stats from:', `${API_URL}/stats`);
+
+                const [stationsRes, statsRes] = await Promise.all([
+                    fetch(`${API_URL}/stations`),
+                    fetch(`${API_URL}/stats`)
+                ]);
+
+                console.log('📥 Stations response status:', stationsRes.status);
+                console.log('📥 Stats response status:', statsRes.status);
+
+                if (!stationsRes.ok || !statsRes.ok) {
+                    throw new Error(`HTTP error! stations: ${stationsRes.status}, stats: ${statsRes.status}`);
+                }
+
                 allStations = await stationsRes.json();
                 const stats = await statsRes.json();
+
+                console.log('✅ Stations loaded:', allStations.length);
+                console.log('✅ Stats loaded:', stats);
 
                 document.getElementById('statTotal').textContent = stats.total_stations;
                 document.getElementById('statAvg').textContent = stats.avg_aqi;
@@ -2386,6 +2403,9 @@
                 document.getElementById('loadingOverlay').style.display = 'none';
                 showToast('✅ Dữ liệu đã cập nhật!');
             } catch (e) {
+                console.error('❌ LoadStations Error:', e);
+                console.error('❌ Error message:', e.message);
+                console.error('❌ Error stack:', e.stack);
                 document.getElementById('loadingOverlay').style.display = 'none';
                 showToast('❌ Lỗi kết nối server');
             }
