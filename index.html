@@ -2392,10 +2392,16 @@
                 console.log('✅ Stations loaded:', allStations.length);
                 console.log('✅ Stats loaded:', stats);
 
-                document.getElementById('statTotal').textContent = stats.total_stations;
-                document.getElementById('statAvg').textContent = stats.avg_aqi;
-                document.getElementById('statGood').textContent = stats.good + stats.moderate;
-                document.getElementById('statBad').textContent = stats.unhealthy + stats.very_unhealthy + stats.hazardous;
+                // Safe update stats elements (may not exist in UI)
+                const statTotal = document.getElementById('statTotal');
+                const statAvg = document.getElementById('statAvg');
+                const statGood = document.getElementById('statGood');
+                const statBad = document.getElementById('statBad');
+
+                if (statTotal) statTotal.textContent = stats.total_stations;
+                if (statAvg) statAvg.textContent = stats.avg_aqi;
+                if (statGood) statGood.textContent = stats.good + stats.moderate;
+                if (statBad) statBad.textContent = stats.unhealthy + stats.very_unhealthy + stats.hazardous;
 
                 renderMap(allStations);
                 updateRanking(allStations);
