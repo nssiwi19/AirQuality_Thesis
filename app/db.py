@@ -4,6 +4,7 @@ SQLite database connection and initialization
 """
 import sqlite3
 import logging
+import os
 from datetime import datetime
 
 from app.config import DB_NAME
@@ -27,6 +28,8 @@ def get_db_connection(timeout=30):
     Get database connection with timeout and WAL mode to prevent locking.
     WAL mode allows concurrent reads while writing.
     """
+    print(f"📁 [DB] Connecting to database: {DB_NAME}")
+    print(f"📁 [DB] Current working directory: {os.getcwd()}")
     conn = sqlite3.connect(DB_NAME, timeout=timeout)
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA busy_timeout=30000")  # 30 seconds
@@ -35,16 +38,20 @@ def get_db_connection(timeout=30):
 
 def init_db():
     """Initialize AQI database tables"""
+    print("🗄️ [DB] Starting database initialization...")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+        
+        print("🗄️ [DB] Creating measurements table...")
         cursor.execute('''CREATE TABLE IF NOT EXISTS measurements (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
             station_uid INTEGER, aqi INTEGER, pm25 REAL,
             timestamp DATETIME,
             UNIQUE(station_uid, timestamp)
         )''')
-        # Bảng alerts cho thông báo
+        
+        print("🗄️ [DB] Creating alerts table...")
         cursor.execute('''CREATE TABLE IF NOT EXISTS alerts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             station_uid INTEGER,
@@ -53,8 +60,12 @@ def init_db():
             aqi_value INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )''')
+        
         conn.commit()
         conn.close()
+        print("✅ [DB] Database initialized successfully!")
         logging.info("Database initialized.")
     except Exception as e:
+        print(f"❌ [DB] Database initialization FAILED: {e}")
         logging.error(f"DB Init Failed: {e}")
+        raise  # Re-raise to make error visible
