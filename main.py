@@ -19,6 +19,13 @@ from database import init_user_db
 # Import routers
 from app.routes import stations, predictions, location, evaluation, auth_routes, user
 
+# Setup logging
+setup_logging()
+
+# Initialize databases on import (for Railway/production)
+init_db()          # Init AQI database (SQLite - creates measurements table)
+init_user_db()     # Init User database (PostgreSQL/SQLite)
+
 # Create FastAPI app
 app = FastAPI(title="AirWatch ASEAN API", version="2.0")
 app.add_middleware(
@@ -36,10 +43,10 @@ app.include_router(evaluation.router)
 app.include_router(auth_routes.router)
 app.include_router(user.router)
 
+# Start crawler in background thread
+crawler_thread = Thread(target=crawler_task, daemon=True)
+crawler_thread.start()
+
 
 if __name__ == "__main__":
-    setup_logging()
-    init_db()          # Init AQI database
-    init_user_db()     # Init User database
-    Thread(target=crawler_task, daemon=True).start()
     uvicorn.run(app, host="0.0.0.0", port=8080)
