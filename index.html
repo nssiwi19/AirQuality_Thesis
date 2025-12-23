@@ -3131,14 +3131,19 @@
         async function deleteFavorite(id) {
             if (!confirm('Xóa vị trí này?')) return;
             try {
-                await fetch(`${API_URL}/user/favorites/${id}`, {
+                const res = await fetch(`${API_URL}/user/favorites/${id}`, {
                     method: 'DELETE',
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    throw new Error(data.detail || 'Không thể xóa');
+                }
                 showToast('🗑️ Đã xóa');
                 loadFavorites();
-            } catch {
-                showToast('❌ Lỗi xóa');
+            } catch (err) {
+                console.error('Delete error:', err);
+                showToast(`❌ ${err.message || 'Lỗi xóa'}`);
             }
         }
 
