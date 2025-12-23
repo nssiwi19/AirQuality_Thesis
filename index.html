@@ -2844,14 +2844,34 @@
         function locateUser() {
             if (!navigator.geolocation) return showToast('❌ GPS không khả dụng');
             showToast('🛰️ Đang định vị...');
-            navigator.geolocation.getCurrentPosition(p => {
+            navigator.geolocation.getCurrentPosition(async (p) => {
                 const lat = p.coords.latitude;
                 const lng = p.coords.longitude;
                 map.flyTo([lat, lng], 13);
 
-                // Show AQI at user location
+                // Get real address using reverse geocoding
+                let placeName = 'Vị trí của bạn';
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=vi`);
+                    const data = await res.json();
+                    if (data && data.address) {
+                        const addr = data.address;
+                        const parts = [];
+                        if (addr.road) parts.push(addr.road);
+                        if (addr.suburb || addr.neighbourhood || addr.quarter) parts.push(addr.suburb || addr.neighbourhood || addr.quarter);
+                        if (addr.city || addr.town || addr.village || addr.county) parts.push(addr.city || addr.town || addr.village || addr.county);
+                        if (addr.state || addr.province) parts.push(addr.state || addr.province);
+                        if (parts.length > 0) {
+                            placeName = parts.slice(0, 3).join(', ');
+                        }
+                    }
+                } catch (e) {
+                    console.error('Reverse geocoding error:', e);
+                }
+
+                // Show AQI at user location with real address
                 setTimeout(() => {
-                    showLocationAQI(lat, lng, 'Vị trí của bạn');
+                    showLocationAQI(lat, lng, placeName);
                 }, 1000);
             }, () => showToast('❌ Không thể lấy vị trí'));
         }
