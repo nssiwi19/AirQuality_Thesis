@@ -121,7 +121,10 @@ class AQIPredictor:
         return "stable"
     
     def predict_multi(self, uid, hours=[1, 6, 12, 24]):
-        """Dự báo đa bước: 1h, 6h, 12h, 24h với model caching"""
+        """
+        Dự báo đa bước: 1h, 6h, 12h, 24h với model caching
+        Sử dụng rolling prediction + historical hourly patterns
+        """
         try:
             conn = sqlite3.connect(DB_NAME)
             df = pd.read_sql_query(
@@ -148,11 +151,14 @@ class AQIPredictor:
                 # Sử dụng weighted average: 70% current + 30% average
                 base_pred = current_aqi * 0.7 + avg_aqi * 0.3
                 
-                # Điều chỉnh theo trend
-                trend_factor = 1.03 if trend == "rising" else (0.97 if trend == "falling" else 1.0)
+                # Điều chỉnh theo trend với variance tăng dần theo thời gian
+                trend_factor = 1.05 if trend == "rising" else (0.95 if trend == "falling" else 1.0)
                 
                 for h in hours:
-                    pred = base_pred * (trend_factor ** (h / 6))
+                    # Thêm variance dựa trên historical volatility
+                    volatility = abs(max(aqi_values) - min(aqi_values)) / max(avg_aqi, 1) if len(aqi_values) > 1 else 0.1
+                    time_decay = 1 + (volatility * h / 24)  # Uncertainty tăng theo thời gian
+                    pred = base_pred * (trend_factor ** (h / 4)) * time_decay
                     predictions[h] = max(0, min(500, int(pred)))
                 
                 # Confidence thấp vì chưa đủ dữ liệu
@@ -178,6 +184,10 @@ class AQIPredictor:
             X = df[['hour', 'day_of_week', 'is_weekend', 'lag_1', 'lag_3']].values
             y = df['aqi'].values
             
+            # Tính hourly patterns từ dữ liệu lịch sử
+            hourly_avg = df.groupby('hour')['aqi'].mean().to_dict()
+            overall_avg = df['aqi'].mean()
+            
             # Try to use cached model first
             model = None
             if self._is_model_valid(uid):
@@ -197,23 +207,74 @@ class AQIPredictor:
             train_score = model.score(X, y)
             confidence = min(int(train_score * 100), 95)
             
-            # Dự báo đa bước
+            # === ROLLING PREDICTION: Dự báo từng bước, dùng kết quả trước cho bước sau ===
             predictions = {}
-            for h in hours:
+            sorted_hours = sorted(hours)
+            
+            # Tính volatility từ dữ liệu lịch sử
+            volatility = df['aqi'].std() / max(overall_avg, 1) if len(df) > 1 else 0.1
+            
+            # Khởi tạo lag values từ dữ liệu thực
+            prev_lag1 = current_aqi
+            prev_lag3 = aqi_values[2] if len(aqi_values) > 2 else current_aqi
+            prev_pred = current_aqi
+            prev_hour_offset = 0
+            
+            for h in sorted_hours:
                 next_time = datetime.now() + timedelta(hours=h)
-                trend_factor = 1.05 if trend == "rising" else (0.95 if trend == "falling" else 1.0)
-                est_lag1 = current_aqi * (trend_factor ** (h/6))
-                est_lag3 = current_aqi * (trend_factor ** (h/3))
+                target_hour = next_time.hour
+                target_weekday = next_time.weekday()
+                is_weekend = 1 if target_weekday >= 5 else 0
                 
-                next_input = [[
-                    next_time.hour, 
-                    next_time.weekday(),
-                    1 if next_time.weekday() >= 5 else 0,
-                    est_lag1,
-                    est_lag3
-                ]]
-                pred = model.predict(next_input)
-                predictions[h] = max(0, min(500, int(pred[0])))
+                # Tính hourly pattern adjustment
+                hour_pattern = hourly_avg.get(target_hour, overall_avg)
+                hour_adjustment = (hour_pattern - overall_avg) / max(overall_avg, 1)
+                
+                # Rolling: sử dụng dự báo trước đó làm lag
+                hours_since_last = h - prev_hour_offset
+                
+                if hours_since_last <= 1:
+                    est_lag1 = prev_pred
+                else:
+                    # Nội suy giữa current và prev_pred
+                    est_lag1 = prev_pred * 0.8 + current_aqi * 0.2
+                
+                if hours_since_last <= 3:
+                    est_lag3 = prev_lag3 * 0.7 + prev_pred * 0.3
+                else:
+                    est_lag3 = prev_pred
+                
+                # Trend adjustment tăng dần theo thời gian
+                trend_strength = 1 + (h / 24) * 0.15  # Max 15% stronger at 24h
+                if trend == "rising":
+                    trend_adj = 1 + (0.02 * h * trend_strength)
+                elif trend == "falling":
+                    trend_adj = 1 - (0.02 * h * trend_strength)
+                else:
+                    trend_adj = 1.0
+                
+                # Predict với model
+                next_input = [[target_hour, target_weekday, is_weekend, est_lag1, est_lag3]]
+                raw_pred = model.predict(next_input)[0]
+                
+                # Apply adjustments
+                adjusted_pred = raw_pred * trend_adj * (1 + hour_adjustment * 0.3)
+                
+                # Thêm uncertainty margin tăng theo thời gian
+                uncertainty = volatility * (h / 6) * 0.1
+                if trend == "rising":
+                    adjusted_pred *= (1 + uncertainty)
+                elif trend == "falling":
+                    adjusted_pred *= (1 - uncertainty * 0.5)
+                
+                final_pred = max(0, min(500, int(adjusted_pred)))
+                predictions[h] = final_pred
+                
+                # Update rolling values cho bước tiếp theo
+                prev_lag3 = prev_lag1
+                prev_lag1 = prev_pred
+                prev_pred = final_pred
+                prev_hour_offset = h
             
             return predictions, trend, confidence
             
