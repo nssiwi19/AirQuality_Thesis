@@ -1,330 +1,10 @@
 [
     {
-        "name": "Chénghǎizi, Shantou (汕头澄海子站)",
+        "name": "小漠子站, Shenzhen (深汕合作区 小漠镇)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "平远大道,  (梅州市平远大道)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "燕山学校, Shenzhen (宝安区 燕罗街道)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "佛冈沿江,  (清远市佛冈沿江)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "阳山城北,  (清远市阳山城北)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "hé chéngzi zhàn, Guigang (贵港荷城子站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Hualien, Taiwan (花蓮)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "North/Taipower Linkou, Taiwan",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "City convenient service centers, Wenshan (文山州市便民服务中心)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Maezato, Ishigaki, Okinawa, Japan (石垣石垣市)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "南雄雄州,  (韶关市南雄雄州)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "南苑二区, Qujing (曲靖南苑二区)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Dòumén, Zhuhai (珠海斗门)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Gaoling, Maoming (茂名高岭)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Ouhai, Wenzhou (温州市瓯海)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Heyuan (河源)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "lóng xīn, Wuzhou (梧州龙新)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Běihú, Nanning (南宁北湖)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Dongfeng East Road, Kunming (昆明东风东路)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Xiuying Hainan Hospital, Haikou (海口秀英海南医院)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "EPA Station, Liuzhou (柳州环保监测站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "南沙街,  (广州市南沙街)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Chenggong New Area, Kunming (昆明呈贡新区)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "City Environmental Monitoring Station, Zhanjiang (湛江市环境监测站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Sikulpuikawn, Aizawl, India",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Zhuhai (珠海)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Puzi, Taiwan (朴子)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Ningde Stations, Ningde (宁德宁德市监测站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "惠来惠城,  (揭阳市惠来惠城)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Bìhú shānzhuāng, Shaoguan (韶关碧湖山庄)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "广宁庄前西,  (肇庆市广宁庄前西)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "yīng huá jiā yuán, Nanning (南宁英华嘉园)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Blood Center, Baise (百色市中心血站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Naharlagun, Naharlagun, India",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "沙湖,  (江门市沙湖)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Hongwen, Xiamen (厦门洪文)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "xī mǎ, Jieyang (揭阳西马)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Puer No2 middle school, Puer (普洱普洱第二中学)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Wujialing, Changsha (长沙伍家岭)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "District Agricultural Vocational College, Nanning (南宁区农职院)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Hua-Tung/Taitung County/Fengli, Taiwan",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Lijiang (丽江)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "罗定罗光,  (云浮市罗定罗光)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "高新知青,  (肇庆市高新知青)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "shì huàgōng chǎng, Shaoyang (邵阳市化工厂)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "台山端芬,  (江门市台山端芬)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Douliu, Taiwan (斗六)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "龙川同德,  (河源市龙川同德)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "State Stations, Nujiang (怒江州州监测站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "阳西城区,  (阳江市阳西城区)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "遂溪建设,  (湛江市遂溪建设)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "连平东园,  (河源市连平东园)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "PWD Juction, Kohima, India",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Yilan, Taiwan (宜蘭)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "City committee communist party school, Huaihua (怀化市委党校)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "高州红荔,  (茂名市高州红荔)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "徐闻东方路,  (湛江市徐闻东方路)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Meizhou (梅州)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "曲靖师范学院, Qujing (曲靖曲靖师范学院)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "City EPA station, Qinzhou (钦州市环保站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Yonagusuku, Okinawa, Japan (西原中頭郡西原町)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "连山广德,  (清远市连山广德)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Shaoyang (邵阳)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Kinmen, Taiwan (金門)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "tóng yuán dǎng xī, Fuzhoushi (抚州桐源党溪)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Hirara, Miyakojima, Okinawa, Japan (平良宮古島市)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "惠东莲花地,  (惠州市惠东莲花地)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "新丰丰城,  (韶关市新丰丰城)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "新兴南外,  (云浮市新兴南外)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "shì jí kòng zhōngxīn, Hechi (河池市疾控中心)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "City committee communist party school, Loudi (娄底市委党校)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "质量技术监督局, Diqing (迪庆州质量技术监督局)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Puli, Taiwan (埔里)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Mazhang EPA, Zhanjiang (湛江麻章区环保局)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Lengshuitan District Environmental Protection Bureau, Yongzhou (永州冷水滩区环保局)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "State Water Authority, Wenshan (文山州州水务局)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Hengchun, Taiwan (恆春)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Hedongzi Station, Sanya (三亚河东子站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "mùyáng, Yunfu (云浮牧羊)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Yun-Chia-Nan/Tainan City/Chengxili, Taiwan",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "信宜新尚,  (茂名市信宜新尚)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Minxi Vocational and Technical College, Longyan (龙岩闽西职业技术学院)",
+        "name": "City hopital No 4, Huaihua (怀化市四医院)",
         "reason": "non-ASEAN keyword"
     },
     {
@@ -332,127 +12,23 @@
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Kao-ping/Taipower Funglin, Taiwan",
+        "name": "Yangjiang (阳江)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Zhudong, Taiwan (竹東)",
+        "name": "Huizhou (惠州)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Qujiang Monitoring Station, Shaoguan (韶关曲江监测站)",
+        "name": "Calçada do Poço, Macau (水坑尾區 (水井斜巷))",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "高栏南水,  (珠海市高栏南水)",
+        "name": "龙川同德,  (河源市龙川同德)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Central/Taipower Wuchi, Taiwan",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "陆河河田,  (汕尾市陆河河田)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Jīntóu bù, Quanzhou (泉州津头埔)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Zhushan, Taiwan (竹山)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "鹤山南山,  (江门市鹤山南山)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "sān gāng, Sanming (三明三钢)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Zhuzhou (株洲)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Okinawa, Japan (国設辺戸岬酸性雨国頭郡国頭村)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Longwan, Wenzhou (温州市龙湾)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "yuán xī, Heyuan (河源源西)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "shì zhí zhōng, Chenzhou (郴州市职中)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Bingcaogang, Panzhihua (攀枝花炳草岗)",
-        "reason": "out of bounds"
-    },
-    {
-        "name": "大埔湖寮,  (梅州市大埔湖寮)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Dongshan, Taiwan (冬山)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "lián gāng, Loudi (娄底涟钢)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "晋宁区生态环境分局, Kunming (昆明晋宁区生态环境分局)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "丰顺八乡山,  (梅州市丰顺八乡山)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "怀集三江口,  (肇庆市怀集三江口)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Municipal Garage, Pingxiang (萍乡市政府车库)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Matsu, Taiwan (馬祖)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "雷州朝南,  (湛江市雷州朝南)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Nanping Aluminum Co., Ltd., Nanping (南平南平铝业有限公司)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "de wěi, Ganzhou (赣州地委)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Guilin (桂林)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "高要湖西,  (肇庆市高要湖西)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "bīnláng shuǐ yè, Yichun (宜春槟榔水业)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "连州城西,  (清远市连州城西)",
+        "name": "CPPCC Building, Hezhou (贺州环保小区)",
         "reason": "non-ASEAN keyword"
     },
     {
@@ -460,143 +36,11 @@
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "兴宁南坛,  (梅州市兴宁南坛)",
+        "name": "徐闻东方路,  (湛江市徐闻东方路)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "City Environmental Monitoring Station, Baoshan (保山市环境监测站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "丰顺汤坑,  (梅州市丰顺汤坑)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Keelung, Taiwan (基隆)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Yingtan (鹰潭)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Běijiē, Jiangmen (江门北街)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Jinghong City Jiangnan, Xishuangbanna (西双版纳州景洪市江南)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "North/CPC Taoyuan Refinery F5, Taiwan",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Dehong Stations, Dehong (德宏州德宏州监测站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "jiǔlóng zhèn zhèn lóng, Guangzhou (广州九龙镇镇龙)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "shì sēnlín gōngyè jú, Jian (吉安市森林工业局)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "fènghuáng guāngxué, Shangrao (上饶凤凰光学)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "City Monitoring Station, Hengyang (衡阳市监测站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Lishui (丽水)",
-        "reason": "out of bounds"
-    },
-    {
-        "name": "Lì chéngqū cāng hòu lù, Putian (莆田荔城区仓后路)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "和平新华,  (河源市和平新华)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Guangming, Shenzhen (光明区 光明街道)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "阳东陶然,  (阳江市阳东陶然)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "FugueiCape, Taiwan",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Beigang, Xinyu (新余北岗)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Beihai Industrial Park, Beihai (北海北海工业园)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "始兴丹凤,  (韶关市始兴丹凤)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "nanjiang No1 middle school, Yulin (玉林南江一中)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Dali City Environmental Monitoring Station, Dali (大理州大理市环境监测站)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Mǎānshān, Guiyang (贵阳马鞍山)",
-        "reason": "out of bounds"
-    },
-    {
-        "name": "Yogi, Naha, Okinawa, Japan (那覇那覇市)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Qiaotou, Taiwan (橋頭)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "City EPA, Lincang (临沧市环保局)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "gǎng qū yī xiǎo, Qinzhou (钦州港区一小)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Taitung, Taiwan (台東)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "Magong, Taiwan (馬公)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "赤石中学, Shenzhen (深汕合作区 赤石镇)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "罗定兴华,  (云浮市罗定兴华)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "徐闻海安,  (湛江市徐闻海安)",
-        "reason": "non-ASEAN keyword"
-    },
-    {
-        "name": "shì huánbǎo jú jiāng zhōu fēnjú, Chongzuo (崇左市环保局江州分局)",
+        "name": "乳源乳城,  (韶关市乳源乳城)",
         "reason": "non-ASEAN keyword"
     },
     {
@@ -604,35 +48,63 @@
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Central, HongKong (中環)",
-        "reason": "out of bounds"
-    },
-    {
-        "name": "Hexizi Station, Sanya (三亚河西子站)",
+        "name": "Putian City Stations, Putian (莆田莆田市监测站)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Zhongzhuang, Zunyi (遵义忠庄)",
-        "reason": "out of bounds"
-    },
-    {
-        "name": "增城荔城,  (广州市增城荔城)",
+        "name": "青年创业园, Kunming (昆明青年创业园)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Monitoring station, Zhaotong (昭通监测站)",
+        "name": "Yuxi (玉溪)",
+        "reason": "out of ASEAN bounds"
+    },
+    {
+        "name": "高州红荔,  (茂名市高州红荔)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Girls College, Sivasagar, India",
+        "name": "Jinghong City Jiangnan, Xishuangbanna (西双版纳州景洪市江南)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Normal Univertsity, Fuzhou (福州师大)",
+        "name": "Land Environment and Resources Bureau , Ledongxian (乐东县国土环境资源局)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "cǎi chá jùtuán, Fuzhoushi (抚州采茶剧团)",
+        "name": "Yogi, Naha, Okinawa, Japan (那覇那覇市)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Puli, Taiwan (埔里)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "大埔湖寮,  (梅州市大埔湖寮)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "连平东园,  (河源市连平东园)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "No.9 middle school, Liuzhou (柳州市九中)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "lián gāng, Loudi (娄底涟钢)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Tung Chung, HongKong (東涌)",
+        "reason": "out of ASEAN bounds"
+    },
+    {
+        "name": "北郊,  (江门市北郊)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City EPA station, Qinzhou (钦州市环保站)",
         "reason": "non-ASEAN keyword"
     },
     {
@@ -640,19 +112,219 @@
         "reason": "non-ASEAN keyword"
     },
     {
+        "name": "坪山田心山,  (深圳市坪山田心山)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Yun-Chia-Nan/Tainan City/Chengxili, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "始兴丹凤,  (韶关市始兴丹凤)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Lishui (丽水)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Island/Taipower Shinren, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Zhongzhuang, Zunyi (遵义忠庄)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City government, Shanwei (汕尾市政府)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "高明更合,  (佛山市高明更合)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Hualien, Taiwan (花蓮)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Matsu, Taiwan (馬祖)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Wujialing, Changsha (长沙伍家岭)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Land Environment and Resources Bureau, Chengmaixian (澄迈县澄迈国土环境资源局站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Lingshui Tufu Bay, Lingshuixian (陵水县陵水土福湾)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "gǎng qū yī xiǎo, Qinzhou (钦州港区一小)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Dehong Stations, Dehong (德宏州德宏州监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Tushan Street, Quanzhou (泉州涂山街)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Sikulpuikawn, Aizawl, India",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "徐闻海安,  (湛江市徐闻海安)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Chénghǎizi, Shantou (汕头澄海子站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "lú shuǐ No1 middle shcool, Nujiang (怒江州泸水一中)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Dongshan, Taiwan (冬山)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Chu Hui District Environmental Protection Bureau, Hengyang (衡阳珠晖区环保局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Lijiang (丽江)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Zhuhai (珠海)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "hóngqí zhōng xuézǐ station, Tunchangxian (屯昌县红旗中学子站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "North/CPC Taoyuan Refinery F5, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Old Town, Heyuan (河源老城)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "广宁庄前西,  (肇庆市广宁庄前西)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Yongzhou EPA, Yongzhou (永州永州市环保局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
         "name": "No.8 middle school, Guilin (桂林八中)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "City Economic Development Zone, Chuxiong (楚雄州市经济开发区)",
+        "name": "Qionghai (琼海)",
+        "reason": "out of ASEAN bounds"
+    },
+    {
+        "name": "南雄雄州,  (韶关市南雄雄州)",
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "Southern, HongKong (南區)",
-        "reason": "out of bounds"
+        "name": "Taixi, Taiwan (台西)",
+        "reason": "non-ASEAN keyword"
     },
     {
-        "name": "紫金紫城,  (河源市紫金紫城)",
+        "name": "Longwan, Wenzhou (温州市龙湾)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "shì sēnlín gōngyè jú, Jian (吉安市森林工业局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "新兴南外,  (云浮市新兴南外)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Yun-Chia-Nan/Yunlin City/ Huwei, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "雷州朝南,  (湛江市雷州朝南)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "南苑二区, Qujing (曲靖南苑二区)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Dali City Environmental Monitoring Station, Dali (大理州大理市环境监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Gāomíng kǒngtáng, Foshan (佛山高明孔堂)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "质量技术监督局, Diqing (迪庆州质量技术监督局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "North/CPC Taoyuan Refinery F1, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Central/TaiChung City/Houli, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "lù huítóu, Sanya (三亚鹿回头)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Wenzhou (温州)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Qujiang Monitoring Station, Shaoguan (韶关曲江监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Taici Bridge, Guiyang (贵阳太慈桥)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "新会银湖,  (江门市新会银湖)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Ziyang, Fuzhou (福州紫阳)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "梅江月梅,  (梅州市梅江月梅)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Hainan University, Haikou (海口海南大学)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "高新知青,  (肇庆市高新知青)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City first secondary school sub-station , Danzhou (儋州市第一中学子站)",
         "reason": "non-ASEAN keyword"
     },
     {
@@ -660,7 +332,367 @@
         "reason": "non-ASEAN keyword"
     },
     {
-        "name": "CPPCC Building, Hezhou (贺州环保小区)",
+        "name": "Běihú, Nanning (南宁北湖)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "增城派潭,  (广州市增城派潭)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "信宜新尚,  (茂名市信宜新尚)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Hirara, Miyakojima, Okinawa, Japan (平良宮古島市)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Yun-Chia-Nan/Tainan City/Nanxi, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Blood Center, Baise (百色市中心血站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Monitoring station, Zhaotong (昭通监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "东莞塘厦,  (东莞市东莞塘厦)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "连山广德,  (清远市连山广德)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "sān gāng, Sanming (三明三钢)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "xuèfáng zhàn, Fuzhoushi (抚州血防站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Guilin (桂林)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City convenient service centers, Wenshan (文山州市便民服务中心)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Hexizi Station, Sanya (三亚河西子站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "丰顺八乡山,  (梅州市丰顺八乡山)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Kinmen, Taiwan (金門)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "罗定罗光,  (云浮市罗定罗光)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "yīng huá jiā yuán, Nanning (南宁英华嘉园)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City EPA station, Hechi (河池市环保站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Zhanjiang (湛江)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Hua-Tung/Taitung County/Fengli, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Beigang, Xinyu (新余北岗)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "State Water Authority, Wenshan (文山州州水务局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "开平卫民,  (江门市开平卫民)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Ningde Stations, Ningde (宁德宁德市监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "PWD Juction, Kohima, India",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "New EPA, Beihai (北海新市环保局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "连南城东,  (清远市连南城东)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Girls College, Sivasagar, India",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Longyan City Stations, Longyan (龙岩龙岩市监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "xīnshì fǔ, Yunfu (云浮新市府)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "怀集三江口,  (肇庆市怀集三江口)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "shì huánbǎo jú jiāng zhōu fēnjú, Chongzuo (崇左市环保局江州分局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "nánpíng qī zhōng, Nanping (南平南平七中)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "佛冈沿江,  (清远市佛冈沿江)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "新丰丰城,  (韶关市新丰丰城)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "bīnláng shuǐ yè, Yichun (宜春槟榔水业)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City Land Resources Bureau office environment , Wenchang (文昌市国土环境资局办公楼)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City Environmental Monitoring Station, Zhanjiang (湛江市环境监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "High-tech Zone EPA, Changsha (长沙高开区环保局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "jiǔlóng zhèn zhèn lóng, Guangzhou (广州九龙镇镇龙)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City EPA, Chenzhou (郴州市环保局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Kao-ping/CPC Linyuan Q1, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Commission compound Archives , Lingaoxian (临高县委大院档案馆)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "官渡区博物馆, Kunming (昆明官渡区博物馆)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Naharlagun, Naharlagun, India",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Yilan, Taiwan (宜蘭)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Keelung, Taiwan (基隆)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Gulangyu, Xiamen (厦门鼓浪屿)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City EPA, Baoshan (保山市环保局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City EPA, Lincang (临沧市环保局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Guanshan, Taiwan (關山)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "BDA Management Committe, Shangrao (上饶开发区管委会)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "惠来惠城,  (揭阳市惠来惠城)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "紫金紫城,  (河源市紫金紫城)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "四会威整,  (肇庆市四会威整)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "罗定兴华,  (云浮市罗定兴华)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Hengchun, Taiwan (恆春)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Central/TaiChung City/Dali, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "tóng yuán dǎng xī, Fuzhoushi (抚州桐源党溪)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City Economic Development Zone, Chuxiong (楚雄州市经济开发区)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "曲靖师范学院, Qujing (曲靖曲靖师范学院)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "高栏港,  (珠海市高栏港)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City Monitoring Station, Loudi (娄底市监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Renhe, Panzhihua (攀枝花仁和)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "lóng xīn, Wuzhou (梧州龙新)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "FugueiCape, Taiwan",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "hé chéngzi zhàn, Guigang (贵港荷城子站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Sanyi, Taiwan (三義)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "兴宁南坛,  (梅州市兴宁南坛)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "shì huàgōng chǎng, Shaoyang (邵阳市化工厂)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "遂溪建设,  (湛江市遂溪建设)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Ronggui street committee, Foshan (佛山容桂街道办)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "连州城西,  (清远市连州城西)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "阳西城区,  (阳江市阳西城区)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Okinawa, Japan (国設辺戸岬酸性雨国頭郡国頭村)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Chaozhou (潮州)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Municipal Garage, Pingxiang (萍乡市政府车库)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "平远大道,  (梅州市平远大道)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "de wěi, Ganzhou (赣州地委)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "District Agricultural Vocational College, Nanning (南宁区农职院)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Yonagusuku, Okinawa, Japan (西原中頭郡西原町)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "揭西河婆,  (揭阳市揭西河婆)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Dongpu, Heyuan (河源东埔)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "nanjiang No1 middle school, Yulin (玉林南江一中)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City Peoples Hospital , Qionghai (琼海市人民医院)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "xīn jiāncè zhàn, Yingtan (鹰潭新监测站)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Southern, HongKong (南區)",
+        "reason": "out of ASEAN bounds"
+    },
+    {
+        "name": "吴川梅岭,  (湛江市吴川梅岭)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "City EPA, Shaoyang (邵阳市环保局)",
+        "reason": "non-ASEAN keyword"
+    },
+    {
+        "name": "Puer No2 middle school, Puer (普洱普洱第二中学)",
         "reason": "non-ASEAN keyword"
     }
 ]

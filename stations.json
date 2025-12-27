@@ -1,44 +1,303 @@
 [
     {
-        "uid": 1831,
-        "name": "Knowledge Park, Phayao, Thailand (อุทยานการเรียนรู้กว๊านพะเยา)",
-        "lat": 19.200226,
-        "lng": 99.893048,
+        "uid": 1832,
+        "name": "Maesai Health Office, Chiangrai, Thailand (สำนักงานสาธารณสุขอำเภอแม่สาย เชียงราย)",
+        "lat": 20.439944444444,
+        "lng": 99.913666666667,
         "country": "Thailand"
+    },
+    {
+        "uid": 13683,
+        "name": "Hưng Yên/Sở TNMT - 437 Nguyễn Văn Linh, Tp Hưng Yên, Vietnam",
+        "lat": 20.661683,
+        "lng": 106.058761,
+        "country": "Vietnam"
+    },
+    {
+        "uid": 12796,
+        "name": "Lat Yai,Mueang,Samut Songkhram, Thailand (ต.ลาดใหญ่ อ.เมือง จ.สมุทรสงคราม)",
+        "lat": 13.428581,
+        "lng": 100.024664,
+        "country": "Thailand"
+    },
+    {
+        "uid": 9450,
+        "name": "Chiangrai - Gaia Station 01, Thailand",
+        "lat": 19.687157,
+        "lng": 100.19024,
+        "country": "Thailand"
+    },
+    {
+        "uid": 2605,
+        "name": "Sandakan, Sabah, Malaysia",
+        "lat": 5.864467,
+        "lng": 118.091089,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 13637,
+        "name": "Nong Prajak Public Park, Udon Thani, Thailand (สวนสาธารณะหนองประจักษ์ อุดรธานี)",
+        "lat": 17.414174,
+        "lng": 102.780926,
+        "country": "Thailand"
+    },
+    {
+        "uid": 10484,
+        "name": "Tangkak, Johor, Malaysia",
+        "lat": 2.294794,
+        "lng": 102.571595,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 9496,
+        "name": "Rompin, Pahang, Malaysia",
+        "lat": 2.926645,
+        "lng": 103.419198,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 9492,
+        "name": "Segamat, Johor, Malaysia",
+        "lat": 2.493914,
+        "lng": 102.862694,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 2623,
+        "name": "Kuala Terengganu, Terengganu, Malaysia",
+        "lat": 5.308094,
+        "lng": 103.120392,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 13687,
+        "name": "Cần Thơ/Ninh Kiều - KTTV - Trạm cảm biến, Vietnam",
+        "lat": 10.026977,
+        "lng": 105.768249,
+        "country": "Vietnam"
+    },
+    {
+        "uid": 1825,
+        "name": "Nakhonsawan Irrigation , Nakhon Sawan, Thailand (โครงการชลประทานนครสวรรค์)",
+        "lat": 15.68623,
+        "lng": 100.110556,
+        "country": "Thailand"
+    },
+    {
+        "uid": 13633,
+        "name": "Suphan Buri Provincial Central Stadium, Thailand (สนามกีฬากลางจังหวัดสุพรรณบุรี)",
+        "lat": 14.476214,
+        "lng": 100.086095,
+        "country": "Thailand"
+    },
+    {
+        "uid": 1830,
+        "name": "Phrae Meteorological Station, Thailand (สถานีอุตุนิยมวิทยาแพร่)",
+        "lat": 18.1283666,
+        "lng": 100.1624333,
+        "country": "Thailand"
+    },
+    {
+        "uid": 9497,
+        "name": "Temerloh, Pahang, Malaysia",
+        "lat": 3.471603,
+        "lng": 102.376406,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 2611,
+        "name": "Limbang, Sarawak, Malaysia",
+        "lat": 4.758891,
+        "lng": 115.013667,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 14893,
+        "name": "Manila US Embassy, Philippines",
+        "lat": 14.57711,
+        "lng": 120.9778,
+        "country": "Philippines"
+    },
+    {
+        "uid": 9494,
+        "name": "Kluang, Johor, Malaysia",
+        "lat": 2.037882,
+        "lng": 103.312063,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 13632,
+        "name": "Trat Provincial Central Stadium, Thailand (สนามกีฬากลางจังหวัดตราด)",
+        "lat": 12.234862,
+        "lng": 102.523721,
+        "country": "Thailand"
+    },
+    {
+        "uid": 13635,
+        "name": "Chom Nan Chaloem Phrakiat Public Park, Thailand (สวนชมน่านเฉลิมพระเกียรติ)",
+        "lat": 16.820833,
+        "lng": 100.258056,
+        "country": "Thailand"
+    },
+    {
+        "uid": 2610,
+        "name": "Kuching, Sarawak, Malaysia",
+        "lat": 1.562229,
+        "lng": 110.388958,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 1826,
+        "name": "Regional Environmental Office 14, Surat Thani, Thailand (สำนักงานสิ่งแวดล้อมภาคที่ 14)",
+        "lat": 9.126017,
+        "lng": 99.325145,
+        "country": "Thailand"
+    },
+    {
+        "uid": 3688,
+        "name": "Khonkaen, Thailand (ส่วนอุทกวิทยา สำนักงานทรัพยากรน้ำภาค 4 ขอนแก่น)",
+        "lat": 16.44538333,
+        "lng": 102.83525,
+        "country": "Thailand"
+    },
+    {
+        "uid": 9013,
+        "name": "Mae Pa,Mae Sot,Tak, Thailand (ต.แม่ปะ อ.แม่สอด จ.ตาก)",
+        "lat": 16.734413,
+        "lng": 98.566961,
+        "country": "Thailand"
+    },
+    {
+        "uid": 1865,
+        "name": "City Hall, Narathiwat, Thailand (ศาลากลางจังหวัดนราธิวาส)",
+        "lat": 6.426853,
+        "lng": 101.823388,
+        "country": "Thailand"
+    },
+    {
+        "uid": 2597,
+        "name": "Seri Manjung, Perak, Malaysia",
+        "lat": 4.200344,
+        "lng": 100.663358,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 1840,
+        "name": "South Bangkok Power Plant, Samut Prakan, Thailand (โรงไฟฟ้าพระนครใต้)",
+        "lat": 13.618,
+        "lng": 100.5562,
+        "country": "Thailand"
+    },
+    {
+        "uid": 2627,
+        "name": "Labuan, Wilayah Persekutuan, Malaysia",
+        "lat": 5.298107,
+        "lng": 115.232106,
+        "country": "Malaysia"
     },
     {
         "uid": 2591,
         "name": "Balok Baru, Kuantan, Pahang, Malaysia",
         "lat": 3.960644,
         "lng": 103.382158,
-        "country": "Indonesia"
+        "country": "Malaysia"
     },
     {
-        "uid": 1814,
-        "name": "Highway District, Samut Sakhon, Thailand (แขวงการทางสมุทรสาคร)",
-        "lat": 13.7054879,
-        "lng": 100.315622,
+        "uid": 2614,
+        "name": "Sarikei, Sarawak, Malaysia",
+        "lat": 2.132809,
+        "lng": 111.52287,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 13659,
+        "name": "Tây Ninh/Thị xã Tràng Bảng, Vietnam",
+        "lat": 11.030287,
+        "lng": 106.35631,
+        "country": "Vietnam"
+    },
+    {
+        "uid": 13763,
+        "name": "Ninh Bình/Cúc Phương, Đông Phong, Nho Quan - KTTV - Trạm cảm biến, Vietnam",
+        "lat": 20.320741,
+        "lng": 105.745489,
+        "country": "Vietnam"
+    },
+    {
+        "uid": 9014,
+        "name": "Tha Tum, Si Maha Phot, Prachin Buri, Thailand (ต.ท่าตูม อ.ศรีมหาโพธิ จ.ปราจีนบุรี)",
+        "lat": 13.917563,
+        "lng": 101.590529,
         "country": "Thailand"
     },
     {
-        "uid": 13841,
-        "name": "Maros, Indonesia",
-        "lat": -4.997,
-        "lng": 119.57,
-        "country": "Indonesia"
+        "uid": 2609,
+        "name": "Kapit, Sarawak, Malaysia",
+        "lat": 2.014498,
+        "lng": 112.92736,
+        "country": "Malaysia"
     },
     {
         "uid": 9501,
         "name": "Mukah, Sarawak, Malaysia",
         "lat": 2.883238,
         "lng": 112.019742,
-        "country": "Indonesia"
+        "country": "Malaysia"
     },
     {
-        "uid": 5107,
-        "name": "Government Center, Rayong, Thailand (ศูนย์ราชการระยอง)",
-        "lat": 12.7066,
-        "lng": 101.18055,
+        "uid": 8688,
+        "name": "United Nations International School of Hanoi, Vietnam (Trường Quốc tế Liên Hợp Quốc Hà Nội)",
+        "lat": 21.0811211,
+        "lng": 105.8180306,
+        "country": "Vietnam"
+    },
+    {
+        "uid": 1815,
+        "name": "Ayutthaya Witthayalai School, Ayutthaya, Thailand (โรงเรียนอยุธยาวิทยาลัย)",
+        "lat": 14.35222,
+        "lng": 100.565325,
+        "country": "Thailand"
+    },
+    {
+        "uid": 9493,
+        "name": "Batu Pahat, Johor, Malaysia",
+        "lat": 1.919323,
+        "lng": 102.866618,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 9556,
+        "name": "Kota Bharu, Kelantan, Malaysia",
+        "lat": 6.147431,
+        "lng": 102.249236,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 2626,
+        "name": "Cheras,Kuala Lumpur, Wilayah Persekutuan, Malaysia",
+        "lat": 3.106236,
+        "lng": 101.717917,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 13628,
+        "name": "Polytechnic College, Trang, Thailand (วิทยาลัยสารพัดช่างตรัง)",
+        "lat": 7.570238,
+        "lng": 99.588743,
+        "country": "Thailand"
+    },
+    {
+        "uid": 1854,
+        "name": "Municipal Waste Water Pumping Station, Nakhon Ratchasima, Thailand (สถานีสูบน้ำเสีย เทศบาลนครราชสีมา)",
+        "lat": 14.979537,
+        "lng": 102.098335,
+        "country": "Thailand"
+    },
+    {
+        "uid": 12797,
+        "name": "Nai Mueang,Mueang,Ubon Ratchathani , Thailand (ต.ในเมือง อ.เมือง จ.อุบลราชธานี)",
+        "lat": 15.245413,
+        "lng": 104.846219,
         "country": "Thailand"
     },
     {
@@ -49,207 +308,11 @@
         "country": "Thailand"
     },
     {
-        "uid": 13654,
-        "name": "Sorong, Indonesia",
-        "lat": -0.8634105,
-        "lng": 131.2544805,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2622,
-        "name": "Kemaman, Terengganu, Malaysia",
-        "lat": 4.262121,
-        "lng": 103.425778,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 9492,
-        "name": "Segamat, Johor, Malaysia",
-        "lat": 2.493914,
-        "lng": 102.862694,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 13644,
-        "name": "Bengkulu, Indonesia",
-        "lat": -3.865,
-        "lng": 102.312,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2616,
-        "name": "Sri Aman, Sarawak, Malaysia",
-        "lat": 1.219656,
-        "lng": 111.464792,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8294,
-        "name": "Kemayoran, Indonesia",
-        "lat": -6.155,
-        "lng": 106.846,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8288,
-        "name": "Pekanbaru, Indonesia",
-        "lat": 0.46667,
-        "lng": 101.4666,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 12795,
-        "name": "T.Meechai A.Muang Nongkhai Province, Thailand (ต.มีชัย อ.เมืองหนองคาย จ.หนองคาย)",
-        "lat": 17.87748,
-        "lng": 102.728925,
+        "uid": 5190,
+        "name": "Dongfang (东方)",
+        "lat": 19.095361,
+        "lng": 108.651775,
         "country": "Vietnam"
-    },
-    {
-        "uid": 14641,
-        "name": "Thái Bình/Trạm quan trắc khí tại Thái Thụy, Vietnam",
-        "lat": 20.461641,
-        "lng": 106.516972,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 4693,
-        "name": "Bangkok University Rangsit Campus, Pathum Thani, Thailand (มหาวิทยาลัยกรุงเทพ วิทยาเขตรังสิต)",
-        "lat": 14.03742,
-        "lng": 100.605216,
-        "country": "Thailand"
-    },
-    {
-        "uid": 8114,
-        "name": "Temburong, Brunei",
-        "lat": 4.6204128,
-        "lng": 115.141484,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 10481,
-        "name": "Pak Prak, Kanchanaburi, Kanchanaburi, Thailand (ต.ปากแพรก อ.เมือง จ.กาญจนบุรี)",
-        "lat": 14.022376,
-        "lng": 99.536195,
-        "country": "Thailand"
-    },
-    {
-        "uid": 1823,
-        "name": "Lampang Meteorological Station, Thailand (สถานีอุตุนิยมวิทยาลำปาง)",
-        "lat": 18.2783333,
-        "lng": 99.5064666,
-        "country": "Thailand"
-    },
-    {
-        "uid": 13647,
-        "name": "Malang, Indonesia",
-        "lat": -7.9551897,
-        "lng": 112.6119383,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 1849,
-        "name": "General Education Office, Chonburi, Thailand (สำนักงานสามัญศึกษาชลบุรี)",
-        "lat": 13.35461667,
-        "lng": 100.9792167,
-        "country": "Thailand"
-    },
-    {
-        "uid": 2618,
-        "name": "Kuala Selangor, Selangor, Malaysia",
-        "lat": 3.321308,
-        "lng": 101.256242,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2614,
-        "name": "Sarikei, Sarawak, Malaysia",
-        "lat": 2.132809,
-        "lng": 111.52287,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8289,
-        "name": "Jambi, Indonesia",
-        "lat": -1.6318964,
-        "lng": 103.6414547,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 10490,
-        "name": "Pangkalanbun, Indonesia",
-        "lat": -2.676583,
-        "lng": 111.626448,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8117,
-        "name": "Pekan Tutong, Brunei",
-        "lat": 4.8140524,
-        "lng": 114.6608562,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2595,
-        "name": "Kg. Air Putih, Taiping, Perak, Malaysia",
-        "lat": 4.89885,
-        "lng": 100.679106,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8342,
-        "name": "Palangka Raya, Indonesia",
-        "lat": -2.22611,
-        "lng": 113.945,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2615,
-        "name": "Sibu, Sarawak, Malaysia",
-        "lat": 2.314408,
-        "lng": 111.831916,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8287,
-        "name": "Medan, Indonesia",
-        "lat": 3.59,
-        "lng": 98.85,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 13645,
-        "name": "Kotabaru, Indonesia",
-        "lat": -3.3,
-        "lng": 116.17,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 1870,
-        "name": "Provincial Health Office, Loei, Thailand (สำนักงานสาธารณสุขจังหวัดเลย)",
-        "lat": 17.4525229,
-        "lng": 101.7272395,
-        "country": "Thailand"
-    },
-    {
-        "uid": 2607,
-        "name": "Bintulu, Sarawak, Malaysia",
-        "lat": 3.177084,
-        "lng": 113.041091,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2581,
-        "name": "Alor Setar, Kedah, Malaysia",
-        "lat": 6.137244,
-        "lng": 100.346815,
-        "country": "Thailand"
-    },
-    {
-        "uid": 9494,
-        "name": "Kluang, Johor, Malaysia",
-        "lat": 2.037882,
-        "lng": 103.312063,
-        "country": "Indonesia"
     },
     {
         "uid": 1868,
@@ -259,361 +322,39 @@
         "country": "Thailand"
     },
     {
-        "uid": 13630,
-        "name": "Meteorological stations, Nakhon Phanom, Thailand (สถานีอุตุนิยมวิทยานครพนม)",
-        "lat": 17.412345,
-        "lng": 104.7786123,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 1664,
-        "name": "East, Singapore",
-        "lat": 1.3645924,
-        "lng": 103.9477547,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8116,
-        "name": "Kuala Belait, Brunei",
-        "lat": 4.5831986,
-        "lng": 114.2212174,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2604,
-        "name": "Kota Kinabalu, Sabah, Malaysia",
-        "lat": 5.89372,
-        "lng": 116.04327,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 9496,
-        "name": "Rompin, Pahang, Malaysia",
-        "lat": 2.926645,
-        "lng": 103.419198,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8688,
-        "name": "United Nations International School of Hanoi, Vietnam (Trường Quốc tế Liên Hợp Quốc Hà Nội)",
-        "lat": 21.0811211,
-        "lng": 105.8180306,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 14903,
-        "name": "Talang Betutu Palembang, Indonesia",
-        "lat": -2.94,
-        "lng": 104.7,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2586,
-        "name": "Bandaraya Melaka, Melaka, Malaysia",
-        "lat": 2.190936,
-        "lng": 102.257058,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 13655,
-        "name": "Supadio, Indonesia",
-        "lat": -0.14,
-        "lng": 109.45,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2597,
-        "name": "Seri Manjung, Perak, Malaysia",
-        "lat": 4.200344,
-        "lng": 100.663358,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 1828,
-        "name": "Natural Resources and Environment Office, Chiangrai, Thailand (สำนักงานทรัพยากรธรรมชาติและสิ่งแวดล้อมจังหวัดเชียงราย)",
-        "lat": 19.909217,
-        "lng": 99.823467,
-        "country": "Thailand"
-    },
-    {
-        "uid": 2589,
-        "name": "Port Dickson, Negeri Sembilan, Malaysia",
-        "lat": 2.441383,
-        "lng": 101.866858,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8293,
-        "name": "Samarinda, Indonesia",
-        "lat": -0.4825,
-        "lng": 117.1563,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2611,
-        "name": "Limbang, Sarawak, Malaysia",
-        "lat": 4.758891,
-        "lng": 115.013667,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 5506,
-        "name": "Viet Tri, Vietnam (Tp Việt Trì)",
-        "lat": 21.33847,
-        "lng": 105.3673,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 2626,
-        "name": "Cheras,Kuala Lumpur, Wilayah Persekutuan, Malaysia",
-        "lat": 3.106236,
-        "lng": 101.717917,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 9013,
-        "name": "Mae Pa,Mae Sot,Tak, Thailand (ต.แม่ปะ อ.แม่สอด จ.ตาก)",
-        "lat": 16.734413,
-        "lng": 98.566961,
-        "country": "Thailand"
-    },
-    {
-        "uid": 2588,
-        "name": "Nilai, Negeri Sembilan, Malaysia",
-        "lat": 2.821692,
-        "lng": 101.811486,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8322,
-        "name": "Health Promotion Hospital Ban Khao Hin,Chonburi, Thailand (โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านเขาหิน ชลบุรี)",
-        "lat": 13.054551,
-        "lng": 101.098128,
-        "country": "Thailand"
-    },
-    {
-        "uid": 2627,
-        "name": "Labuan, Wilayah Persekutuan, Malaysia",
-        "lat": 5.298107,
-        "lng": 115.232106,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 9014,
-        "name": "Tha Tum, Si Maha Phot, Prachin Buri, Thailand (ต.ท่าตูม อ.ศรีมหาโพธิ จ.ปราจีนบุรี)",
-        "lat": 13.917563,
-        "lng": 101.590529,
-        "country": "Thailand"
-    },
-    {
-        "uid": 12797,
-        "name": "Nai Mueang,Mueang,Ubon Ratchathani , Thailand (ต.ในเมือง อ.เมือง จ.อุบลราชธานี)",
-        "lat": 15.245413,
-        "lng": 104.846219,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 13651,
-        "name": "Semarang, Indonesia",
-        "lat": -6.985,
-        "lng": 110.381,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 12796,
-        "name": "Lat Yai,Mueang,Samut Songkhram, Thailand (ต.ลาดใหญ่ อ.เมือง จ.สมุทรสงคราม)",
-        "lat": 13.428581,
-        "lng": 100.024664,
-        "country": "Thailand"
-    },
-    {
-        "uid": 1665,
-        "name": "West, Singapore",
-        "lat": 1.3880078,
-        "lng": 103.698064,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2623,
-        "name": "Kuala Terengganu, Terengganu, Malaysia",
-        "lat": 5.308094,
-        "lng": 103.120392,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 2606,
-        "name": "Tawau, Sabah, Malaysia",
-        "lat": 4.249786,
-        "lng": 117.935864,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 13631,
-        "name": "Meteorological stations, Sakon Nakhon, Thailand (สถานีอุตุนิยมวิทยาสกลนคร)",
-        "lat": 17.15662,
-        "lng": 104.133216,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 1830,
-        "name": "Phrae Meteorological Station, Thailand (สถานีอุตุนิยมวิทยาแพร่)",
-        "lat": 18.1283666,
-        "lng": 100.1624333,
-        "country": "Thailand"
+        "uid": 9499,
+        "name": "Kimanis, Sabah, Malaysia",
+        "lat": 5.538225,
+        "lng": 115.850556,
+        "country": "Malaysia"
     },
     {
         "uid": 9498,
         "name": "Besut, Terengganu, Malaysia",
         "lat": 5.748449,
         "lng": 102.515632,
-        "country": "Thailand"
+        "country": "Malaysia"
     },
     {
-        "uid": 10484,
-        "name": "Tangkak, Johor, Malaysia",
-        "lat": 2.294794,
-        "lng": 102.571595,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 9556,
-        "name": "Kota Bharu, Kelantan, Malaysia",
-        "lat": 6.147431,
-        "lng": 102.249236,
-        "country": "Thailand"
-    },
-    {
-        "uid": 14893,
-        "name": "Manila US Embassy, Philippines",
-        "lat": 14.57711,
-        "lng": 120.9778,
-        "country": "Philippines"
-    },
-    {
-        "uid": 13505,
-        "name": "Tanjung Harapan, Indonesia",
-        "lat": 2.83,
-        "lng": 117.36,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 9493,
-        "name": "Batu Pahat, Johor, Malaysia",
-        "lat": 1.919323,
-        "lng": 102.866618,
-        "country": "Indonesia"
+        "uid": 2581,
+        "name": "Alor Setar, Kedah, Malaysia",
+        "lat": 6.137244,
+        "lng": 100.346815,
+        "country": "Malaysia"
     },
     {
         "uid": 2593,
         "name": "Jerantut, Pahang, Malaysia",
         "lat": 3.94836,
         "lng": 102.366632,
-        "country": "Indonesia"
+        "country": "Malaysia"
     },
     {
-        "uid": 8324,
-        "name": "Health Promotion Hospital Sob Pad, Lampang, Thailand (โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านสบป้าด ลำปาง)",
-        "lat": 18.2508166,
-        "lng": 99.76395,
+        "uid": 12760,
+        "name": "Betong, Thailand (ต.เบตง อ.เบตง จ.ยะลา)",
+        "lat": 5.763873,
+        "lng": 101.067903,
         "country": "Thailand"
-    },
-    {
-        "uid": 2610,
-        "name": "Kuching, Sarawak, Malaysia",
-        "lat": 1.562229,
-        "lng": 110.388958,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 1825,
-        "name": "Nakhonsawan Irrigation , Nakhon Sawan, Thailand (โครงการชลประทานนครสวรรค์)",
-        "lat": 15.68623,
-        "lng": 100.110556,
-        "country": "Thailand"
-    },
-    {
-        "uid": 9497,
-        "name": "Temerloh, Pahang, Malaysia",
-        "lat": 3.471603,
-        "lng": 102.376406,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 13637,
-        "name": "Nong Prajak Public Park, Udon Thani, Thailand (สวนสาธารณะหนองประจักษ์ อุดรธานี)",
-        "lat": 17.414174,
-        "lng": 102.780926,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 1867,
-        "name": "Municipality Office, Nan, Thailand (สำนักงานเทศบาลเมืองน่าน)",
-        "lat": 18.7888833,
-        "lng": 100.7763166,
-        "country": "Thailand"
-    },
-    {
-        "uid": 9500,
-        "name": "Samalaju, Sarawak, Malaysia",
-        "lat": 3.537059,
-        "lng": 113.295168,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 3688,
-        "name": "Khonkaen, Thailand (ส่วนอุทกวิทยา สำนักงานทรัพยากรน้ำภาค 4 ขอนแก่น)",
-        "lat": 16.44538333,
-        "lng": 102.83525,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 2599,
-        "name": "Kangar, Perlis, Malaysia",
-        "lat": 6.429922,
-        "lng": 100.211069,
-        "country": "Thailand"
-    },
-    {
-        "uid": 2609,
-        "name": "Kapit, Sarawak, Malaysia",
-        "lat": 2.014498,
-        "lng": 112.92736,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 8292,
-        "name": "Banjarbaru, Indonesia",
-        "lat": -3.475,
-        "lng": 114.856,
-        "country": "Indonesia"
-    },
-    {
-        "uid": 13683,
-        "name": "Hưng Yên/Sở TNMT - 437 Nguyễn Văn Linh, Tp Hưng Yên, Vietnam",
-        "lat": 20.661683,
-        "lng": 106.058761,
-        "country": "Vietnam"
-    },
-    {
-        "uid": 13628,
-        "name": "Polytechnic College, Trang, Thailand (วิทยาลัยสารพัดช่างตรัง)",
-        "lat": 7.570238,
-        "lng": 99.588743,
-        "country": "Thailand"
-    },
-    {
-        "uid": 1832,
-        "name": "Maesai Health Office, Chiangrai, Thailand (สำนักงานสาธารณสุขอำเภอแม่สาย เชียงราย)",
-        "lat": 20.439944444444,
-        "lng": 99.913666666667,
-        "country": "Thailand"
-    },
-    {
-        "uid": 13662,
-        "name": "Trà Vinh/xã Dân Thành, TX Duyên Hải, Vietnam",
-        "lat": 9.599143,
-        "lng": 106.51985,
-        "country": "Vietnam"
     },
     {
         "uid": 1863,
@@ -623,17 +364,31 @@
         "country": "Thailand"
     },
     {
-        "uid": 5192,
-        "name": "Danzhou (儋州)",
-        "lat": 19.521134,
-        "lng": 109.580811,
-        "country": "Vietnam"
+        "uid": 1849,
+        "name": "General Education Office, Chonburi, Thailand (สำนักงานสามัญศึกษาชลบุรี)",
+        "lat": 13.35461667,
+        "lng": 100.9792167,
+        "country": "Thailand"
     },
     {
-        "uid": 13633,
-        "name": "Suphan Buri Provincial Central Stadium, Thailand (สนามกีฬากลางจังหวัดสุพรรณบุรี)",
-        "lat": 14.476214,
-        "lng": 100.086095,
+        "uid": 8114,
+        "name": "Temburong, Brunei",
+        "lat": 4.6204128,
+        "lng": 115.141484,
+        "country": "Brunei"
+    },
+    {
+        "uid": 2624,
+        "name": "Paka, Terengganu, Malaysia",
+        "lat": 4.598064,
+        "lng": 103.434819,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 13576,
+        "name": "Prachuap Khiri Khan - Gaia Station 10, Thailand",
+        "lat": 11.80027,
+        "lng": 99.790596,
         "country": "Thailand"
     },
     {
@@ -644,6 +399,104 @@
         "country": "Thailand"
     },
     {
+        "uid": 2578,
+        "name": "Larkin Lama, Johor, Malaysia",
+        "lat": 1.494625,
+        "lng": 103.735975,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 1827,
+        "name": "Municipal Health Center 1, Phuket, Thailand (ศูนย์บริการสาธารณสุข 1 กองการแพทย์ เทศบาลนครภูเก็ต)",
+        "lat": 7.884488,
+        "lng": 98.391283,
+        "country": "Thailand"
+    },
+    {
+        "uid": 13658,
+        "name": "Đà Nẵng/Hòa Thuận Tây, Hải Châu - KTTV - Trạm cảm biến, Vietnam",
+        "lat": 16.043252,
+        "lng": 108.206826,
+        "country": "Vietnam"
+    },
+    {
+        "uid": 2616,
+        "name": "Sri Aman, Sarawak, Malaysia",
+        "lat": 1.219656,
+        "lng": 111.464792,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 1870,
+        "name": "Provincial Health Office, Loei, Thailand (สำนักงานสาธารณสุขจังหวัดเลย)",
+        "lat": 17.4525229,
+        "lng": 101.7272395,
+        "country": "Thailand"
+    },
+    {
+        "uid": 1816,
+        "name": "Sukhothai Thammathirat Open University, Nonthaburi, Thailand (มหาวิทยาลัยสุโขทัยธรรมาธิราช)",
+        "lat": 13.907861,
+        "lng": 100.535641,
+        "country": "Thailand"
+    },
+    {
+        "uid": 1831,
+        "name": "Knowledge Park, Phayao, Thailand (อุทยานการเรียนรู้กว๊านพะเยา)",
+        "lat": 19.200226,
+        "lng": 99.893048,
+        "country": "Thailand"
+    },
+    {
+        "uid": 8117,
+        "name": "Pekan Tutong, Brunei",
+        "lat": 4.8140524,
+        "lng": 114.6608562,
+        "country": "Brunei"
+    },
+    {
+        "uid": 2594,
+        "name": "Jalan Tasek, Ipoh, Perak, Malaysia",
+        "lat": 4.629444,
+        "lng": 101.11665,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 12759,
+        "name": "Mueang, Nakhon Pathom, Thailand (ต.นครปฐม อ.เมือง จ.นครปฐม)",
+        "lat": 13.832076,
+        "lng": 100.057961,
+        "country": "Thailand"
+    },
+    {
+        "uid": 12795,
+        "name": "T.Meechai A.Muang Nongkhai Province, Thailand (ต.มีชัย อ.เมืองหนองคาย จ.หนองคาย)",
+        "lat": 17.87748,
+        "lng": 102.728925,
+        "country": "Thailand"
+    },
+    {
+        "uid": 1821,
+        "name": "Field Crop Research Center, Rayong, Thailand (ศูนย์วิจัยพืชไร่ระยอง)",
+        "lat": 12.73518333,
+        "lng": 101.13565,
+        "country": "Thailand"
+    },
+    {
+        "uid": 2607,
+        "name": "Bintulu, Sarawak, Malaysia",
+        "lat": 3.177084,
+        "lng": 113.041091,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 1817,
+        "name": "Na Phralan Police Station Saraburi, Thailand (สถานีตำรวจภูธรหน้าพระลาน สระบุรี)",
+        "lat": 14.685833,
+        "lng": 100.871996,
+        "country": "Thailand"
+    },
+    {
         "uid": 1829,
         "name": "Natural Resources and Environment Office, Mae Hongson, Thailand (สำนักงานทรัพยากรธรรมชาติและสิ่งแวดล้อมจังหวัดแม่ฮ่องสอน)",
         "lat": 19.30455,
@@ -651,52 +504,101 @@
         "country": "Thailand"
     },
     {
-        "uid": 13653,
-        "name": "Sleman, Indonesia",
-        "lat": -7.731,
-        "lng": 110.354,
-        "country": "Indonesia"
+        "uid": 2618,
+        "name": "Kuala Selangor, Selangor, Malaysia",
+        "lat": 3.321308,
+        "lng": 101.256242,
+        "country": "Malaysia"
     },
     {
-        "uid": 13659,
-        "name": "Tây Ninh/Thị xã Tràng Bảng, Vietnam",
-        "lat": 11.030287,
-        "lng": 106.35631,
-        "country": "Vietnam"
+        "uid": 2595,
+        "name": "Kg. Air Putih, Taiping, Perak, Malaysia",
+        "lat": 4.89885,
+        "lng": 100.679106,
+        "country": "Malaysia"
     },
     {
-        "uid": 6817,
-        "name": "City Hall, Chiangmai, Thailand (ศาลากลางเชียงใหม่)",
-        "lat": 18.840732,
-        "lng": 98.96978,
+        "uid": 2586,
+        "name": "Bandaraya Melaka, Melaka, Malaysia",
+        "lat": 2.190936,
+        "lng": 102.257058,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 2588,
+        "name": "Nilai, Negeri Sembilan, Malaysia",
+        "lat": 2.821692,
+        "lng": 101.811486,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 13629,
+        "name": "Elderly Health Rehabilitation Center, Thailand (ศูนย์ฟื้นฟูสุขภาพผู้สูงอายุ)",
+        "lat": 8.426923,
+        "lng": 99.961469,
         "country": "Thailand"
     },
     {
-        "uid": 2594,
-        "name": "Jalan Tasek, Ipoh, Perak, Malaysia",
-        "lat": 4.629444,
-        "lng": 101.11665,
-        "country": "Indonesia"
+        "uid": 5506,
+        "name": "Viet Tri, Vietnam (Tp Việt Trì)",
+        "lat": 21.33847,
+        "lng": 105.3673,
+        "country": "Vietnam"
     },
     {
-        "uid": 2603,
-        "name": "Keningau, Sabah, Malaysia",
-        "lat": 5.339317,
-        "lng": 116.163658,
-        "country": "Indonesia"
+        "uid": 13762,
+        "name": "Gia Lai/Phù Đổng, Thành phố Pleiku - KTTV - Trạm cảm biến, Vietnam",
+        "lat": 13.968848,
+        "lng": 108.017617,
+        "country": "Vietnam"
     },
     {
-        "uid": 8645,
-        "name": "Batam, Indonesia",
-        "lat": 1.124,
-        "lng": 104.126,
-        "country": "Indonesia"
+        "uid": 10481,
+        "name": "Pak Prak, Kanchanaburi, Kanchanaburi, Thailand (ต.ปากแพรก อ.เมือง จ.กาญจนบุรี)",
+        "lat": 14.022376,
+        "lng": 99.536195,
+        "country": "Thailand"
     },
     {
-        "uid": 2582,
-        "name": "Bakar Arang, Sg. Petani, Kedah, Malaysia",
-        "lat": 5.629631,
-        "lng": 100.467771,
+        "uid": 13630,
+        "name": "Meteorological stations, Nakhon Phanom, Thailand (สถานีอุตุนิยมวิทยานครพนม)",
+        "lat": 17.412345,
+        "lng": 104.7786123,
+        "country": "Thailand"
+    },
+    {
+        "uid": 2606,
+        "name": "Tawau, Sabah, Malaysia",
+        "lat": 4.249786,
+        "lng": 117.935864,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 1662,
+        "name": "North, Singapore",
+        "lat": 1.4296436,
+        "lng": 103.7960862,
+        "country": "Singapore"
+    },
+    {
+        "uid": 13631,
+        "name": "Meteorological stations, Sakon Nakhon, Thailand (สถานีอุตุนิยมวิทยาสกลนคร)",
+        "lat": 17.15662,
+        "lng": 104.133216,
+        "country": "Thailand"
+    },
+    {
+        "uid": 8322,
+        "name": "Health Promotion Hospital Ban Khao Hin,Chonburi, Thailand (โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านเขาหิน ชลบุรี)",
+        "lat": 13.054551,
+        "lng": 101.098128,
+        "country": "Thailand"
+    },
+    {
+        "uid": 8324,
+        "name": "Health Promotion Hospital Sob Pad, Lampang, Thailand (โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านสบป้าด ลำปาง)",
+        "lat": 18.2508166,
+        "lng": 99.76395,
         "country": "Thailand"
     },
     {
@@ -707,17 +609,87 @@
         "country": "Indonesia"
     },
     {
-        "uid": 1817,
-        "name": "Na Phralan Police Station Saraburi, Thailand (สถานีตำรวจภูธรหน้าพระลาน สระบุรี)",
-        "lat": 14.685833,
-        "lng": 100.871996,
+        "uid": 14641,
+        "name": "Thái Bình/Trạm quan trắc khí tại Thái Thụy, Vietnam",
+        "lat": 20.461641,
+        "lng": 106.516972,
+        "country": "Vietnam"
+    },
+    {
+        "uid": 9500,
+        "name": "Samalaju, Sarawak, Malaysia",
+        "lat": 3.537059,
+        "lng": 113.295168,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 2589,
+        "name": "Port Dickson, Negeri Sembilan, Malaysia",
+        "lat": 2.441383,
+        "lng": 101.866858,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 2599,
+        "name": "Kangar, Perlis, Malaysia",
+        "lat": 6.429922,
+        "lng": 100.211069,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 1823,
+        "name": "Lampang Meteorological Station, Thailand (สถานีอุตุนิยมวิทยาลำปาง)",
+        "lat": 18.2783333,
+        "lng": 99.5064666,
         "country": "Thailand"
     },
     {
-        "uid": 2605,
-        "name": "Sandakan, Sabah, Malaysia",
-        "lat": 5.864467,
-        "lng": 118.091089,
-        "country": "Indonesia"
+        "uid": 1828,
+        "name": "Natural Resources and Environment Office, Chiangrai, Thailand (สำนักงานทรัพยากรธรรมชาติและสิ่งแวดล้อมจังหวัดเชียงราย)",
+        "lat": 19.909217,
+        "lng": 99.823467,
+        "country": "Thailand"
+    },
+    {
+        "uid": 2600,
+        "name": "Perai, Pulau Pinang, Malaysia",
+        "lat": 5.329358,
+        "lng": 100.443475,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 5191,
+        "name": "Wuzhishan (五指山)",
+        "lat": 18.775147,
+        "lng": 109.516925,
+        "country": "Vietnam"
+    },
+    {
+        "uid": 6817,
+        "name": "City Hall, Chiangmai, Thailand (ศาลากลางเชียงใหม่)",
+        "lat": 18.840732,
+        "lng": 98.96978,
+        "country": "Thailand"
+    },
+    {
+        "uid": 2615,
+        "name": "Sibu, Sarawak, Malaysia",
+        "lat": 2.314408,
+        "lng": 111.831916,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 2612,
+        "name": "Miri, Sarawak, Malaysia",
+        "lat": 4.424679,
+        "lng": 114.012426,
+        "country": "Malaysia"
+    },
+    {
+        "uid": 2604,
+        "name": "Kota Kinabalu, Sabah, Malaysia",
+        "lat": 5.89372,
+        "lng": 116.04327,
+        "country": "Malaysia"
     }
 ]
