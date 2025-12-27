@@ -99,9 +99,9 @@ def crawler_task():
                 count = 0
                 for item in valid_data_batch:
                     cursor.execute('''
-                        INSERT OR IGNORE INTO measurements (station_uid, aqi, pm25, timestamp) 
-                        VALUES (?, ?, ?, ?)
-                    ''', (item['uid'], item['aqi'], item['pm25'], item['timestamp']))
+                        INSERT OR IGNORE INTO measurements (station_uid, station_name, aqi, pm25, timestamp) 
+                        VALUES (?, ?, ?, ?, ?)
+                    ''', (item['uid'], item['name'], item['aqi'], item['pm25'], item['timestamp']))
                     if cursor.rowcount > 0: 
                         count += 1
                         # Kiểm tra spike alert

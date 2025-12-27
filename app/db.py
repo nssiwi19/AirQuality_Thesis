@@ -46,10 +46,20 @@ def init_db():
         print("🗄️ [DB] Creating measurements table...")
         cursor.execute('''CREATE TABLE IF NOT EXISTS measurements (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            station_uid INTEGER, aqi INTEGER, pm25 REAL,
+            station_uid INTEGER, 
+            station_name TEXT,
+            aqi INTEGER, 
+            pm25 REAL,
             timestamp DATETIME,
             UNIQUE(station_uid, timestamp)
         )''')
+        
+        # Add station_name column if it doesn't exist (migration for existing DB)
+        try:
+            cursor.execute("ALTER TABLE measurements ADD COLUMN station_name TEXT")
+            print("🗄️ [DB] Added station_name column to existing table")
+        except sqlite3.OperationalError:
+            pass  # Column already exists
         
         print("🗄️ [DB] Creating alerts table...")
         cursor.execute('''CREATE TABLE IF NOT EXISTS alerts (
