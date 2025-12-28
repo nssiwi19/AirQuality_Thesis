@@ -1,0 +1,98 @@
+@startuml AirWatch_Sequence_Prediction
+
+!theme cerulean
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 11
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+
+title <b>BIỂU ĐỒ TUẦN TỰ - DỰ ĐOÁN AQI</b>\n<i>Sequence Diagram - AQI Prediction with Machine Learning</i>
+
+actor "Người dùng\n(User)" as User #LightBlue
+participant "Trình duyệt\n(Browser/PWA)" as Browser #LightGreen
+participant "FastAPI\nServer" as API #RoyalBlue
+participant "AQIPredictor\nService" as Predictor #Orange
+participant "Gradient\nBoosting Model" as ML #Purple
+database "SQLite\n(Measurements)" as DB #LightYellow
+database "Model Cache\n(Joblib Files)" as Cache #Pink
+
+== YÊU CẦU DỰ ĐOÁN ĐA BƯỚC ==
+
+User -> Browser: Xem dự đoán cho trạm
+activate Browser
+
+Browser -> API: GET /api/predictions/{uid}
+activate API
+
+API -> Predictor: predict_multi(uid, [1,6,12,24])
+activate Predictor
+
+Predictor -> DB: SELECT timestamp, aqi\nWHERE station_uid = {uid}\nORDER BY timestamp DESC\nLIMIT 168
+activate DB
+DB --> Predictor: DataFrame với 168 records
+deactivate DB
+
+alt Không đủ dữ liệu (< 1 record)
+    Predictor --> API: {"h": "Đang học..."}\ntrend="stable", confidence=0
+else Có ít dữ liệu (< 15 records)
+    Predictor -> Predictor: Fallback: Weighted Average\n70% current + 30% avg
+    Predictor -> Predictor: Điều chỉnh theo trend\nvà volatility
+    Predictor --> API: Predictions với\nconfidence thấp (< 40%)
+else Đủ dữ liệu (>= 15 records)
+    Predictor -> Predictor: Feature Engineering:\n- hour, day_of_week\n- is_weekend\n- lag_1, lag_3
+    
+    Predictor -> Predictor: _is_model_valid(uid)
+    
+    alt Model cache còn hợp lệ (< 24h)
+        Predictor -> Predictor: Lấy model từ memory
+    else Model cache hết hạn
+        Predictor -> Cache: _load_cached_model(uid)
+        activate Cache
+        Cache --> Predictor: Model hoặc null
+        deactivate Cache
+        
+        alt Không có cache
+            Predictor -> ML: GradientBoostingRegressor\nn_estimators=50, max_depth=3
+            activate ML
+            ML -> ML: model.fit(X, y)
+            ML --> Predictor: Trained model
+            deactivate ML
+            
+            Predictor -> Cache: _save_model(uid, model)
+            activate Cache
+            Cache --> Predictor: Model saved
+            deactivate Cache
+        end
+    end
+    
+    Predictor -> Predictor: Tính hourly_avg patterns
+    
+    loop Rolling Prediction cho [1h, 6h, 12h, 24h]
+        Predictor -> Predictor: Chuẩn bị input:\n[hour, weekday, weekend, lag1, lag3]
+        Predictor -> ML: model.predict([[...]])
+        activate ML
+        ML --> Predictor: raw_pred
+        deactivate ML
+        Predictor -> Predictor: Apply adjustments:\n- trend_adj\n- hour_pattern\n- uncertainty margin
+        Predictor -> Predictor: Cập nhật rolling lags\ncho bước tiếp theo
+    end
+    
+    Predictor -> Predictor: Tính confidence score\nmin(train_score * 100, 95)
+    
+    Predictor --> API: {predictions, trend, confidence}
+end
+
+deactivate Predictor
+
+API --> Browser: JSON Response:\n{uid, predictions, trend,\nconfidence, generated_at}
+
+deactivate API
+
+Browser -> Browser: Hiển thị predictions\ntrong popup/panel:\n- 1h: xxx AQI\n- 6h: xxx AQI\n- 12h: xxx AQI\n- 24h: xxx AQI
+
+Browser --> User: Thông tin dự đoán\nvới confidence level
+
+deactivate Browser
+
+@enduml

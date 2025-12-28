@@ -1566,6 +1566,11 @@
                     <label>Mật khẩu</label>
                     <input type="password" id="registerPassword" required placeholder="Tối thiểu 6 ký tự" minlength="6">
                 </div>
+                <div class="form-group">
+                    <label>Xác nhận mật khẩu</label>
+                    <input type="password" id="registerPasswordConfirm" required placeholder="Nhập lại mật khẩu"
+                        minlength="6">
+                </div>
                 <button type="submit" class="auth-btn" id="registerBtn">Tạo tài khoản</button>
             </form>
             <div class="auth-switch">
@@ -3029,8 +3034,16 @@
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
+            const passwordConfirm = document.getElementById('registerPasswordConfirm').value;
             const btn = document.getElementById('registerBtn');
             const errorDiv = document.getElementById('registerError');
+
+            // Validate password confirmation
+            if (password !== passwordConfirm) {
+                errorDiv.textContent = 'Mật khẩu xác nhận không khớp';
+                errorDiv.classList.add('show');
+                return;
+            }
 
             btn.disabled = true;
             btn.textContent = 'Đang tạo tài khoản...';

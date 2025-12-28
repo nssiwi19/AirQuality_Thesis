@@ -1,0 +1,91 @@
+@startuml AirWatch_Sequence_IDW
+
+!theme cerulean
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 11
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+
+title <b>BIỂU ĐỒ TUẦN TỰ - NỘI SUY IDW</b>\n<i>Sequence Diagram - Inverse Distance Weighting Interpolation</i>
+
+actor "Người dùng\n(User)" as User #LightBlue
+participant "Trình duyệt\n(Browser/PWA)" as Browser #LightGreen
+participant "Leaflet\nMap" as Map #YellowGreen
+participant "FastAPI\nServer" as API #RoyalBlue
+participant "IDWService" as IDW #Orange
+participant "OpenWeather\nAPI (Satellite)" as OWM #Purple
+database "SQLite\n(Measurements)" as DB #LightYellow
+
+== CLICK VÀO VỊ TRÍ BẤT KỲ ==
+
+User -> Map: Click vào điểm trên bản đồ\n(lat, lng)
+activate Map
+
+Map -> Browser: Click event với tọa độ
+activate Browser
+
+Browser -> API: GET /api/idw?lat={lat}&lng={lng}
+activate API
+
+API -> DB: Lấy AQI mới nhất từ tất cả stations
+activate DB
+DB --> API: List stations với AQI
+deactivate DB
+
+API -> IDW: idw_interpolate(lat, lng, stations, power=2)
+activate IDW
+
+IDW -> IDW: Khởi tạo:\nsum_weights = 0\nsum_values = 0\nmin_distance = infinity
+
+loop Với mỗi station
+    IDW -> IDW: haversine_km(lat, lng,\nstation_lat, station_lng)
+    note right: Tính khoảng cách\ntheo công thức Haversine
+    
+    IDW -> IDW: weight = 1 / (distance ^ power)
+    IDW -> IDW: sum_weights += weight\nsum_values += weight * aqi
+    
+    alt distance < min_distance
+        IDW -> IDW: min_distance = distance
+    end
+end
+
+IDW -> IDW: interpolated_aqi = sum_values / sum_weights
+
+IDW -> IDW: get_confidence_level(min_distance)
+note right
+    < 5km: "Cao" (High)
+    5-20km: "Trung bình" (Medium)
+    20-50km: "Thấp" (Low)
+    > 50km: "Rất thấp" (Very Low)
+end note
+
+alt Confidence = "Rất thấp" (> 50km)
+    IDW -> API: Trigger satellite fallback
+    
+    API -> OWM: GET /air_pollution?\nlat={lat}&lon={lng}\n&appid={key}
+    activate OWM
+    OWM --> API: {components: {pm2_5, pm10, ...}}
+    deactivate OWM
+    
+    API -> IDW: pm25_to_aqi(pm2_5)
+    IDW --> API: Satellite AQI
+    
+    API -> API: Kết hợp:\n70% IDW + 30% Satellite
+end
+
+IDW --> API: {aqi, confidence, distance,\nnearest_station, source}
+deactivate IDW
+
+API --> Browser: JSON Response:\n{estimated_aqi: 85,\nconfidence: "Trung bình",\nnearest_station: "Hanoi US Embassy",\ndistance_km: 12.5}
+deactivate API
+
+Browser -> Browser: Hiển thị popup tại vị trí:\n- AQI ước tính: 85\n- Mức tin cậy: Trung bình\n- Trạm gần nhất: 12.5km
+
+Browser -> Map: Marker tạm thời\nvới thông tin IDW
+Map --> User: Popup thông tin AQI\ncho vị trí được chọn
+
+deactivate Browser
+deactivate Map
+
+@enduml

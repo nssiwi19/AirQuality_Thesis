@@ -1,0 +1,94 @@
+@startuml AirWatch_Sequence_Crawler
+
+!theme cerulean
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 11
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+
+title <b>BIỂU ĐỒ TUẦN TỰ - THU THẬP DỮ LIỆU</b>\n<i>Sequence Diagram - Data Crawler (ETL Process)</i>
+
+participant "Background\nScheduler" as Scheduler #LightBlue
+participant "CrawlerService" as Crawler #LightGreen
+participant "ThreadPool\nExecutor" as Pool #YellowGreen
+participant "WAQI API\n(External)" as WAQI #Orange
+database "SQLite\n(Measurements)" as DB #LightYellow
+participant "Alert\nChecker" as Alert #Red
+
+== KHỞI ĐỘNG CRAWLER ==
+
+activate Scheduler
+Scheduler -> Crawler: crawler_task()
+activate Crawler
+
+loop Mỗi 5 phút (300 giây)
+    Crawler -> Crawler: Logging: "Scanning stations..."
+    
+    Crawler -> Pool: ThreadPoolExecutor(max_workers=10)
+    activate Pool
+    
+    Pool -> Pool: Chia STATIONS_CONFIG\nthành các batch
+    
+    par Parallel Fetch (10 threads)
+        Pool -> WAQI: GET /feed/@{uid}/?token={token}
+        activate WAQI
+        
+        WAQI -> WAQI: Validate token\nLấy dữ liệu realtime
+        
+        alt API Response OK
+            WAQI --> Pool: JSON:\n{status: "ok", data: {aqi, iaqi, time}}
+            Pool -> Pool: Parse response:\n- aqi (int)\n- pm25 (float)\n- timestamp (ISO)
+        else API Error
+            WAQI --> Pool: Error response
+            Pool -> Pool: Return null
+        end
+        
+        deactivate WAQI
+    end
+    
+    Pool --> Crawler: List[valid_data_batch]
+    deactivate Pool
+    
+    alt Có dữ liệu hợp lệ
+        Crawler -> DB: get_db_connection()
+        activate DB
+        
+        loop Với mỗi item trong batch
+            Crawler -> DB: INSERT OR IGNORE INTO measurements\n(station_uid, station_name, aqi, pm25, timestamp)
+            DB --> Crawler: rowcount
+            
+            alt Có record mới được thêm
+                Crawler -> Alert: check_spike_alert(uid, aqi)
+                activate Alert
+                
+                Alert -> DB: SELECT aqi FROM measurements\nWHERE station_uid=?\nORDER BY timestamp DESC\nLIMIT 3
+                DB --> Alert: Previous AQI values
+                
+                Alert -> Alert: Tính trung bình 2 records trước
+                
+                alt AQI tăng > 30% VÀ AQI > 100
+                    Alert -> DB: INSERT INTO alerts\n(station_uid, 'SPIKE', message, aqi_value)
+                    DB --> Alert: Alert created
+                    Alert -> Alert: Logging: "⚠️ SPIKE ALERT"
+                end
+                
+                deactivate Alert
+            end
+        end
+        
+        Crawler -> DB: commit()
+        DB --> Crawler: OK
+        deactivate DB
+        
+        Crawler -> Crawler: Logging: "Saved {count} new records"
+    end
+    
+    Crawler -> Scheduler: sleep(300)
+    note right: Chờ 5 phút\ntrước lần crawl tiếp
+end
+
+deactivate Crawler
+deactivate Scheduler
+
+@enduml

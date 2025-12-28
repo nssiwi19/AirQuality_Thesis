@@ -1,0 +1,61 @@
+@startuml AirWatch_Deployment_Architecture
+
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 11
+skinparam defaultFontColor #000000
+skinparam componentStyle rectangle
+
+title <b>KIẾN TRÚC TRIỂN KHAI - AIRWATCH ASEAN</b>
+
+' ========== ROW 1: CLIENTS ==========
+package "Client" #E6F3FF {
+    [PWA Web] as PWA #90EE90
+    [Android] as Android #90EE90
+    [iOS] as iOS #90EE90
+}
+
+' ========== ROW 2: INTERNET ==========
+cloud "Internet (HTTPS)" as Internet #B0E0E6
+
+' ========== ROW 3: BACKEND ==========
+package "Railway Cloud" #FFF0F5 {
+    [FastAPI Server] as API #ADD8E6
+    [Crawler] as Crawler #FFD700
+    [ML Predictor] as ML #DDA0DD
+    database "SQLite" as SQLite #FFD700
+    database "PostgreSQL" as PG #FFFFE0
+}
+
+' ========== ROW 4: EXTERNAL ==========
+package "External APIs" #F0FFF0 {
+    [WAQI API] as WAQI #FFB6C1
+    [OpenWeather] as OWM #E0FFFF
+}
+
+package "Map Tiles" #FFE4E1 {
+    [OpenStreetMap] as OSM #F5DEB3
+    [CartoDB] as Carto #FFFAF0
+}
+
+' ========== CONNECTIONS ==========
+PWA --> Internet
+Android --> Internet
+iOS --> Internet
+
+Internet --> API
+
+API --> SQLite
+API --> PG
+API --> ML
+
+Crawler --> WAQI
+Crawler --> SQLite
+
+ML --> SQLite
+ML --> OWM
+
+PWA --> OSM
+PWA --> Carto
+
+@enduml

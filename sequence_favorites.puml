@@ -1,0 +1,123 @@
+@startuml AirWatch_Sequence_Favorites
+
+!theme cerulean
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 11
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+
+title <b>BIỂU ĐỒ TUẦN TỰ - QUẢN LÝ ĐỊA ĐIỂM YÊU THÍCH</b>\n<i>Sequence Diagram - Favorite Locations Management</i>
+
+actor "Người dùng\n(User)" as User #LightBlue
+participant "Trình duyệt\n(Browser/PWA)" as Browser #LightGreen
+participant "FastAPI\nServer" as API #RoyalBlue
+participant "AuthService" as Auth #Orange
+database "PostgreSQL\n(Users DB)" as DB #LightYellow
+
+== XEM DANH SÁCH YÊU THÍCH ==
+
+User -> Browser: Mở trang "Vị trí yêu thích"
+activate Browser
+
+Browser -> API: GET /api/user/favorites\nHeader: Authorization: Bearer <token>
+activate API
+
+API -> Auth: require_auth(token)
+activate Auth
+Auth -> Auth: Decode & validate JWT
+Auth -> DB: Lấy User theo ID
+activate DB
+DB --> Auth: User object
+deactivate DB
+Auth --> API: Current User
+deactivate Auth
+
+API -> DB: SELECT * FROM favorite_locations\nWHERE user_id = {user.id}\nORDER BY created_at DESC
+activate DB
+DB --> API: List[FavoriteLocation]
+deactivate DB
+
+API --> Browser: JSON Array:\n[{id, name, lat, lng, created_at}]
+deactivate API
+
+Browser --> User: Hiển thị danh sách\nvị trí yêu thích
+
+deactivate Browser
+
+== THÊM VỊ TRÍ YÊU THÍCH ==
+
+User -> Browser: Click "Lưu vị trí" trên bản đồ
+activate Browser
+
+Browser -> Browser: Lấy tọa độ & tên vị trí
+
+Browser -> API: POST /api/user/favorites\nHeader: Authorization: Bearer <token>\n{name, lat, lng}
+activate API
+
+API -> Auth: require_auth(token)
+activate Auth
+Auth --> API: Current User
+deactivate Auth
+
+API -> API: Validate với\nFavoriteCreate schema
+
+API -> DB: Kiểm tra trùng lặp:\nSELECT * WHERE user_id=? AND lat=? AND lng=?
+activate DB
+DB --> API: Existing hoặc null
+deactivate DB
+
+alt Vị trí đã được lưu
+    API --> Browser: 400 Bad Request\n"Vị trí này đã được lưu"
+    Browser --> User: Hiển thị thông báo lỗi
+else Vị trí mới
+    API -> DB: INSERT INTO favorite_locations\n(user_id, name, lat, lng)
+    activate DB
+    DB --> API: New FavoriteLocation
+    deactivate DB
+    
+    API --> Browser: 200 OK\n{id, name, lat, lng, created_at}
+    Browser --> User: "Đã lưu vị trí yêu thích"
+end
+
+deactivate API
+deactivate Browser
+
+== XÓA VỊ TRÍ YÊU THÍCH ==
+
+User -> Browser: Click "Xóa" trên vị trí
+activate Browser
+
+Browser -> Browser: Xác nhận xóa
+
+Browser -> API: DELETE /api/user/favorites/{favorite_id}\nHeader: Authorization: Bearer <token>
+activate API
+
+API -> Auth: require_auth(token)
+activate Auth
+Auth --> API: Current User
+deactivate Auth
+
+API -> DB: SELECT * FROM favorite_locations\nWHERE id=? AND user_id=?
+activate DB
+DB --> API: Favorite hoặc null
+deactivate DB
+
+alt Không tìm thấy vị trí
+    API --> Browser: 404 Not Found\n"Không tìm thấy vị trí"
+    Browser --> User: Hiển thị lỗi
+else Tìm thấy
+    API -> DB: DELETE FROM favorite_locations\nWHERE id=?
+    activate DB
+    DB --> API: Deleted
+    deactivate DB
+    
+    API --> Browser: 200 OK\n"Đã xóa vị trí yêu thích"
+    Browser -> Browser: Cập nhật danh sách
+    Browser --> User: Vị trí đã được xóa
+end
+
+deactivate API
+deactivate Browser
+
+@enduml

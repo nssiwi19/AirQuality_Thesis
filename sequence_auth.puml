@@ -1,0 +1,140 @@
+@startuml AirWatch_Sequence_Authentication
+
+!theme cerulean
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 11
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+title <b>BIỂU ĐỒ TUẦN TỰ - XÁC THỰC NGƯỜI DÙNG</b>\n<i>Sequence Diagram - User Authentication</i>
+
+actor "Người dùng\n(User)" as User #LightBlue
+participant "Trình duyệt\n(Browser/PWA)" as Browser #LightGreen
+participant "FastAPI\nServer" as API #RoyalBlue
+participant "AuthService" as Auth #Orange
+database "PostgreSQL\n(Users DB)" as DB #LightYellow
+
+== ĐĂNG KÝ TÀI KHOẢN (Register) ==
+
+User -> Browser: Nhập thông tin đăng ký\n(email, password, name)
+activate Browser
+
+Browser -> API: POST /api/auth/register\n{email, password, name}
+activate API
+
+API -> API: Validate với\nPydantic Schema
+
+API -> DB: Kiểm tra email tồn tại
+activate DB
+DB --> API: Kết quả kiểm tra
+deactivate DB
+
+alt Email đã tồn tại
+    API --> Browser: 400 Bad Request\n"Email đã được sử dụng"
+    Browser --> User: Hiển thị lỗi
+else Email hợp lệ
+    API -> Auth: hash_password(password)
+    activate Auth
+    Auth --> API: Password hash (bcrypt)
+    deactivate Auth
+    
+    API -> DB: INSERT User
+    activate DB
+    DB --> API: User created
+    deactivate DB
+    
+    API -> Auth: create_access_token({sub: user_id})
+    activate Auth
+    Auth --> API: JWT Token
+    deactivate Auth
+    
+    API --> Browser: 200 OK\n{access_token, user}
+end
+
+Browser -> Browser: Lưu token vào\nlocalStorage
+Browser --> User: Chuyển đến trang chính
+
+deactivate API
+deactivate Browser
+
+== ĐĂNG NHẬP (Login) ==
+
+User -> Browser: Nhập email và password
+activate Browser
+
+Browser -> API: POST /api/auth/login\n{email, password}
+activate API
+
+API -> DB: Tìm User theo email
+activate DB
+DB --> API: User hoặc null
+deactivate DB
+
+alt Không tìm thấy User
+    API --> Browser: 401 Unauthorized\n"Email hoặc mật khẩu không đúng"
+    Browser --> User: Hiển thị lỗi
+else Tìm thấy User
+    API -> Auth: verify_password(input, hash)
+    activate Auth
+    Auth --> API: true/false
+    deactivate Auth
+    
+    alt Password không đúng
+        API --> Browser: 401 Unauthorized
+        Browser --> User: Hiển thị lỗi
+    else Password đúng
+        API -> API: Kiểm tra is_active
+        
+        alt Tài khoản bị khóa
+            API --> Browser: 403 Forbidden\n"Tài khoản đã bị khóa"
+            Browser --> User: Hiển thị lỗi
+        else Tài khoản hoạt động
+            API -> Auth: create_access_token({sub: user_id})
+            activate Auth
+            Auth --> API: JWT Token
+            deactivate Auth
+            
+            API --> Browser: 200 OK\n{access_token, user}
+            Browser -> Browser: Lưu token vào\nlocalStorage
+            Browser --> User: Đăng nhập thành công
+        end
+    end
+end
+
+deactivate API
+deactivate Browser
+
+== XÁC THỰC TOKEN (Authenticated Request) ==
+
+User -> Browser: Truy cập trang cá nhân
+activate Browser
+
+Browser -> API: GET /api/auth/me\nHeader: Authorization: Bearer <token>
+activate API
+
+API -> Auth: decode_token(token)
+activate Auth
+Auth -> Auth: jwt.decode()\nKiểm tra signature & expiry
+Auth --> API: payload hoặc error
+deactivate Auth
+
+alt Token không hợp lệ
+    API --> Browser: 401 Unauthorized
+    Browser --> User: Chuyển đến trang login
+else Token hợp lệ
+    API -> DB: Lấy User theo ID
+    activate DB
+    DB --> API: User data
+    deactivate DB
+    
+    API --> Browser: 200 OK\n{UserResponse}
+    Browser --> User: Hiển thị thông tin
+end
+
+deactivate API
+deactivate Browser
+
+@enduml

@@ -1,0 +1,97 @@
+@startuml AirWatch_Sequence_Stations
+
+!theme cerulean
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 11
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+
+title <b>BIỂU ĐỒ TUẦN TỰ - XEM THÔNG TIN TRẠM QUAN TRẮC</b>\n<i>Sequence Diagram - View Station Information</i>
+
+actor "Người dùng\n(User)" as User #LightBlue
+participant "Trình duyệt\n(Browser/PWA)" as Browser #LightGreen
+participant "Leaflet\nMap" as Map #YellowGreen
+participant "FastAPI\nServer" as API #RoyalBlue
+participant "AQIPredictor\nService" as Predictor #Orange
+database "SQLite\n(Measurements)" as DB #LightYellow
+
+== TẢI DANH SÁCH TRẠM ==
+
+User -> Browser: Mở ứng dụng AirWatch
+activate Browser
+
+Browser -> Browser: Khởi tạo Leaflet Map\nvới tile layer
+
+Browser -> API: GET /api/stations
+activate API
+
+API -> DB: Lấy AQI mới nhất mỗi trạm\n(JOIN với MAX timestamp)
+activate DB
+DB --> API: Danh sách measurements
+deactivate DB
+
+loop Với mỗi trạm trong STATIONS_CONFIG
+    API -> Predictor: predict_multi(uid, [1,6,12,24])
+    activate Predictor
+    Predictor -> DB: Lấy 168 records gần nhất
+    activate DB
+    DB --> Predictor: Historical data
+    deactivate DB
+    Predictor -> Predictor: Phân tích xu hướng
+    Predictor -> Predictor: Train/Load ML model
+    Predictor --> API: {predictions, trend, confidence}
+    deactivate Predictor
+end
+
+API --> Browser: JSON Array với\nAQI + predictions cho mỗi trạm
+
+deactivate API
+
+Browser -> Map: Thêm markers cho mỗi trạm\nvới màu theo mức AQI
+activate Map
+Map --> Browser: Markers displayed
+deactivate Map
+
+Browser --> User: Hiển thị bản đồ\nvới các trạm quan trắc
+
+deactivate Browser
+
+== XEM CHI TIẾT TRẠM ==
+
+User -> Map: Click vào marker trạm
+activate Map
+
+Map -> Browser: Trigger popup event
+activate Browser
+
+Browser -> Browser: Hiển thị popup với:\n- Tên trạm\n- AQI hiện tại\n- PM2.5\n- Dự đoán 1h, 6h, 12h, 24h\n- Xu hướng
+
+Browser --> User: Popup với thông tin chi tiết
+
+deactivate Browser
+deactivate Map
+
+== XEM LỊCH SỬ TRẠM ==
+
+User -> Browser: Click "Xem lịch sử"
+activate Browser
+
+Browser -> API: GET /api/history/{uid}?limit=24
+activate API
+
+API -> DB: SELECT aqi, pm25, timestamp\nORDER BY timestamp DESC\nLIMIT 24
+activate DB
+DB --> API: Dữ liệu lịch sử 24h
+deactivate DB
+
+API --> Browser: JSON Array lịch sử
+
+deactivate API
+
+Browser -> Browser: Vẽ biểu đồ Chart.js\nAQI theo thời gian
+Browser --> User: Hiển thị biểu đồ lịch sử
+
+deactivate Browser
+
+@enduml
