@@ -1662,6 +1662,22 @@
             </div>
 
             <div class="toggle-group">
+                <div class="toggle-item" onclick="document.getElementById('idwToggle').click()">
+                    <div class="toggle-info">
+                        <div class="toggle-icon idw"><i class="fas fa-layer-group"></i></div><span
+                            class="toggle-text">Bản đồ IDW Heatmap</span>
+                    </div>
+                    <label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="idwToggle"
+                            checked onchange="toggleIDWLayer()"><span class="switch-slider"></span></label>
+                </div>
+                <div class="opacity-control active" id="idwOpacityControl">
+                    <div class="opacity-label">
+                        <span>Độ trong suốt</span>
+                        <span id="idwOpacityValue">60%</span>
+                    </div>
+                    <input type="range" class="opacity-slider" min="0.1" max="1" step="0.1" value="0.6"
+                        onchange="updateIDWOpacity(this.value)" oninput="updateIDWOpacity(this.value)">
+                </div>
                 <div class="toggle-item" onclick="document.getElementById('aiToggle').click()">
                     <div class="toggle-info">
                         <div class="toggle-icon ai"><i class="fas fa-brain"></i></div><span class="toggle-text">Chế độ
@@ -1709,6 +1725,255 @@
         let locationMarker = null;
         let selectedStation = null;
         let weatherCache = {};
+        let idwCanvasLayer = null;
+        let idwEnabled = true;
+        let idwOpacity = 0.6;
+
+        // ===== IDW CANVAS LAYER =====
+        class IDWCanvasLayer {
+            constructor(map, stations, options = {}) {
+                this.map = map;
+                this.stations = stations;
+                this.power = options.power || 2;
+                this.opacity = options.opacity || 0.6;
+                this.resolution = options.resolution || 4; // pixels per calculation
+                this.maxDistance = options.maxDistance || 800; // km
+                this.canvas = null;
+                this.ctx = null;
+                this.bounds = null;
+                this.visible = true;
+            }
+
+            init() {
+                // Create canvas overlay
+                this.canvas = document.createElement('canvas');
+                this.canvas.style.position = 'absolute';
+                this.canvas.style.top = '0';
+                this.canvas.style.left = '0';
+                this.canvas.style.pointerEvents = 'none';
+                this.canvas.style.opacity = this.opacity;
+                this.canvas.style.zIndex = '400';
+                this.canvas.id = 'idw-canvas';
+
+                const mapContainer = this.map.getContainer();
+                mapContainer.appendChild(this.canvas);
+
+                this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+
+                // Resize canvas
+                this.resize();
+
+                // Event handlers
+                this.map.on('moveend', () => this.render());
+                this.map.on('zoomend', () => this.render());
+                this.map.on('resize', () => { this.resize(); this.render(); });
+
+                // Initial render
+                this.render();
+            }
+
+            resize() {
+                const mapContainer = this.map.getContainer();
+                this.canvas.width = mapContainer.clientWidth;
+                this.canvas.height = mapContainer.clientHeight;
+            }
+
+            getAQIColor(aqi) {
+                // US EPA AQI color scale with smooth gradients
+                if (aqi <= 50) {
+                    const ratio = aqi / 50;
+                    return { r: 0, g: Math.round(228 + (0 - 228) * ratio * 0.2), b: 0 }; // Green
+                }
+                if (aqi <= 100) {
+                    const ratio = (aqi - 50) / 50;
+                    return { r: Math.round(255), g: Math.round(255 - 80 * ratio), b: 0 }; // Yellow to Orange
+                }
+                if (aqi <= 150) {
+                    const ratio = (aqi - 100) / 50;
+                    return { r: 255, g: Math.round(175 - 80 * ratio), b: 0 }; // Orange
+                }
+                if (aqi <= 200) {
+                    const ratio = (aqi - 150) / 50;
+                    return { r: 255, g: Math.round(95 - 95 * ratio), b: 0 }; // Red
+                }
+                if (aqi <= 300) {
+                    const ratio = (aqi - 200) / 100;
+                    return { r: Math.round(255 - 112 * ratio), g: 0, b: Math.round(128 * ratio) }; // Purple
+                }
+                return { r: 128, g: 0, b: 35 }; // Maroon
+            }
+
+            haversine(lat1, lng1, lat2, lng2) {
+                const R = 6371;
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLon = (lng2 - lng1) * Math.PI / 180;
+                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            }
+
+            calculateIDW(lat, lng) {
+                let numerator = 0;
+                let denominator = 0;
+                let minDist = Infinity;
+
+                for (const st of this.stations) {
+                    if (typeof st.aqi !== 'number' || isNaN(st.aqi)) continue;
+
+                    const dist = this.haversine(lat, lng, st.lat, st.lng);
+                    if (dist > this.maxDistance) continue;
+
+                    if (dist < 1) return st.aqi; // Very close
+
+                    const weight = 1 / Math.pow(dist, this.power);
+                    numerator += st.aqi * weight;
+                    denominator += weight;
+                    minDist = Math.min(minDist, dist);
+                }
+
+                if (denominator === 0) return null;
+                return numerator / denominator;
+            }
+
+            render() {
+                if (!this.visible || !this.stations || this.stations.length === 0) {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    return;
+                }
+
+                const validStations = this.stations.filter(s => typeof s.aqi === 'number' && !isNaN(s.aqi));
+                if (validStations.length === 0) {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    return;
+                }
+
+                const bounds = this.map.getBounds();
+                const width = this.canvas.width;
+                const height = this.canvas.height;
+
+                // Create image data
+                const imageData = this.ctx.createImageData(width, height);
+                const data = imageData.data;
+
+                // Calculate for each pixel (use resolution for performance)
+                for (let y = 0; y < height; y += this.resolution) {
+                    for (let x = 0; x < width; x += this.resolution) {
+                        // Convert pixel to lat/lng
+                        const point = this.map.containerPointToLatLng([x, y]);
+                        const lat = point.lat;
+                        const lng = point.lng;
+
+                        const aqi = this.calculateIDW(lat, lng);
+
+                        if (aqi !== null) {
+                            const color = this.getAQIColor(aqi);
+
+                            // Fill block of pixels
+                            for (let dy = 0; dy < this.resolution && y + dy < height; dy++) {
+                                for (let dx = 0; dx < this.resolution && x + dx < width; dx++) {
+                                    const idx = ((y + dy) * width + (x + dx)) * 4;
+                                    data[idx] = color.r;
+                                    data[idx + 1] = color.g;
+                                    data[idx + 2] = color.b;
+                                    data[idx + 3] = 180; // Semi-transparent
+                                }
+                            }
+                        }
+                    }
+                }
+
+                this.ctx.putImageData(imageData, 0, 0);
+
+                // Apply Gaussian blur for smoother appearance
+                this.ctx.filter = 'blur(8px)';
+                this.ctx.drawImage(this.canvas, 0, 0);
+                this.ctx.filter = 'none';
+            }
+
+            updateStations(stations) {
+                this.stations = stations;
+                this.render();
+            }
+
+            setOpacity(opacity) {
+                this.opacity = opacity;
+                this.canvas.style.opacity = opacity;
+            }
+
+            show() {
+                this.visible = true;
+                this.canvas.style.display = 'block';
+                this.render();
+            }
+
+            hide() {
+                this.visible = false;
+                this.canvas.style.display = 'none';
+            }
+
+            toggle() {
+                if (this.visible) {
+                    this.hide();
+                } else {
+                    this.show();
+                }
+                return this.visible;
+            }
+
+            destroy() {
+                if (this.canvas && this.canvas.parentNode) {
+                    this.canvas.parentNode.removeChild(this.canvas);
+                }
+            }
+        }
+
+        // Initialize IDW layer function
+        function initIDWLayer() {
+            if (idwCanvasLayer) {
+                idwCanvasLayer.destroy();
+            }
+            idwCanvasLayer = new IDWCanvasLayer(map, allStations, {
+                power: 2,
+                opacity: idwOpacity,
+                resolution: 6,
+                maxDistance: 500
+            });
+            idwCanvasLayer.init();
+            console.log('🗺️ IDW Canvas Layer initialized');
+        }
+
+        // Toggle IDW layer
+        function toggleIDWLayer() {
+            const checkbox = document.getElementById('idwToggle');
+            const opacityControl = document.getElementById('idwOpacityControl');
+
+            if (checkbox && checkbox.checked) {
+                if (!idwCanvasLayer) {
+                    initIDWLayer();
+                } else {
+                    idwCanvasLayer.show();
+                }
+                if (opacityControl) opacityControl.classList.add('active');
+                idwEnabled = true;
+            } else {
+                if (idwCanvasLayer) {
+                    idwCanvasLayer.hide();
+                }
+                if (opacityControl) opacityControl.classList.remove('active');
+                idwEnabled = false;
+            }
+        }
+
+        // Update IDW opacity
+        function updateIDWOpacity(value) {
+            idwOpacity = parseFloat(value);
+            const label = document.getElementById('idwOpacityValue');
+            if (label) label.textContent = Math.round(idwOpacity * 100) + '%';
+            if (idwCanvasLayer) {
+                idwCanvasLayer.setOpacity(idwOpacity);
+            }
+        }
 
         // ===== AQI STATUS MAPPING =====
         function getAQIStatus(aqi) {
@@ -2399,6 +2664,16 @@
                 renderMap(allStations);
                 updateRanking(allStations);
                 populateStationSelector(allStations);
+
+                // Initialize IDW layer with new station data
+                if (idwEnabled) {
+                    if (idwCanvasLayer) {
+                        idwCanvasLayer.updateStations(allStations);
+                    } else {
+                        initIDWLayer();
+                    }
+                }
+
                 document.getElementById('loadingOverlay').style.display = 'none';
                 showToast('✅ Dữ liệu đã cập nhật!');
             } catch (e) {
