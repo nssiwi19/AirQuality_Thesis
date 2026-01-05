@@ -190,6 +190,10 @@ def crawler_task():
     """Background task to periodically fetch AQI data from all stations"""
     logging.info(">>> Crawler started...")
     
+    # Wait 30 seconds before first fetch (allow health check to pass)
+    logging.info("⏳ Waiting 30s for app to fully start...")
+    time.sleep(30)
+    
     # Count stations by source
     waqi_count = len([s for s in STATIONS_CONFIG if s.get('source') not in ['iqair', 'openweathermap']])
     iqair_count = len([s for s in STATIONS_CONFIG if s.get('source') == 'iqair'])
