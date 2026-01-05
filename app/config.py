@@ -17,11 +17,15 @@ if not WAQI_TOKEN:
     logging.warning("⚠️ WAQI_TOKEN not set in environment! AQI data will not load.")
 
 # OpenWeatherMap API config
-OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY", "")
+OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY", "eda5937f0d0d0c56547e6a213b079db1")
 
 # OpenAQ API config (satellite fallback)
 OPENAQ_API_KEY = os.getenv("OPENAQ_API_KEY", "")
-SATELLITE_ENABLED = bool(OPENWEATHER_API_KEY) or bool(OPENAQ_API_KEY)
+
+# IQAir API config (ASEAN stations)
+IQAIR_API_KEY = os.getenv("IQAIR_API_KEY", "b40d772a-7243-457f-ad6f-62e220841057")
+
+SATELLITE_ENABLED = bool(OPENWEATHER_API_KEY) or bool(OPENAQ_API_KEY) or bool(IQAIR_API_KEY)
 
 
 def load_stations_config():

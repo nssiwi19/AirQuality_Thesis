@@ -691,5 +691,2205 @@
         "lat": 5.89372,
         "lng": 116.04327,
         "country": "Malaysia"
+    },
+    {
+        "uid": "iqair_da_nang",
+        "name": "Da Nang, Vietnam (IQAir)",
+        "lat": 16.048587,
+        "lng": 108.207097,
+        "country": "Vietnam",
+        "source": "iqair"
+    },
+    {
+        "uid": "owm_jakarta",
+        "name": "Jakarta, Indonesia (OWM Satellite)",
+        "lat": -6.2088,
+        "lng": 106.8456,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_surabaya",
+        "name": "Surabaya, Indonesia (OWM Satellite)",
+        "lat": -7.2575,
+        "lng": 112.7521,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bandung",
+        "name": "Bandung, Indonesia (OWM Satellite)",
+        "lat": -6.9175,
+        "lng": 107.6191,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_medan",
+        "name": "Medan, Indonesia (OWM Satellite)",
+        "lat": 3.5952,
+        "lng": 98.6722,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_semarang",
+        "name": "Semarang, Indonesia (OWM Satellite)",
+        "lat": -6.9666,
+        "lng": 110.4196,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_makassar",
+        "name": "Makassar, Indonesia (OWM Satellite)",
+        "lat": -5.1477,
+        "lng": 119.4327,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_palembang",
+        "name": "Palembang, Indonesia (OWM Satellite)",
+        "lat": -2.9761,
+        "lng": 104.7754,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_denpasar",
+        "name": "Denpasar, Indonesia (OWM Satellite)",
+        "lat": -8.6705,
+        "lng": 115.2126,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_yogyakarta",
+        "name": "Yogyakarta, Indonesia (OWM Satellite)",
+        "lat": -7.7956,
+        "lng": 110.3695,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_balikpapan",
+        "name": "Balikpapan, Indonesia (OWM Satellite)",
+        "lat": -1.2654,
+        "lng": 116.8311,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pontianak",
+        "name": "Pontianak, Indonesia (OWM Satellite)",
+        "lat": -0.0263,
+        "lng": 109.3425,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_manado",
+        "name": "Manado, Indonesia (OWM Satellite)",
+        "lat": 1.4748,
+        "lng": 124.8421,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_quezon_city",
+        "name": "Quezon City, Philippines (OWM Satellite)",
+        "lat": 14.676,
+        "lng": 121.0437,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_davao",
+        "name": "Davao, Philippines (OWM Satellite)",
+        "lat": 7.1907,
+        "lng": 125.4553,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_cebu_city",
+        "name": "Cebu City, Philippines (OWM Satellite)",
+        "lat": 10.3157,
+        "lng": 123.8854,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_zamboanga",
+        "name": "Zamboanga, Philippines (OWM Satellite)",
+        "lat": 6.9214,
+        "lng": 122.079,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_cagayan_de_oro",
+        "name": "Cagayan de Oro, Philippines (OWM Satellite)",
+        "lat": 8.4542,
+        "lng": 124.6319,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_iloilo_city",
+        "name": "Iloilo City, Philippines (OWM Satellite)",
+        "lat": 10.7202,
+        "lng": 122.5621,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_yangon",
+        "name": "Yangon, Myanmar (OWM Satellite)",
+        "lat": 16.8661,
+        "lng": 96.1951,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_mandalay",
+        "name": "Mandalay, Myanmar (OWM Satellite)",
+        "lat": 21.9588,
+        "lng": 96.0891,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_naypyidaw",
+        "name": "Naypyidaw, Myanmar (OWM Satellite)",
+        "lat": 19.7633,
+        "lng": 96.0785,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_mawlamyine",
+        "name": "Mawlamyine, Myanmar (OWM Satellite)",
+        "lat": 16.4905,
+        "lng": 97.6256,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_phnom_penh",
+        "name": "Phnom Penh, Cambodia (OWM Satellite)",
+        "lat": 11.5564,
+        "lng": 104.9282,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_siem_reap",
+        "name": "Siem Reap, Cambodia (OWM Satellite)",
+        "lat": 13.3671,
+        "lng": 103.8448,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_battambang",
+        "name": "Battambang, Cambodia (OWM Satellite)",
+        "lat": 13.0957,
+        "lng": 103.2022,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sihanoukville",
+        "name": "Sihanoukville, Cambodia (OWM Satellite)",
+        "lat": 10.6093,
+        "lng": 103.5296,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_vientiane",
+        "name": "Vientiane, Laos (OWM Satellite)",
+        "lat": 17.9757,
+        "lng": 102.6331,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_luang_prabang",
+        "name": "Luang Prabang, Laos (OWM Satellite)",
+        "lat": 19.8833,
+        "lng": 102.1333,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_savannakhet",
+        "name": "Savannakhet, Laos (OWM Satellite)",
+        "lat": 16.5573,
+        "lng": 104.7519,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pakse",
+        "name": "Pakse, Laos (OWM Satellite)",
+        "lat": 15.12,
+        "lng": 105.7833,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_vinh",
+        "name": "Vinh, Vietnam (OWM Satellite)",
+        "lat": 18.6796,
+        "lng": 105.6813,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_quy_nhon",
+        "name": "Quy Nhon, Vietnam (OWM Satellite)",
+        "lat": 13.783,
+        "lng": 109.2197,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_buon_ma_thuot",
+        "name": "Buon Ma Thuot, Vietnam (OWM Satellite)",
+        "lat": 12.6676,
+        "lng": 108.0383,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_rach_gia",
+        "name": "Rach Gia, Vietnam (OWM Satellite)",
+        "lat": 10.0125,
+        "lng": 105.0809,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_khon_kaen",
+        "name": "Khon Kaen, Thailand (OWM Satellite)",
+        "lat": 16.4322,
+        "lng": 102.8236,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_udon_thani",
+        "name": "Udon Thani, Thailand (OWM Satellite)",
+        "lat": 17.4156,
+        "lng": 102.7872,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_hat_yai",
+        "name": "Hat Yai, Thailand (OWM Satellite)",
+        "lat": 7.0086,
+        "lng": 100.4747,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_jakarta_utara",
+        "name": "Jakarta Utara, Indonesia (OWM Satellite)",
+        "lat": -6.1384,
+        "lng": 106.8633,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_jakarta_selatan",
+        "name": "Jakarta Selatan, Indonesia (OWM Satellite)",
+        "lat": -6.2615,
+        "lng": 106.8106,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tangerang",
+        "name": "Tangerang, Indonesia (OWM Satellite)",
+        "lat": -6.1783,
+        "lng": 106.6319,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bekasi",
+        "name": "Bekasi, Indonesia (OWM Satellite)",
+        "lat": -6.2349,
+        "lng": 107.0036,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_depok",
+        "name": "Depok, Indonesia (OWM Satellite)",
+        "lat": -6.4025,
+        "lng": 106.7942,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bogor",
+        "name": "Bogor, Indonesia (OWM Satellite)",
+        "lat": -6.5971,
+        "lng": 106.806,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_cirebon",
+        "name": "Cirebon, Indonesia (OWM Satellite)",
+        "lat": -6.732,
+        "lng": 108.5523,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tasikmalaya",
+        "name": "Tasikmalaya, Indonesia (OWM Satellite)",
+        "lat": -7.3274,
+        "lng": 108.2207,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_surakarta",
+        "name": "Surakarta, Indonesia (OWM Satellite)",
+        "lat": -7.5755,
+        "lng": 110.8243,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_malang",
+        "name": "Malang, Indonesia (OWM Satellite)",
+        "lat": -7.9786,
+        "lng": 112.6304,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kediri",
+        "name": "Kediri, Indonesia (OWM Satellite)",
+        "lat": -7.8161,
+        "lng": 112.0185,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_madiun",
+        "name": "Madiun, Indonesia (OWM Satellite)",
+        "lat": -7.6298,
+        "lng": 111.523,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pekanbaru",
+        "name": "Pekanbaru, Indonesia (OWM Satellite)",
+        "lat": 0.5071,
+        "lng": 101.4478,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_padang",
+        "name": "Padang, Indonesia (OWM Satellite)",
+        "lat": -0.9471,
+        "lng": 100.4172,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_jambi",
+        "name": "Jambi, Indonesia (OWM Satellite)",
+        "lat": -1.5896,
+        "lng": 103.6134,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bandar_lampung",
+        "name": "Bandar Lampung, Indonesia (OWM Satellite)",
+        "lat": -5.4295,
+        "lng": 105.261,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bengkulu",
+        "name": "Bengkulu, Indonesia (OWM Satellite)",
+        "lat": -3.7928,
+        "lng": 102.2608,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_batam",
+        "name": "Batam, Indonesia (OWM Satellite)",
+        "lat": 1.0456,
+        "lng": 104.0305,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_samarinda",
+        "name": "Samarinda, Indonesia (OWM Satellite)",
+        "lat": -0.4948,
+        "lng": 117.1436,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_banjarmasin",
+        "name": "Banjarmasin, Indonesia (OWM Satellite)",
+        "lat": -3.3194,
+        "lng": 114.5908,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tarakan",
+        "name": "Tarakan, Indonesia (OWM Satellite)",
+        "lat": 3.3005,
+        "lng": 117.5893,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_palangkaraya",
+        "name": "Palangkaraya, Indonesia (OWM Satellite)",
+        "lat": -2.2136,
+        "lng": 113.9108,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_palu",
+        "name": "Palu, Indonesia (OWM Satellite)",
+        "lat": -0.9002,
+        "lng": 119.8779,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kendari",
+        "name": "Kendari, Indonesia (OWM Satellite)",
+        "lat": -3.9985,
+        "lng": 122.5129,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_gorontalo",
+        "name": "Gorontalo, Indonesia (OWM Satellite)",
+        "lat": 0.5435,
+        "lng": 123.0568,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ambon",
+        "name": "Ambon, Indonesia (OWM Satellite)",
+        "lat": -3.6954,
+        "lng": 128.1814,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_jayapura",
+        "name": "Jayapura, Indonesia (OWM Satellite)",
+        "lat": -2.5337,
+        "lng": 140.7181,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sorong",
+        "name": "Sorong, Indonesia (OWM Satellite)",
+        "lat": -0.8762,
+        "lng": 131.287,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kupang",
+        "name": "Kupang, Indonesia (OWM Satellite)",
+        "lat": -10.1772,
+        "lng": 123.607,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_mataram",
+        "name": "Mataram, Indonesia (OWM Satellite)",
+        "lat": -8.5833,
+        "lng": 116.1167,
+        "country": "Indonesia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_makati",
+        "name": "Makati, Philippines (OWM Satellite)",
+        "lat": 14.5547,
+        "lng": 121.0244,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pasig",
+        "name": "Pasig, Philippines (OWM Satellite)",
+        "lat": 14.5764,
+        "lng": 121.0851,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_taguig",
+        "name": "Taguig, Philippines (OWM Satellite)",
+        "lat": 14.5176,
+        "lng": 121.0509,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_caloocan",
+        "name": "Caloocan, Philippines (OWM Satellite)",
+        "lat": 14.6488,
+        "lng": 120.9672,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pasay",
+        "name": "Pasay, Philippines (OWM Satellite)",
+        "lat": 14.5378,
+        "lng": 121.0014,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_baguio",
+        "name": "Baguio, Philippines (OWM Satellite)",
+        "lat": 16.4023,
+        "lng": 120.596,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_angeles",
+        "name": "Angeles, Philippines (OWM Satellite)",
+        "lat": 15.145,
+        "lng": 120.5887,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_olongapo",
+        "name": "Olongapo, Philippines (OWM Satellite)",
+        "lat": 14.8292,
+        "lng": 120.283,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_batangas",
+        "name": "Batangas, Philippines (OWM Satellite)",
+        "lat": 13.7565,
+        "lng": 121.0583,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lipa",
+        "name": "Lipa, Philippines (OWM Satellite)",
+        "lat": 13.9411,
+        "lng": 121.1622,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lucena",
+        "name": "Lucena, Philippines (OWM Satellite)",
+        "lat": 13.9373,
+        "lng": 121.617,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_naga",
+        "name": "Naga, Philippines (OWM Satellite)",
+        "lat": 13.6192,
+        "lng": 123.1814,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_legazpi",
+        "name": "Legazpi, Philippines (OWM Satellite)",
+        "lat": 13.1391,
+        "lng": 123.7438,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bacolod",
+        "name": "Bacolod, Philippines (OWM Satellite)",
+        "lat": 10.684,
+        "lng": 122.9563,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tacloban",
+        "name": "Tacloban, Philippines (OWM Satellite)",
+        "lat": 11.2543,
+        "lng": 124.9613,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_dumaguete",
+        "name": "Dumaguete, Philippines (OWM Satellite)",
+        "lat": 9.3068,
+        "lng": 123.3054,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tagbilaran",
+        "name": "Tagbilaran, Philippines (OWM Satellite)",
+        "lat": 9.65,
+        "lng": 123.85,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_general_santos",
+        "name": "General Santos, Philippines (OWM Satellite)",
+        "lat": 6.1164,
+        "lng": 125.1716,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_butuan",
+        "name": "Butuan, Philippines (OWM Satellite)",
+        "lat": 8.9475,
+        "lng": 125.5406,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_cotabato",
+        "name": "Cotabato, Philippines (OWM Satellite)",
+        "lat": 7.2236,
+        "lng": 124.2464,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_iligan",
+        "name": "Iligan, Philippines (OWM Satellite)",
+        "lat": 8.228,
+        "lng": 124.2452,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_dipolog",
+        "name": "Dipolog, Philippines (OWM Satellite)",
+        "lat": 8.5872,
+        "lng": 123.3408,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_surigao",
+        "name": "Surigao, Philippines (OWM Satellite)",
+        "lat": 9.7572,
+        "lng": 125.4989,
+        "country": "Philippines",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lao_cai",
+        "name": "Lao Cai, Vietnam (OWM)",
+        "lat": 22.4809,
+        "lng": 103.9755,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_dien_bien_phu",
+        "name": "Dien Bien Phu, Vietnam (OWM)",
+        "lat": 21.386,
+        "lng": 103.023,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_son_la",
+        "name": "Son La, Vietnam (OWM)",
+        "lat": 21.3268,
+        "lng": 103.9144,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_yen_bai",
+        "name": "Yen Bai, Vietnam (OWM)",
+        "lat": 21.7051,
+        "lng": 104.8702,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_thai_nguyen",
+        "name": "Thai Nguyen, Vietnam (OWM)",
+        "lat": 21.5942,
+        "lng": 105.8482,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lang_son",
+        "name": "Lang Son, Vietnam (OWM)",
+        "lat": 21.8537,
+        "lng": 106.7615,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_quang_ninh",
+        "name": "Quang Ninh, Vietnam (OWM)",
+        "lat": 21.0064,
+        "lng": 107.2925,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bac_ninh",
+        "name": "Bac Ninh, Vietnam (OWM)",
+        "lat": 21.1861,
+        "lng": 106.0763,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_hai_duong",
+        "name": "Hai Duong, Vietnam (OWM)",
+        "lat": 20.9373,
+        "lng": 106.3146,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nam_dinh",
+        "name": "Nam Dinh, Vietnam (OWM)",
+        "lat": 20.4388,
+        "lng": 106.1621,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ninh_binh",
+        "name": "Ninh Binh, Vietnam (OWM)",
+        "lat": 20.2506,
+        "lng": 105.9745,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_thanh_hoa",
+        "name": "Thanh Hoa, Vietnam (OWM)",
+        "lat": 19.8067,
+        "lng": 105.7852,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nghe_an",
+        "name": "Nghe An, Vietnam (OWM)",
+        "lat": 18.67,
+        "lng": 105.6813,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ha_tinh",
+        "name": "Ha Tinh, Vietnam (OWM)",
+        "lat": 18.3559,
+        "lng": 105.8877,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_quang_binh",
+        "name": "Quang Binh, Vietnam (OWM)",
+        "lat": 17.469,
+        "lng": 106.599,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_quang_tri",
+        "name": "Quang Tri, Vietnam (OWM)",
+        "lat": 16.752,
+        "lng": 107.1856,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_thua_thien_hue",
+        "name": "Thua Thien Hue, Vietnam (OWM)",
+        "lat": 16.4637,
+        "lng": 107.5909,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_quang_nam",
+        "name": "Quang Nam, Vietnam (OWM)",
+        "lat": 15.5394,
+        "lng": 108.0191,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_quang_ngai",
+        "name": "Quang Ngai, Vietnam (OWM)",
+        "lat": 15.1214,
+        "lng": 108.8044,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_binh_dinh",
+        "name": "Binh Dinh, Vietnam (OWM)",
+        "lat": 13.7765,
+        "lng": 109.2237,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_phu_yen",
+        "name": "Phu Yen, Vietnam (OWM)",
+        "lat": 13.0882,
+        "lng": 109.0929,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_khanh_hoa",
+        "name": "Khanh Hoa, Vietnam (OWM)",
+        "lat": 12.2388,
+        "lng": 109.1968,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ninh_thuan",
+        "name": "Ninh Thuan, Vietnam (OWM)",
+        "lat": 11.5752,
+        "lng": 108.9829,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_binh_thuan",
+        "name": "Binh Thuan, Vietnam (OWM)",
+        "lat": 10.928,
+        "lng": 108.1021,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kon_tum",
+        "name": "Kon Tum, Vietnam (OWM)",
+        "lat": 14.3545,
+        "lng": 108.0007,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_gia_lai",
+        "name": "Gia Lai, Vietnam (OWM)",
+        "lat": 13.9833,
+        "lng": 108.0,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_dak_lak",
+        "name": "Dak Lak, Vietnam (OWM)",
+        "lat": 12.6667,
+        "lng": 108.05,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_dak_nong",
+        "name": "Dak Nong, Vietnam (OWM)",
+        "lat": 12.0,
+        "lng": 107.7,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lam_dong",
+        "name": "Lam Dong, Vietnam (OWM)",
+        "lat": 11.9404,
+        "lng": 108.4583,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_binh_phuoc",
+        "name": "Binh Phuoc, Vietnam (OWM)",
+        "lat": 11.7512,
+        "lng": 106.7235,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tay_ninh",
+        "name": "Tay Ninh, Vietnam (OWM)",
+        "lat": 11.3103,
+        "lng": 106.0983,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_binh_duong",
+        "name": "Binh Duong, Vietnam (OWM)",
+        "lat": 11.1671,
+        "lng": 106.6414,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_dong_nai",
+        "name": "Dong Nai, Vietnam (OWM)",
+        "lat": 10.9453,
+        "lng": 106.8243,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ba_ria_vung_tau",
+        "name": "Ba Ria Vung Tau, Vietnam (OWM)",
+        "lat": 10.5417,
+        "lng": 107.2428,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_long_an",
+        "name": "Long An, Vietnam (OWM)",
+        "lat": 10.5361,
+        "lng": 106.4133,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tien_giang",
+        "name": "Tien Giang, Vietnam (OWM)",
+        "lat": 10.36,
+        "lng": 106.36,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ben_tre",
+        "name": "Ben Tre, Vietnam (OWM)",
+        "lat": 10.2415,
+        "lng": 106.3759,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_vinh_long",
+        "name": "Vinh Long, Vietnam (OWM)",
+        "lat": 10.2537,
+        "lng": 105.9722,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tra_vinh",
+        "name": "Tra Vinh, Vietnam (OWM)",
+        "lat": 9.9347,
+        "lng": 106.3455,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_dong_thap",
+        "name": "Dong Thap, Vietnam (OWM)",
+        "lat": 10.4933,
+        "lng": 105.6882,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_an_giang",
+        "name": "An Giang, Vietnam (OWM)",
+        "lat": 10.5216,
+        "lng": 105.1259,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kien_giang",
+        "name": "Kien Giang, Vietnam (OWM)",
+        "lat": 10.0125,
+        "lng": 105.0809,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_hau_giang",
+        "name": "Hau Giang, Vietnam (OWM)",
+        "lat": 9.7579,
+        "lng": 105.6413,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_soc_trang",
+        "name": "Soc Trang, Vietnam (OWM)",
+        "lat": 9.6003,
+        "lng": 105.98,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bac_lieu",
+        "name": "Bac Lieu, Vietnam (OWM)",
+        "lat": 9.285,
+        "lng": 105.7278,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ca_mau",
+        "name": "Ca Mau, Vietnam (OWM)",
+        "lat": 9.1769,
+        "lng": 105.15,
+        "country": "Vietnam",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_chiang_rai",
+        "name": "Chiang Rai, Thailand (OWM)",
+        "lat": 19.9105,
+        "lng": 99.8406,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_mae_hong_son",
+        "name": "Mae Hong Son, Thailand (OWM)",
+        "lat": 19.299,
+        "lng": 97.9654,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nan",
+        "name": "Nan, Thailand (OWM)",
+        "lat": 18.7756,
+        "lng": 100.773,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_phrae",
+        "name": "Phrae, Thailand (OWM)",
+        "lat": 18.1445,
+        "lng": 100.1403,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lampang",
+        "name": "Lampang, Thailand (OWM)",
+        "lat": 18.2888,
+        "lng": 99.4987,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_phitsanulok",
+        "name": "Phitsanulok, Thailand (OWM)",
+        "lat": 16.8211,
+        "lng": 100.2659,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sukhothai",
+        "name": "Sukhothai, Thailand (OWM)",
+        "lat": 17.0072,
+        "lng": 99.8231,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tak",
+        "name": "Tak, Thailand (OWM)",
+        "lat": 16.884,
+        "lng": 99.1258,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_uttaradit",
+        "name": "Uttaradit, Thailand (OWM)",
+        "lat": 17.62,
+        "lng": 100.0993,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nakhon_ratchasima",
+        "name": "Nakhon Ratchasima, Thailand (OWM)",
+        "lat": 14.9799,
+        "lng": 102.0978,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ubon_ratchathani",
+        "name": "Ubon Ratchathani, Thailand (OWM)",
+        "lat": 15.2287,
+        "lng": 104.8564,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_roi_et",
+        "name": "Roi Et, Thailand (OWM)",
+        "lat": 16.0567,
+        "lng": 103.6528,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kalasin",
+        "name": "Kalasin, Thailand (OWM)",
+        "lat": 16.4322,
+        "lng": 103.5061,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_maha_sarakham",
+        "name": "Maha Sarakham, Thailand (OWM)",
+        "lat": 16.1847,
+        "lng": 103.3009,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nakhon_phanom",
+        "name": "Nakhon Phanom, Thailand (OWM)",
+        "lat": 17.4107,
+        "lng": 104.7858,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_mukdahan",
+        "name": "Mukdahan, Thailand (OWM)",
+        "lat": 16.5436,
+        "lng": 104.7235,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_amnat_charoen",
+        "name": "Amnat Charoen, Thailand (OWM)",
+        "lat": 15.8656,
+        "lng": 104.6297,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_yasothon",
+        "name": "Yasothon, Thailand (OWM)",
+        "lat": 15.7944,
+        "lng": 104.1451,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sisaket",
+        "name": "Sisaket, Thailand (OWM)",
+        "lat": 15.1186,
+        "lng": 104.322,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_buriram",
+        "name": "Buriram, Thailand (OWM)",
+        "lat": 14.9931,
+        "lng": 103.1029,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_surin",
+        "name": "Surin, Thailand (OWM)",
+        "lat": 14.8818,
+        "lng": 103.4936,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_chaiyaphum",
+        "name": "Chaiyaphum, Thailand (OWM)",
+        "lat": 15.8068,
+        "lng": 102.0316,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_loei",
+        "name": "Loei, Thailand (OWM)",
+        "lat": 17.486,
+        "lng": 101.7223,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nong_bua_lamphu",
+        "name": "Nong Bua Lamphu, Thailand (OWM)",
+        "lat": 17.2042,
+        "lng": 102.426,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nakhon_sawan",
+        "name": "Nakhon Sawan, Thailand (OWM)",
+        "lat": 15.703,
+        "lng": 100.1371,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lop_buri",
+        "name": "Lop Buri, Thailand (OWM)",
+        "lat": 14.7995,
+        "lng": 100.6534,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_saraburi",
+        "name": "Saraburi, Thailand (OWM)",
+        "lat": 14.5289,
+        "lng": 100.9102,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ang_thong",
+        "name": "Ang Thong, Thailand (OWM)",
+        "lat": 14.5896,
+        "lng": 100.4549,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sing_buri",
+        "name": "Sing Buri, Thailand (OWM)",
+        "lat": 14.8936,
+        "lng": 100.4014,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_chainat",
+        "name": "Chainat, Thailand (OWM)",
+        "lat": 15.1851,
+        "lng": 100.1252,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_uthai_thani",
+        "name": "Uthai Thani, Thailand (OWM)",
+        "lat": 15.3835,
+        "lng": 100.0245,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kamphaeng_phet",
+        "name": "Kamphaeng Phet, Thailand (OWM)",
+        "lat": 16.4827,
+        "lng": 99.522,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nakhon_pathom",
+        "name": "Nakhon Pathom, Thailand (OWM)",
+        "lat": 13.8196,
+        "lng": 100.0445,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ratchaburi",
+        "name": "Ratchaburi, Thailand (OWM)",
+        "lat": 13.5283,
+        "lng": 99.8134,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kanchanaburi",
+        "name": "Kanchanaburi, Thailand (OWM)",
+        "lat": 14.0227,
+        "lng": 99.5328,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_suphan_buri",
+        "name": "Suphan Buri, Thailand (OWM)",
+        "lat": 14.4744,
+        "lng": 100.1177,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_prachin_buri",
+        "name": "Prachin Buri, Thailand (OWM)",
+        "lat": 14.0509,
+        "lng": 101.3687,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sa_kaeo",
+        "name": "Sa Kaeo, Thailand (OWM)",
+        "lat": 13.813,
+        "lng": 102.0645,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_chachoengsao",
+        "name": "Chachoengsao, Thailand (OWM)",
+        "lat": 13.6904,
+        "lng": 101.0779,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_chumphon",
+        "name": "Chumphon, Thailand (OWM)",
+        "lat": 10.493,
+        "lng": 99.18,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ranong",
+        "name": "Ranong, Thailand (OWM)",
+        "lat": 9.9529,
+        "lng": 98.6085,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_surat_thani",
+        "name": "Surat Thani, Thailand (OWM)",
+        "lat": 9.1382,
+        "lng": 99.3211,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_phang_nga",
+        "name": "Phang Nga, Thailand (OWM)",
+        "lat": 8.4509,
+        "lng": 98.5253,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_krabi",
+        "name": "Krabi, Thailand (OWM)",
+        "lat": 8.0863,
+        "lng": 98.9063,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_nakhon_si_thammarat",
+        "name": "Nakhon Si Thammarat, Thailand (OWM)",
+        "lat": 8.4324,
+        "lng": 99.9631,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_trang",
+        "name": "Trang, Thailand (OWM)",
+        "lat": 7.5645,
+        "lng": 99.6113,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_phatthalung",
+        "name": "Phatthalung, Thailand (OWM)",
+        "lat": 7.6167,
+        "lng": 100.0833,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_songkhla",
+        "name": "Songkhla, Thailand (OWM)",
+        "lat": 7.1756,
+        "lng": 100.6142,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_satun",
+        "name": "Satun, Thailand (OWM)",
+        "lat": 6.6238,
+        "lng": 100.0673,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pattani",
+        "name": "Pattani, Thailand (OWM)",
+        "lat": 6.8686,
+        "lng": 101.2501,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_yala",
+        "name": "Yala, Thailand (OWM)",
+        "lat": 6.54,
+        "lng": 101.28,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_narathiwat",
+        "name": "Narathiwat, Thailand (OWM)",
+        "lat": 6.4318,
+        "lng": 101.8231,
+        "country": "Thailand",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_langkawi",
+        "name": "Langkawi, Malaysia (OWM)",
+        "lat": 6.35,
+        "lng": 99.8,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_butterworth",
+        "name": "Butterworth, Malaysia (OWM)",
+        "lat": 5.3991,
+        "lng": 100.3639,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sungai_petani",
+        "name": "Sungai Petani, Malaysia (OWM)",
+        "lat": 5.647,
+        "lng": 100.4882,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_taiping",
+        "name": "Taiping, Malaysia (OWM)",
+        "lat": 4.85,
+        "lng": 100.7333,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_teluk_intan",
+        "name": "Teluk Intan, Malaysia (OWM)",
+        "lat": 4.0259,
+        "lng": 101.0213,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_klang",
+        "name": "Klang, Malaysia (OWM)",
+        "lat": 3.0449,
+        "lng": 101.4455,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_shah_alam",
+        "name": "Shah Alam, Malaysia (OWM)",
+        "lat": 3.0733,
+        "lng": 101.5185,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_petaling_jaya",
+        "name": "Petaling Jaya, Malaysia (OWM)",
+        "lat": 3.1073,
+        "lng": 101.6067,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_subang_jaya",
+        "name": "Subang Jaya, Malaysia (OWM)",
+        "lat": 3.0565,
+        "lng": 101.5851,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kajang",
+        "name": "Kajang, Malaysia (OWM)",
+        "lat": 2.9927,
+        "lng": 101.7909,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_seremban",
+        "name": "Seremban, Malaysia (OWM)",
+        "lat": 2.7297,
+        "lng": 101.9381,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_muar",
+        "name": "Muar, Malaysia (OWM)",
+        "lat": 2.0442,
+        "lng": 102.5689,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kota_bharu",
+        "name": "Kota Bharu, Malaysia (OWM)",
+        "lat": 6.1254,
+        "lng": 102.2381,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kuala_terengganu",
+        "name": "Kuala Terengganu, Malaysia (OWM)",
+        "lat": 5.3117,
+        "lng": 103.1324,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kemaman",
+        "name": "Kemaman, Malaysia (OWM)",
+        "lat": 4.2333,
+        "lng": 103.4167,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kuantan",
+        "name": "Kuantan, Malaysia (OWM)",
+        "lat": 3.8077,
+        "lng": 103.326,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pekan",
+        "name": "Pekan, Malaysia (OWM)",
+        "lat": 3.4833,
+        "lng": 103.4,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_mersing",
+        "name": "Mersing, Malaysia (OWM)",
+        "lat": 2.4311,
+        "lng": 103.8406,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kota_kinabalu",
+        "name": "Kota Kinabalu, Malaysia (OWM)",
+        "lat": 5.9804,
+        "lng": 116.0735,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sandakan",
+        "name": "Sandakan, Malaysia (OWM)",
+        "lat": 5.8402,
+        "lng": 118.1179,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tawau",
+        "name": "Tawau, Malaysia (OWM)",
+        "lat": 4.2498,
+        "lng": 117.8871,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lahad_datu",
+        "name": "Lahad Datu, Malaysia (OWM)",
+        "lat": 5.0267,
+        "lng": 118.34,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_keningau",
+        "name": "Keningau, Malaysia (OWM)",
+        "lat": 5.3378,
+        "lng": 116.1597,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_beaufort",
+        "name": "Beaufort, Malaysia (OWM)",
+        "lat": 5.3472,
+        "lng": 115.7472,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kuching",
+        "name": "Kuching, Malaysia (OWM)",
+        "lat": 1.5535,
+        "lng": 110.3593,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_miri",
+        "name": "Miri, Malaysia (OWM)",
+        "lat": 4.3995,
+        "lng": 113.9914,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sibu",
+        "name": "Sibu, Malaysia (OWM)",
+        "lat": 2.287,
+        "lng": 111.8308,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bintulu",
+        "name": "Bintulu, Malaysia (OWM)",
+        "lat": 3.1667,
+        "lng": 113.0333,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_limbang",
+        "name": "Limbang, Malaysia (OWM)",
+        "lat": 4.75,
+        "lng": 115.0,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sarikei",
+        "name": "Sarikei, Malaysia (OWM)",
+        "lat": 2.1333,
+        "lng": 111.5167,
+        "country": "Malaysia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bago",
+        "name": "Bago, Myanmar (OWM)",
+        "lat": 17.3352,
+        "lng": 96.4814,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pathein",
+        "name": "Pathein, Myanmar (OWM)",
+        "lat": 16.7792,
+        "lng": 94.7319,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_monywa",
+        "name": "Monywa, Myanmar (OWM)",
+        "lat": 22.1086,
+        "lng": 95.1361,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_meiktila",
+        "name": "Meiktila, Myanmar (OWM)",
+        "lat": 20.8667,
+        "lng": 95.85,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_myitkyina",
+        "name": "Myitkyina, Myanmar (OWM)",
+        "lat": 25.3867,
+        "lng": 97.3958,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_taunggyi",
+        "name": "Taunggyi, Myanmar (OWM)",
+        "lat": 20.7833,
+        "lng": 97.0333,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_lashio",
+        "name": "Lashio, Myanmar (OWM)",
+        "lat": 22.9333,
+        "lng": 97.75,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sittwe",
+        "name": "Sittwe, Myanmar (OWM)",
+        "lat": 20.15,
+        "lng": 92.8833,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_magway",
+        "name": "Magway, Myanmar (OWM)",
+        "lat": 20.15,
+        "lng": 94.9333,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pyay",
+        "name": "Pyay, Myanmar (OWM)",
+        "lat": 18.8167,
+        "lng": 95.2167,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_hpa_an",
+        "name": "Hpa-An, Myanmar (OWM)",
+        "lat": 16.89,
+        "lng": 97.635,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_dawei",
+        "name": "Dawei, Myanmar (OWM)",
+        "lat": 14.0833,
+        "lng": 98.2,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_myeik",
+        "name": "Myeik, Myanmar (OWM)",
+        "lat": 12.4333,
+        "lng": 98.6,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kawthoung",
+        "name": "Kawthoung, Myanmar (OWM)",
+        "lat": 9.9833,
+        "lng": 98.55,
+        "country": "Myanmar",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kampong_cham",
+        "name": "Kampong Cham, Cambodia (OWM)",
+        "lat": 11.9925,
+        "lng": 105.4623,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kampong_thom",
+        "name": "Kampong Thom, Cambodia (OWM)",
+        "lat": 12.7111,
+        "lng": 104.8883,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kampong_speu",
+        "name": "Kampong Speu, Cambodia (OWM)",
+        "lat": 11.4519,
+        "lng": 104.5186,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_takeo",
+        "name": "Takeo, Cambodia (OWM)",
+        "lat": 10.9908,
+        "lng": 104.785,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_prey_veng",
+        "name": "Prey Veng, Cambodia (OWM)",
+        "lat": 11.4872,
+        "lng": 105.3244,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_svay_rieng",
+        "name": "Svay Rieng, Cambodia (OWM)",
+        "lat": 11.0883,
+        "lng": 105.7989,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_pursat",
+        "name": "Pursat, Cambodia (OWM)",
+        "lat": 12.5338,
+        "lng": 103.9192,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kratie",
+        "name": "Kratie, Cambodia (OWM)",
+        "lat": 12.4881,
+        "lng": 106.0189,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_stung_treng",
+        "name": "Stung Treng, Cambodia (OWM)",
+        "lat": 13.5236,
+        "lng": 105.9683,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_banlung",
+        "name": "Banlung, Cambodia (OWM)",
+        "lat": 13.7394,
+        "lng": 106.9872,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_mondulkiri",
+        "name": "Mondulkiri, Cambodia (OWM)",
+        "lat": 12.45,
+        "lng": 107.1833,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_koh_kong",
+        "name": "Koh Kong, Cambodia (OWM)",
+        "lat": 11.615,
+        "lng": 102.9839,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kampot",
+        "name": "Kampot, Cambodia (OWM)",
+        "lat": 10.6104,
+        "lng": 104.1791,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kep",
+        "name": "Kep, Cambodia (OWM)",
+        "lat": 10.4833,
+        "lng": 104.3167,
+        "country": "Cambodia",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_thakhek",
+        "name": "Thakhek, Laos (OWM)",
+        "lat": 17.4,
+        "lng": 104.8,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_luang_namtha",
+        "name": "Luang Namtha, Laos (OWM)",
+        "lat": 20.95,
+        "lng": 101.4,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_phongsali",
+        "name": "Phongsali, Laos (OWM)",
+        "lat": 21.6833,
+        "lng": 102.1,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sam_neua",
+        "name": "Sam Neua, Laos (OWM)",
+        "lat": 20.4167,
+        "lng": 104.05,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_xam_nua",
+        "name": "Xam Nua, Laos (OWM)",
+        "lat": 20.4167,
+        "lng": 104.05,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_oudomxay",
+        "name": "Oudomxay, Laos (OWM)",
+        "lat": 20.6833,
+        "lng": 101.9833,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sayaboury",
+        "name": "Sayaboury, Laos (OWM)",
+        "lat": 19.25,
+        "lng": 101.7167,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_xieng_khouang",
+        "name": "Xieng Khouang, Laos (OWM)",
+        "lat": 19.3333,
+        "lng": 103.3667,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bolikhamxai",
+        "name": "Bolikhamxai, Laos (OWM)",
+        "lat": 18.3833,
+        "lng": 103.65,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_khammouane",
+        "name": "Khammouane, Laos (OWM)",
+        "lat": 17.8167,
+        "lng": 105.2333,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_salavan",
+        "name": "Salavan, Laos (OWM)",
+        "lat": 15.7167,
+        "lng": 106.4167,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sekong",
+        "name": "Sekong, Laos (OWM)",
+        "lat": 15.35,
+        "lng": 106.7333,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_attapeu",
+        "name": "Attapeu, Laos (OWM)",
+        "lat": 14.8,
+        "lng": 106.8333,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_champasak",
+        "name": "Champasak, Laos (OWM)",
+        "lat": 14.8833,
+        "lng": 105.8833,
+        "country": "Laos",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bandar_seri_begawan",
+        "name": "Bandar Seri Begawan, Brunei (OWM)",
+        "lat": 4.9031,
+        "lng": 114.9398,
+        "country": "Brunei",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_kuala_belait",
+        "name": "Kuala Belait, Brunei (OWM)",
+        "lat": 4.5833,
+        "lng": 114.2333,
+        "country": "Brunei",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_seria",
+        "name": "Seria, Brunei (OWM)",
+        "lat": 4.6167,
+        "lng": 114.3167,
+        "country": "Brunei",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tutong",
+        "name": "Tutong, Brunei (OWM)",
+        "lat": 4.8,
+        "lng": 114.65,
+        "country": "Brunei",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bangar",
+        "name": "Bangar, Brunei (OWM)",
+        "lat": 4.7167,
+        "lng": 115.0667,
+        "country": "Brunei",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_jurong_west",
+        "name": "Jurong West, Singapore (OWM)",
+        "lat": 1.3404,
+        "lng": 103.709,
+        "country": "Singapore",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_tampines",
+        "name": "Tampines, Singapore (OWM)",
+        "lat": 1.3496,
+        "lng": 103.9568,
+        "country": "Singapore",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_woodlands",
+        "name": "Woodlands, Singapore (OWM)",
+        "lat": 1.4382,
+        "lng": 103.7891,
+        "country": "Singapore",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bedok",
+        "name": "Bedok, Singapore (OWM)",
+        "lat": 1.3236,
+        "lng": 103.9273,
+        "country": "Singapore",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_changi",
+        "name": "Changi, Singapore (OWM)",
+        "lat": 1.3644,
+        "lng": 103.9915,
+        "country": "Singapore",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_toa_payoh",
+        "name": "Toa Payoh, Singapore (OWM)",
+        "lat": 1.3343,
+        "lng": 103.8563,
+        "country": "Singapore",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_ang_mo_kio",
+        "name": "Ang Mo Kio, Singapore (OWM)",
+        "lat": 1.3691,
+        "lng": 103.8454,
+        "country": "Singapore",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_bukit_timah",
+        "name": "Bukit Timah, Singapore (OWM)",
+        "lat": 1.3294,
+        "lng": 103.8021,
+        "country": "Singapore",
+        "source": "openweathermap"
+    },
+    {
+        "uid": "owm_sentosa",
+        "name": "Sentosa, Singapore (OWM)",
+        "lat": 1.2494,
+        "lng": 103.8303,
+        "country": "Singapore",
+        "source": "openweathermap"
     }
 ]
