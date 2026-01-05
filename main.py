@@ -57,9 +57,18 @@ app.include_router(evaluation.router)
 app.include_router(auth_routes.router)
 app.include_router(user.router)
 
-# Start crawler in background thread
-crawler_thread = Thread(target=crawler_task, daemon=True)
-crawler_thread.start()
+
+@app.on_event("startup")
+async def startup_event():
+    """Start crawler after app is fully ready"""
+    import time
+    # Give Railway time to complete healthcheck first
+    def delayed_crawler():
+        time.sleep(60)  # Wait 60 seconds after startup
+        crawler_task()
+    
+    crawler_thread = Thread(target=delayed_crawler, daemon=True)
+    crawler_thread.start()
 
 
 if __name__ == "__main__":
