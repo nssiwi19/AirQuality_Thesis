@@ -13,6 +13,12 @@ from app.predictor import predictor
 router = APIRouter()
 
 
+@router.get("/health")
+def health_check():
+    """Simple health check endpoint for Railway"""
+    return {"status": "ok", "service": "airwatch-asean"}
+
+
 @router.get("/")
 def serve_index():
     return FileResponse("index.html")
