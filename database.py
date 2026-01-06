@@ -39,9 +39,7 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
     
-    verification_token = Column(String(255), nullable=True)
-    reset_token = Column(String(255), nullable=True)
-    reset_token_expires = Column(DateTime, nullable=True)
+    # OTP columns removed
     
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

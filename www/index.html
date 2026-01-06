@@ -1816,7 +1816,7 @@
         let weatherCache = {};
         let idwCanvasLayer = null;
         let idwEnabled = false;
-        let idwOpacity = 0.7;
+        let idwOpacity = 0.85;
 
         // ===== IDW CANVAS LAYER IMPLEMENTATION =====
         L.IDWCanvasLayer = L.Layer.extend({
@@ -1848,6 +1848,7 @@
                 this._canvas.style.pointerEvents = 'none';
                 this._canvas.style.opacity = this._opacity;
                 this._canvas.style.zIndex = '399';
+                this._canvas.style.mixBlendMode = 'screen';
 
                 map.getPanes().overlayPane.appendChild(this._canvas);
                 map.on('moveend', this._redraw, this);
@@ -1957,7 +1958,7 @@
                                     data[idx] = color.r;
                                     data[idx + 1] = color.g;
                                     data[idx + 2] = color.b;
-                                    data[idx + 3] = 180; // Alpha
+                                    data[idx + 3] = 210; // Alpha
                                 }
                             }
                         }
