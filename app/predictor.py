@@ -128,8 +128,9 @@ class AQIPredictor:
         try:
             conn = sqlite3.connect(DB_NAME)
             df = pd.read_sql_query(
-                f"SELECT timestamp, aqi FROM measurements WHERE station_uid={uid} ORDER BY timestamp DESC LIMIT 168", 
-                conn
+                "SELECT timestamp, aqi FROM measurements WHERE station_uid=? ORDER BY timestamp DESC LIMIT 168", 
+                conn,
+                params=(str(uid),)
             )
             conn.close()
             

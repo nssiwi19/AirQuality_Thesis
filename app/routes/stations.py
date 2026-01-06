@@ -115,7 +115,7 @@ def api_stats():
 
 
 @router.get("/api/history/{uid}")
-def api_history(uid: int, limit: int = 24):
+def api_history(uid: str, limit: int = 24):
     conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()

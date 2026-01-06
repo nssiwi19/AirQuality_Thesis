@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 @router.get("/api/predictions/{uid}")
-def api_predictions(uid: int):
+def api_predictions(uid: str):
     """Dự báo đa bước cho 1 trạm"""
     preds, trend, confidence = predictor.predict_multi(uid, [1, 6, 12, 24])
     return {
