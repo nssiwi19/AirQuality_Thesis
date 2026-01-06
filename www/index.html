@@ -1,0 +1,3764 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="Hệ thống giám sát và dự báo chất lượng không khí thời gian thực khu vực ASEAN">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AirWatch">
+    <title>AirWatch ASEAN | Giám Sát & Dự Báo Chất Lượng Không Khí</title>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #f1f5f9;
+            --bg-secondary: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --glass: rgba(0, 0, 0, 0.02);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --accent-primary: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(20, 20, 30, 0.9);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #94a3b8;
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        #map {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .leaflet-container {
+            background: var(--bg-primary);
+        }
+
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .panel {
+            position: fixed;
+            z-index: 1000;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .stats-bar {
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 16px 28px;
+            border-radius: 50px;
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 36px;
+            background: var(--glass-border);
+        }
+
+        .control-panel {
+            top: 90px;
+            left: 20px;
+            width: 340px;
+            max-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 20px 20px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--accent-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .brand h1 {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .panel-content {
+            padding: 16px 20px 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 44px 12px 16px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        /* Autocomplete Dropdown */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-top: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1001;
+            display: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-suggestions.active {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .suggestion-item {
+            padding: 12px 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: var(--glass);
+        }
+
+        .suggestion-item.selected {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .suggestion-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--glass);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .suggestion-icon.station {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+        }
+
+        .suggestion-icon.location {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .suggestion-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .suggestion-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .suggestion-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        .suggestion-aqi {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .search-loading {
+            padding: 16px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .health-card {
+            display: none;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .health-card.active {
+            display: block;
+        }
+
+        .health-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .health-item {
+            display: flex;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* ===== ENHANCED INFO PANEL ===== */
+        .station-selector {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        .station-selector:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .info-panel-section {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .info-timestamp {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .aqi-display {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .aqi-icon-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .aqi-big-value {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .aqi-status-text {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .weather-info {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+        }
+
+        .weather-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .weather-item i {
+            font-size: 18px;
+            color: var(--accent-primary);
+        }
+
+        .weather-label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .weather-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Health Recommendations */
+        .health-recommendations {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .health-rec-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .health-rec-title i {
+            color: #ef4444;
+        }
+
+        .health-rec-group {
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .health-rec-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .health-rec-group.warning {
+            background: rgba(234, 179, 8, 0.1);
+            border-left: 3px solid #eab308;
+        }
+
+        .health-rec-group.danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid #ef4444;
+        }
+
+        .health-rec-group.info {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid #3b82f6;
+        }
+
+        .health-rec-label {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .health-rec-text {
+            color: var(--text-secondary);
+        }
+
+        /* AQI Mask Icon SVG */
+        .aqi-mask-icon {
+            width: 70px;
+            height: 70px;
+        }
+
+        /* AQI Color Classes */
+        .aqi-good {
+            color: #00e400;
+        }
+
+        .aqi-moderate {
+            color: #ffff00;
+        }
+
+        .aqi-unhealthy-sensitive {
+            color: #ff7e00;
+        }
+
+        .aqi-unhealthy {
+            color: #ff0000;
+        }
+
+        .aqi-very-unhealthy {
+            color: #8f3f97;
+        }
+
+        .aqi-hazardous {
+            color: #7e0023;
+        }
+
+        .aqi-bg-good {
+            background: linear-gradient(135deg, #00e400, #00c400);
+        }
+
+        .aqi-bg-moderate {
+            background: linear-gradient(135deg, #ffff00, #e6e600);
+        }
+
+        .aqi-bg-unhealthy-sensitive {
+            background: linear-gradient(135deg, #ff7e00, #e67300);
+        }
+
+        .aqi-bg-unhealthy {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+        }
+
+        .aqi-bg-very-unhealthy {
+            background: linear-gradient(135deg, #8f3f97, #7a357f);
+        }
+
+        .aqi-bg-hazardous {
+            background: linear-gradient(135deg, #7e0023, #5c001a);
+        }
+
+        .toggle-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .toggle-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+        }
+
+        .toggle-icon.idw {
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+        }
+
+        .toggle-icon.ai {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        }
+
+        .toggle-icon.theme {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        .toggle-text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+            inset: 0;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .switch-slider:before {
+            content: "";
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 2px;
+            bottom: 2px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        input:checked+.switch-slider {
+            background: var(--accent-gradient);
+            border-color: transparent;
+        }
+
+        input:checked+.switch-slider:before {
+            transform: translateX(20px);
+            background: white;
+        }
+
+        .opacity-control {
+            display: none;
+            padding: 12px 14px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .opacity-control.active {
+            display: block;
+        }
+
+        .opacity-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .opacity-slider {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--glass-border);
+            border-radius: 3px;
+        }
+
+        .opacity-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .ranking-panel {
+            top: 90px;
+            right: 20px;
+            width: 300px;
+            max-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ranking-header {
+            padding: 18px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ranking-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .ranking-header h2 {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .ranking-header p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .ranking-list {
+            padding: 12px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--glass);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .rank-num {
+            width: 24px;
+            height: 24px;
+            background: var(--glass);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .ranking-item:nth-child(1) .rank-num {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a1a;
+        }
+
+        .rank-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .rank-name {
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-aqi {
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .legend-panel {
+            bottom: 20px;
+            right: 20px;
+            padding: 16px;
+            border-radius: 14px;
+            display: none;
+        }
+
+        .legend-panel.active {
+            display: block;
+        }
+
+        .legend-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .legend-bar {
+            width: 200px;
+            height: 16px;
+            border-radius: 8px;
+            background: linear-gradient(to right, #00e400, #ffff00, #ff7e00, #ff0000, #8f3f97, #7e0023);
+            margin-bottom: 8px;
+        }
+
+        .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+            width: 280px !important;
+        }
+
+        .leaflet-popup-tip {
+            background: var(--bg-card);
+        }
+
+        .popup-header {
+            padding: 14px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .popup-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .popup-body {
+            padding: 14px;
+            background: var(--bg-secondary);
+        }
+
+        .popup-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .popup-metric {
+            text-align: center;
+            padding: 10px;
+            background: var(--glass);
+            border-radius: 10px;
+        }
+
+        .popup-metric-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .popup-metric-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .popup-chart {
+            height: 80px;
+            margin-top: 8px;
+        }
+
+        /* Prediction grid in popup */
+        .popup-prediction-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+
+        .popup-prediction-item {
+            background: var(--glass);
+            padding: 6px;
+            border-radius: 6px;
+        }
+
+        .popup-prediction-label {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .popup-prediction-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .marker-cluster-small,
+        .marker-cluster-medium,
+        .marker-cluster-large {
+            background: rgba(99, 102, 241, 0.3) !important;
+        }
+
+        .marker-cluster div {
+            background: var(--accent-primary) !important;
+            color: white !important;
+            font-weight: 600 !important;
+        }
+
+        .location-aqi-marker {
+            background: none !important;
+            border: none !important;
+        }
+
+        @media (max-width: 1100px) {
+
+            .stats-bar,
+            .ranking-panel {
+                display: none;
+            }
+
+            .control-panel {
+                top: 20px;
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .control-panel {
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                max-height: 50vh;
+                border-radius: 20px 20px 0 0;
+            }
+        }
+
+        /* ===== TOGGLE UI BUTTON ===== */
+        .toggle-ui-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+            box-shadow: var(--shadow-card);
+        }
+
+        .toggle-ui-btn:hover {
+            transform: scale(1.1);
+            background: var(--accent-primary);
+        }
+
+        .toggle-ui-btn:hover i {
+            color: white;
+        }
+
+        .toggle-ui-btn i {
+            font-size: 18px;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        body.fullscreen-mode .panel,
+        body.fullscreen-mode .user-btn {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-20px);
+        }
+
+        body.fullscreen-mode .toggle-ui-btn {
+            background: var(--accent-primary);
+        }
+
+        body.fullscreen-mode .toggle-ui-btn i {
+            color: white;
+        }
+
+        /* ===== AUTH STYLES ===== */
+        .user-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        .user-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+
+        .user-btn i {
+            font-size: 18px;
+            color: var(--accent-primary);
+        }
+
+        .user-btn span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .auth-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-modal.active {
+            display: flex;
+        }
+
+        .auth-box {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            width: 400px;
+            max-width: 90%;
+            backdrop-filter: blur(20px);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .auth-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .auth-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            background: var(--glass);
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .auth-btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: var(--accent-gradient);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .auth-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .auth-switch a {
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .auth-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .auth-error.show {
+            display: block;
+        }
+
+        .auth-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .auth-success.show {
+            display: block;
+        }
+
+        .otp-input-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            background: var(--glass);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .otp-countdown {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        .otp-countdown a {
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .otp-countdown a:hover {
+            text-decoration: underline;
+        }
+
+        .otp-countdown a.disabled {
+            color: var(--text-muted);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .user-menu {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 999;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 200px;
+            display: none;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-card);
+        }
+
+        .user-menu.active {
+            display: block;
+        }
+
+        .user-menu-item {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .user-menu-item:hover {
+            background: var(--glass);
+        }
+
+        .user-menu-item i {
+            width: 20px;
+            color: var(--text-muted);
+        }
+
+        .user-menu-item.danger {
+            color: #ef4444;
+        }
+
+        .user-menu-item.danger i {
+            color: #ef4444;
+        }
+
+        .favorites-panel {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .favorite-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: var(--glass);
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+
+        .favorite-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .favorite-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .favorite-info i {
+            color: var(--accent-primary);
+        }
+
+        .favorite-name {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .favorite-delete {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .favorite-delete:hover {
+            color: #ef4444;
+        }
+
+        /* Ranking Panel Styles */
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: var(--glass);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .ranking-item:hover {
+            background: rgba(99, 102, 241, 0.15);
+            transform: translateX(4px);
+        }
+
+        .rank-num {
+            width: 26px;
+            height: 26px;
+            background: var(--accent-gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: white;
+        }
+
+        .rank-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .rank-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-aqi {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            color: white;
+            min-width: 45px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <div id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loader-text">Đang kết nối hệ thống...</div>
+    </div>
+    <div id="map"></div>
+    <div id="toast">Thông báo</div>
+
+    <!-- Toggle UI Button -->
+    <div class="toggle-ui-btn" id="toggleUIBtn" onclick="toggleFullscreen()" title="Ẩn/Hiện giao diện">
+        <i class="fas fa-expand" id="toggleUIIcon"></i>
+    </div>
+
+    <!-- User Button -->
+    <div class="user-btn" id="userBtn" onclick="toggleUserMenu()">
+        <i class="fas fa-user-circle"></i>
+        <span id="userBtnText">Đăng nhập</span>
+    </div>
+
+    <!-- User Menu (shown when logged in) -->
+    <div class="user-menu" id="userMenu">
+        <div class="user-menu-item" onclick="showFavorites()">
+            <i class="fas fa-heart"></i>
+            <span>Vị trí yêu thích</span>
+        </div>
+        <div class="user-menu-item" onclick="showAlerts()">
+            <i class="fas fa-bell"></i>
+            <span>Cảnh báo AQI</span>
+        </div>
+        <div class="user-menu-item danger" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Đăng xuất</span>
+        </div>
+    </div>
+
+    <!-- Ranking Panel -->
+    <div class="panel ranking-panel" id="rankingPanel"
+        style="position:fixed;top:80px;right:20px;width:320px;z-index:100;background:var(--bg-card);border:1px solid var(--glass-border);border-radius:16px;backdrop-filter:blur(20px);box-shadow:var(--shadow-card);max-height:calc(100vh - 100px);overflow:hidden;">
+        <div
+            style="padding:16px;border-bottom:1px solid var(--glass-border);display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <i class="fas fa-ranking-star" style="color:var(--accent-primary);font-size:18px;"></i>
+                <span style="font-weight:700;font-size:15px;color:var(--text-primary);">Top 10 Ô Nhiễm Nhất</span>
+            </div>
+            <label class="toggle-switch" style="position:relative;width:40px;height:22px;">
+                <input type="checkbox" id="rankingToggle" checked onchange="toggleRankingPanel()" style="display:none;">
+                <span
+                    style="position:absolute;inset:0;background:var(--accent-gradient);border-radius:11px;cursor:pointer;"></span>
+            </label>
+        </div>
+        <div id="rankingList" style="padding:12px;max-height:400px;overflow-y:auto;">
+            <div style="text-align:center;padding:20px;color:var(--text-muted);">
+                <i class="fas fa-spinner fa-spin"></i> Đang tải...
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div class="auth-modal" id="favoritesModal" onclick="closeAuthModal(event)">
+        <div class="auth-box" onclick="event.stopPropagation()" style="max-height:80vh;overflow-y:auto;">
+            <div class="auth-header">
+                <h2>💖 Vị trí yêu thích</h2>
+                <p>Click vào vị trí để xem trên bản đồ</p>
+            </div>
+            <div id="favoritesList" class="favorites-panel">
+                <div style="text-align:center;color:var(--text-muted);padding:20px;">
+                    <i class="fas fa-spinner fa-spin"></i> Đang tải...
+                </div>
+            </div>
+            <button class="auth-btn" style="margin-top:15px;"
+                onclick="document.getElementById('favoritesModal').classList.remove('active')">
+                Đóng
+            </button>
+        </div>
+    </div>
+
+    <!-- Alerts Modal -->
+    <div class="auth-modal" id="alertsModal" onclick="closeAuthModal(event)">
+        <div class="auth-box" onclick="event.stopPropagation()" style="max-height:80vh;overflow-y:auto;">
+            <div class="auth-header">
+                <h2>🔔 Cảnh báo AQI</h2>
+                <p>Nhận thông báo khi AQI vượt ngưỡng</p>
+            </div>
+            <div id="alertsList" class="favorites-panel">
+                <div style="text-align:center;color:var(--text-muted);padding:20px;">
+                    <i class="fas fa-spinner fa-spin"></i> Đang tải...
+                </div>
+            </div>
+            <div style="margin-top:15px;padding:12px;background:var(--glass);border-radius:8px;">
+                <p style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">💡 Để tạo cảnh báo, tìm kiếm một
+                    địa điểm và click "Đặt cảnh báo" trong popup.</p>
+            </div>
+            <button class="auth-btn" style="margin-top:15px;"
+                onclick="document.getElementById('alertsModal').classList.remove('active')">
+                Đóng
+            </button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="auth-modal" id="loginModal" onclick="closeAuthModal(event)">
+        <div class="auth-box" onclick="event.stopPropagation()">
+            <div class="auth-header">
+                <h2>🔐 Đăng nhập</h2>
+                <p>Chào mừng bạn quay lại AirWatch!</p>
+            </div>
+            <div class="auth-error" id="loginError"></div>
+            <form class="auth-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="auth-btn" id="loginBtn">Đăng nhập</button>
+            </form>
+            <div class="auth-switch">
+                Chưa có tài khoản? <a onclick="switchToRegister()">Đăng ký ngay</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="auth-modal" id="registerModal" onclick="closeAuthModal(event)">
+        <div class="auth-box" onclick="event.stopPropagation()">
+            <div class="auth-header">
+                <h2>✨ Đăng ký</h2>
+                <p>Tạo tài khoản để lưu vị trí yêu thích</p>
+            </div>
+            <div class="auth-error" id="registerError"></div>
+            <form class="auth-form" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Họ tên</label>
+                    <input type="text" id="registerName" placeholder="Nguyễn Văn A">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="registerEmail" required placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" id="registerPassword" required placeholder="Tối thiểu 6 ký tự" minlength="6">
+                </div>
+                <button type="submit" class="auth-btn" id="registerBtn">Tạo tài khoản</button>
+            </form>
+            <div class="auth-switch">
+                Đã có tài khoản? <a onclick="switchToLogin()">Đăng nhập</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal -->
+    <div class="auth-modal" id="otpModal" onclick="closeAuthModal(event)">
+        <div class="auth-box" onclick="event.stopPropagation()">
+            <div class="auth-header">
+                <h2>📧 Xác thực Email</h2>
+                <p id="otpEmailDisplay">Nhập mã 6 số đã gửi đến email của bạn</p>
+            </div>
+            <div class="auth-error" id="otpError"></div>
+            <div class="auth-success" id="otpSuccess"></div>
+            <div class="otp-input-group">
+                <input type="text" class="otp-input" maxlength="1" data-index="0" oninput="handleOTPInput(event)"
+                    onkeydown="handleOTPKeydown(event)">
+                <input type="text" class="otp-input" maxlength="1" data-index="1" oninput="handleOTPInput(event)"
+                    onkeydown="handleOTPKeydown(event)">
+                <input type="text" class="otp-input" maxlength="1" data-index="2" oninput="handleOTPInput(event)"
+                    onkeydown="handleOTPKeydown(event)">
+                <input type="text" class="otp-input" maxlength="1" data-index="3" oninput="handleOTPInput(event)"
+                    onkeydown="handleOTPKeydown(event)">
+                <input type="text" class="otp-input" maxlength="1" data-index="4" oninput="handleOTPInput(event)"
+                    onkeydown="handleOTPKeydown(event)">
+                <input type="text" class="otp-input" maxlength="1" data-index="5" oninput="handleOTPInput(event)"
+                    onkeydown="handleOTPKeydown(event)">
+            </div>
+            <button type="button" class="auth-btn" id="verifyOTPBtn" onclick="handleVerifyOTP()">Xác thực</button>
+            <div class="otp-countdown" id="otpCountdown">
+                Gửi lại mã sau <span id="countdownTimer">60</span>s
+            </div>
+            <div class="auth-switch" style="margin-top:10px;">
+                <a onclick="closeOTPModal()">← Quay lại đăng ký</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel control-panel">
+        <div class="panel-header">
+            <div class="brand">
+                <div class="brand-icon"><i class="fas fa-wind"></i></div>
+                <div>
+                    <h1>AirWatch ASEAN</h1>
+                    <p>Giám sát không khí thời gian thực</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Tìm địa chỉ, đường phố, trạm..."
+                    autocomplete="off" oninput="handleSearchInput(event)" onkeydown="handleSearchKeydown(event)"
+                    onfocus="showSuggestionsIfAny()" onblur="setTimeout(() => hideSuggestions(), 200)">
+                <button class="search-btn" onclick="handleSearch()"><i class="fas fa-search"></i></button>
+                <div id="searchSuggestions" class="search-suggestions"></div>
+            </div>
+
+
+            <!-- Enhanced Info Panel -->
+            <div id="infoPanel" class="info-panel-section" style="display:none;">
+                <div id="infoTimestamp" class="info-timestamp">Chỉ số Chất lượng không khí</div>
+
+                <div class="aqi-display">
+                    <div class="aqi-icon-container">
+                        <!-- Mask Icon SVG -->
+                        <svg id="aqiMaskIcon" class="aqi-mask-icon" viewBox="0 0 100 100">
+                            <circle cx="50" cy="35" r="25" fill="#f5f5f5" stroke="#ddd" stroke-width="2" />
+                            <circle cx="40" cy="30" r="4" fill="#333" />
+                            <circle cx="60" cy="30" r="4" fill="#333" />
+                            <path d="M35 50 Q50 65 65 50" fill="none" stroke="#999" stroke-width="3" />
+                            <rect x="30" y="45" width="40" height="20" rx="5" fill="#4ade80" id="maskRect" />
+                            <line x1="35" y1="55" x2="25" y2="50" stroke="#999" stroke-width="2" />
+                            <line x1="65" y1="55" x2="75" y2="50" stroke="#999" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div style="display:flex;align-items:baseline;gap:12px;">
+                            <span style="font-size:14px;color:var(--text-muted);">AQI</span>
+                            <span id="infoPanelAQI" class="aqi-big-value" style="color:#00e400;">--</span>
+                        </div>
+                        <div id="infoPanelStatus" class="aqi-status-text" style="color:#00e400;">Đang tải...</div>
+                        <div class="weather-info">
+                            <div class="weather-item">
+                                <i class="fas fa-droplet"></i>
+                                <div>
+                                    <div class="weather-label">Độ ẩm</div>
+                                    <div class="weather-value" id="infoPanelHumidity">--%</div>
+                                </div>
+                            </div>
+                            <div class="weather-item">
+                                <i class="fas fa-temperature-half"></i>
+                                <div>
+                                    <div class="weather-label">Nhiệt độ</div>
+                                    <div class="weather-value" id="infoPanelTemp">--°C</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Recommendations -->
+            <div id="healthRecommendations" class="health-recommendations" style="display:none;">
+                <div class="health-rec-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Cảnh báo ảnh hưởng tới sức khỏe</span>
+                </div>
+                <div id="healthRecContent">
+                    <!-- Content will be dynamically generated -->
+                </div>
+            </div>
+
+            <!-- Old health card (hidden, kept for compatibility) -->
+            <div id="healthCard" class="health-card" style="display:none;">
+                <div class="health-header"><i class="fas fa-heart-pulse"></i> Lời khuyên sức khỏe</div>
+                <div id="healthContent"></div>
+            </div>
+
+            <div class="toggle-group">
+                <div class="toggle-item" onclick="document.getElementById('idwToggle').click()">
+                    <div class="toggle-info">
+                        <div class="toggle-icon idw"><i class="fas fa-map"></i></div><span class="toggle-text">Bản đồ
+                            nhiệt AQI</span>
+                    </div>
+                    <label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="idwToggle"
+                            onchange="toggleIDWLayer()"><span class="switch-slider"></span></label>
+                </div>
+                <div class="toggle-item" onclick="document.getElementById('aiToggle').click()">
+                    <div class="toggle-info">
+                        <div class="toggle-icon ai"><i class="fas fa-brain"></i></div><span class="toggle-text">Chế độ
+                            AI Dự báo</span>
+                    </div>
+                    <label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="aiToggle"
+                            onchange="toggleAIMode()"><span class="switch-slider"></span></label>
+                </div>
+                <div class="toggle-item" onclick="toggleRankingPanel()">
+                    <div class="toggle-info">
+                        <div class="toggle-icon" style="background:linear-gradient(135deg, #ef4444, #f97316);"><i
+                                class="fas fa-chart-bar"></i></div><span class="toggle-text">Bảng xếp hạng</span>
+                    </div>
+                    <label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="rankingToggle"
+                            checked onchange="toggleRankingPanel()"><span class="switch-slider"></span></label>
+                </div>
+            </div>
+            <div id="idwOpacityControl" class="opacity-control">
+                <div class="opacity-label">
+                    <span>Độ trong suốt</span>
+                    <span id="idwOpacityValue">70%</span>
+                </div>
+                <input type="range" class="opacity-slider" id="idwOpacitySlider" min="10" max="100" value="70"
+                    oninput="updateIDWOpacity(this.value)">
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="loadStations()"><i class="fas fa-rotate"></i> Cập nhật dữ
+                    liệu</button>
+                <button class="btn btn-secondary" onclick="locateUser()"><i class="fas fa-location-crosshairs"></i> Vị
+                    trí của tôi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const API_URL = window.location.origin + "/api";
+        const map = L.map('map', { zoomControl: false }).setView([14.0, 108.0], 5);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        let tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        const markersCluster = L.markerClusterGroup({ maxClusterRadius: 50 });
+
+        let allStations = [];
+        let markerMap = {};
+        let currentChart = null;
+        let isAIMode = false;
+        let locationMarker = null;
+        let selectedStation = null;
+        let weatherCache = {};
+        let idwCanvasLayer = null;
+        let idwEnabled = false;
+        let idwOpacity = 0.7;
+
+        // ===== IDW CANVAS LAYER IMPLEMENTATION =====
+        L.IDWCanvasLayer = L.Layer.extend({
+            initialize: function (options) {
+                L.setOptions(this, options);
+                this._stations = options.stations || [];
+                this._opacity = options.opacity || 0.7;
+                this._resolution = options.resolution || 4; // pixels per calculation
+            },
+
+            setStations: function (stations) {
+                this._stations = stations;
+                this._redraw();
+            },
+
+            setOpacity: function (opacity) {
+                this._opacity = opacity;
+                if (this._canvas) {
+                    this._canvas.style.opacity = opacity;
+                }
+            },
+
+            onAdd: function (map) {
+                this._map = map;
+                this._canvas = L.DomUtil.create('canvas', 'idw-canvas-layer');
+                this._canvas.style.position = 'absolute';
+                this._canvas.style.top = '0';
+                this._canvas.style.left = '0';
+                this._canvas.style.pointerEvents = 'none';
+                this._canvas.style.opacity = this._opacity;
+                this._canvas.style.zIndex = '399';
+
+                map.getPanes().overlayPane.appendChild(this._canvas);
+                map.on('moveend', this._redraw, this);
+                map.on('zoomend', this._redraw, this);
+                map.on('resize', this._resize, this);
+
+                this._resize();
+                this._redraw();
+            },
+
+            onRemove: function (map) {
+                map.getPanes().overlayPane.removeChild(this._canvas);
+                map.off('moveend', this._redraw, this);
+                map.off('zoomend', this._redraw, this);
+                map.off('resize', this._resize, this);
+            },
+
+            _resize: function () {
+                const size = this._map.getSize();
+                this._canvas.width = size.x;
+                this._canvas.height = size.y;
+            },
+
+            _getAQIColor: function (aqi) {
+                // Smooth color gradient
+                if (aqi <= 50) {
+                    const t = aqi / 50;
+                    return { r: 0, g: Math.round(228 + t * 27), b: 0 }; // Pure green
+                }
+                if (aqi <= 100) {
+                    const t = (aqi - 50) / 50;
+                    return { r: Math.round(255 * t), g: 255, b: 0 }; // Green to yellow
+                }
+                if (aqi <= 150) {
+                    const t = (aqi - 100) / 50;
+                    return { r: 255, g: Math.round(255 - 129 * t), b: 0 }; // Yellow to orange
+                }
+                if (aqi <= 200) {
+                    const t = (aqi - 150) / 50;
+                    return { r: 255, g: Math.round(126 - 126 * t), b: 0 }; // Orange to red
+                }
+                if (aqi <= 300) {
+                    const t = (aqi - 200) / 100;
+                    return { r: Math.round(255 - 112 * t), g: 0, b: Math.round(143 * t) }; // Red to purple
+                }
+                // > 300 Hazardous
+                const t = Math.min((aqi - 300) / 200, 1);
+                return { r: Math.round(143 - 17 * t), g: 0, b: Math.round(143 - 108 * t) }; // Deep maroon
+            },
+
+            _idwInterpolate: function (lat, lng) {
+                const power = 2.5;
+                const maxDist = 500; // km
+                let num = 0, den = 0;
+
+                for (const s of this._stations) {
+                    if (typeof s.aqi !== 'number' || s.aqi < 0) continue;
+
+                    // Haversine distance
+                    const R = 6371;
+                    const dLat = (s.lat - lat) * Math.PI / 180;
+                    const dLng = (s.lng - lng) * Math.PI / 180;
+                    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(lat * Math.PI / 180) * Math.cos(s.lat * Math.PI / 180) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+                    const dist = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+                    if (dist > maxDist) continue;
+                    if (dist < 1) return s.aqi;
+
+                    const w = 1 / Math.pow(dist, power);
+                    num += s.aqi * w;
+                    den += w;
+                }
+
+                return den > 0 ? num / den : null;
+            },
+
+            _redraw: function () {
+                if (!this._map || !this._canvas) return;
+
+                const ctx = this._canvas.getContext('2d');
+                const size = this._map.getSize();
+                const bounds = this._map.getBounds();
+                const res = this._resolution;
+
+                ctx.clearRect(0, 0, size.x, size.y);
+
+                if (this._stations.length === 0) return;
+
+                const imageData = ctx.createImageData(size.x, size.y);
+                const data = imageData.data;
+
+                // Calculate for each pixel (with resolution step)
+                for (let y = 0; y < size.y; y += res) {
+                    for (let x = 0; x < size.x; x += res) {
+                        const point = this._map.containerPointToLatLng([x, y]);
+                        const aqi = this._idwInterpolate(point.lat, point.lng);
+
+                        if (aqi !== null) {
+                            const color = this._getAQIColor(aqi);
+
+                            // Fill a block of pixels
+                            for (let dy = 0; dy < res && (y + dy) < size.y; dy++) {
+                                for (let dx = 0; dx < res && (x + dx) < size.x; dx++) {
+                                    const idx = ((y + dy) * size.x + (x + dx)) * 4;
+                                    data[idx] = color.r;
+                                    data[idx + 1] = color.g;
+                                    data[idx + 2] = color.b;
+                                    data[idx + 3] = 180; // Alpha
+                                }
+                            }
+                        }
+                    }
+                }
+
+                ctx.putImageData(imageData, 0, 0);
+
+                // Apply Gaussian blur for smooth transitions
+                ctx.filter = 'blur(8px)';
+                ctx.drawImage(this._canvas, 0, 0);
+                ctx.filter = 'none';
+            }
+        });
+
+        function toggleIDWLayer() {
+            idwEnabled = document.getElementById('idwToggle').checked;
+            const opacityControl = document.getElementById('idwOpacityControl');
+            const legendPanel = document.querySelector('.legend-panel');
+
+            if (idwEnabled) {
+                opacityControl.classList.add('active');
+                if (legendPanel) legendPanel.classList.add('active');
+
+                if (!idwCanvasLayer) {
+                    idwCanvasLayer = new L.IDWCanvasLayer({
+                        stations: allStations,
+                        opacity: idwOpacity,
+                        resolution: 6
+                    });
+                }
+                map.addLayer(idwCanvasLayer);
+                idwCanvasLayer.setStations(allStations);
+                showToast('Đã bật bản đồ nhiệt AQI');
+            } else {
+                opacityControl.classList.remove('active');
+                if (legendPanel) legendPanel.classList.remove('active');
+
+                if (idwCanvasLayer && map.hasLayer(idwCanvasLayer)) {
+                    map.removeLayer(idwCanvasLayer);
+                }
+                showToast('Đã tắt bản đồ nhiệt AQI');
+            }
+        }
+
+        function updateIDWOpacity(value) {
+            idwOpacity = value / 100;
+            document.getElementById('idwOpacityValue').textContent = value + '%';
+            if (idwCanvasLayer) {
+                idwCanvasLayer.setOpacity(idwOpacity);
+            }
+        }
+
+
+
+        // ===== AQI STATUS MAPPING =====
+        function getAQIStatus(aqi) {
+            if (aqi <= 50) return {
+                level: 'Tốt',
+                color: '#00e400',
+                bgClass: 'aqi-bg-good',
+                description: 'Chất lượng không khí tốt. Không ảnh hưởng đến sức khỏe.'
+            };
+            if (aqi <= 100) return {
+                level: 'Trung bình',
+                color: '#ffff00',
+                bgClass: 'aqi-bg-moderate',
+                description: 'Chất lượng không khí chấp nhận được.'
+            };
+            if (aqi <= 150) return {
+                level: 'Kém',
+                color: '#ff7e00',
+                bgClass: 'aqi-bg-unhealthy-sensitive',
+                description: 'Nhóm nhạy cảm có thể bị ảnh hưởng.'
+            };
+            if (aqi <= 200) return {
+                level: 'Xấu',
+                color: '#ff0000',
+                bgClass: 'aqi-bg-unhealthy',
+                description: 'Mọi người có thể bắt đầu bị ảnh hưởng.'
+            };
+            if (aqi <= 300) return {
+                level: 'Rất xấu',
+                color: '#8f3f97',
+                bgClass: 'aqi-bg-very-unhealthy',
+                description: 'Cảnh báo sức khỏe: mọi người bị ảnh hưởng.'
+            };
+            return {
+                level: 'Nguy hại',
+                color: '#7e0023',
+                bgClass: 'aqi-bg-hazardous',
+                description: 'Cảnh báo khẩn cấp về sức khỏe.'
+            };
+        }
+
+        // ===== HEALTH RECOMMENDATIONS =====
+        function getHealthRecommendations(aqi) {
+            if (aqi <= 50) {
+                return {
+                    alert: null,
+                    general: 'Chất lượng không khí tốt, phù hợp cho mọi hoạt động ngoài trời.',
+                    sensitive: 'Không có khuyến cáo đặc biệt.',
+                    showPanel: false
+                };
+            }
+            if (aqi <= 100) {
+                return {
+                    alert: 'Chất lượng không khí chấp nhận được.',
+                    general: 'Hoạt động ngoài trời bình thường.',
+                    sensitive: 'Người nhạy cảm nên hạn chế hoạt động ngoài trời kéo dài.',
+                    showPanel: false
+                };
+            }
+            if (aqi <= 150) {
+                return {
+                    alert: 'Chất lượng không khí kém, nhóm nhạy cảm có thể bị ảnh hưởng.',
+                    general: 'Hạn chế các hoạt động gắng sức ngoài trời kéo dài.',
+                    sensitive: 'Người có bệnh hô hấp, tim mạch, trẻ em và người già nên hạn chế ra ngoài.',
+                    showPanel: true
+                };
+            }
+            if (aqi <= 200) {
+                return {
+                    alert: 'Cảnh báo ảnh hưởng tới sức khỏe: mọi người bị ảnh hưởng tới sức khỏe nghiêm trọng hơn.',
+                    general: 'Mọi người hạn chế tối đa các hoạt động ngoài trời và chuyển tất cả các hoạt động vào trong nhà. Nếu cần thiết ra ngoài, hãy đeo khẩu trang đạt tiêu chuẩn.',
+                    sensitive: 'Nên ở trong nhà và giảm hoạt động mạnh.',
+                    showPanel: true
+                };
+            }
+            if (aqi <= 300) {
+                return {
+                    alert: 'Cảnh báo sức khỏe: mọi người bị ảnh hưởng nghiêm trọng.',
+                    general: 'Tránh tất cả hoạt động ngoài trời. Đóng cửa sổ, sử dụng máy lọc không khí.',
+                    sensitive: 'Tuyệt đối ở trong nhà. Cân nhắc sơ tán nếu tình trạng kéo dài.',
+                    showPanel: true
+                };
+            }
+            return {
+                alert: 'NGUY HIỂM: Tình trạng khẩn cấp về sức khỏe.',
+                general: 'TRÁNH ra ngoài hoàn toàn. Đóng kín cửa, sử dụng máy lọc không khí. Theo dõi tin tức.',
+                sensitive: 'Cân nhắc sơ tán đến khu vực có không khí sạch hơn.',
+                showPanel: true
+            };
+        }
+
+        // ===== FETCH WEATHER DATA =====
+        async function fetchWeather(lat, lng) {
+            const cacheKey = `${lat.toFixed(2)}_${lng.toFixed(2)}`;
+            const now = Date.now();
+
+            // Check cache (valid for 10 minutes)
+            if (weatherCache[cacheKey] && (now - weatherCache[cacheKey].timestamp) < 600000) {
+                return weatherCache[cacheKey].data;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/weather?lat=${lat}&lng=${lng}`);
+                const data = await res.json();
+
+                if (!data.error) {
+                    weatherCache[cacheKey] = { data, timestamp: now };
+                }
+                return data;
+            } catch (e) {
+                console.error('Weather fetch error:', e);
+                return { temp: null, humidity: null };
+            }
+        }
+
+        // ===== POPULATE STATION SELECTOR =====
+        function populateStationSelector(stations) {
+            const selector = document.getElementById('stationSelector');
+            if (!selector) return; // Element not in DOM
+            selector.innerHTML = '<option value="">-- Chọn điểm đo --</option>';
+
+            // Sort stations by name
+            const sorted = [...stations].sort((a, b) => a.name.localeCompare(b.name));
+
+            sorted.forEach(st => {
+                // Include stations with valid AQI (number or numeric string)
+                const hasValidAQI = st.aqi !== 'N/A' && st.aqi !== null && st.aqi !== undefined && !isNaN(Number(st.aqi));
+                const opt = document.createElement('option');
+                opt.value = st.uid;
+                opt.textContent = hasValidAQI ? `${st.name} (AQI: ${st.aqi})` : st.name;
+                selector.appendChild(opt);
+            });
+
+            console.log(`Populated ${sorted.length} stations in selector`);
+        }
+
+        // ===== SELECT STATION =====
+        async function selectStation(uid) {
+            if (!uid) {
+                document.getElementById('infoPanel').style.display = 'none';
+                document.getElementById('healthRecommendations').style.display = 'none';
+                selectedStation = null;
+                return;
+            }
+
+            const station = allStations.find(s => s.uid == uid);
+            if (!station) return;
+
+            selectedStation = station;
+
+            // Fly to station
+            map.flyTo([station.lat, station.lng], 12);
+
+            // Open popup if marker exists
+            if (markerMap[station.uid]) {
+                markerMap[station.uid].openPopup();
+            }
+
+            // Update info panel
+            await updateInfoPanel(station);
+        }
+
+        // ===== UPDATE INFO PANEL =====
+        async function updateInfoPanel(station) {
+            const panel = document.getElementById('infoPanel');
+            const recPanel = document.getElementById('healthRecommendations');
+
+            if (!station || typeof station.aqi !== 'number') {
+                panel.style.display = 'none';
+                recPanel.style.display = 'none';
+                return;
+            }
+
+            panel.style.display = 'block';
+
+            const aqi = station.aqi;
+            const status = getAQIStatus(aqi);
+            const recs = getHealthRecommendations(aqi);
+
+            // Update timestamp
+            const now = new Date();
+            document.getElementById('infoTimestamp').textContent =
+                `Chỉ số Chất lượng không khí ngày ${now.toLocaleDateString('vi-VN')} ${now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`;
+
+            // Update AQI display
+            document.getElementById('infoPanelAQI').textContent = aqi;
+            document.getElementById('infoPanelAQI').style.color = status.color;
+            document.getElementById('infoPanelStatus').textContent = status.level;
+            document.getElementById('infoPanelStatus').style.color = status.color;
+
+            // Update mask color
+            const maskRect = document.getElementById('maskRect');
+            if (maskRect) {
+                maskRect.style.fill = status.color;
+            }
+
+            // Fetch and update weather
+            const weather = await fetchWeather(station.lat, station.lng);
+            document.getElementById('infoPanelHumidity').textContent =
+                weather.humidity ? `${weather.humidity}%` : '--%';
+            document.getElementById('infoPanelTemp').textContent =
+                weather.temp ? `${weather.temp}°C` : '--°C';
+
+            // Update health recommendations
+            if (recs.showPanel) {
+                recPanel.style.display = 'block';
+                document.getElementById('healthRecContent').innerHTML = `
+                    <div class="health-rec-group danger">
+                        <div class="health-rec-label">⚠️ ${recs.alert}</div>
+                    </div>
+                    <div class="health-rec-group warning">
+                        <div class="health-rec-label">👥 Nhóm người bình thường:</div>
+                        <div class="health-rec-text">${recs.general}</div>
+                    </div>
+                    <div class="health-rec-group info">
+                        <div class="health-rec-label">🫁 Nhóm người nhạy cảm:</div>
+                        <div class="health-rec-text">${recs.sensitive}</div>
+                    </div>
+                `;
+            } else {
+                recPanel.style.display = 'none';
+            }
+        }
+
+        // ===== UPDATE INFO PANEL FOR ANY LOCATION =====
+        async function updateInfoPanelForLocation(placeName, lat, lng, aqi, nearestStation) {
+            const panel = document.getElementById('infoPanel');
+            const recPanel = document.getElementById('healthRecommendations');
+
+            if (!aqi || isNaN(aqi)) {
+                panel.style.display = 'none';
+                recPanel.style.display = 'none';
+                return;
+            }
+
+            panel.style.display = 'block';
+
+            const status = getAQIStatus(aqi);
+            const recs = getHealthRecommendations(aqi);
+
+            // Update timestamp with location name
+            const now = new Date();
+            document.getElementById('infoTimestamp').innerHTML = `
+                <div style="font-weight:600;margin-bottom:4px;">📍 ${placeName}</div>
+                <div>Chỉ số Chất lượng không khí ngày ${now.toLocaleDateString('vi-VN')} ${now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</div>
+            `;
+
+            // Update AQI display
+            document.getElementById('infoPanelAQI').textContent = aqi;
+            document.getElementById('infoPanelAQI').style.color = status.color;
+            document.getElementById('infoPanelStatus').textContent = status.level;
+            document.getElementById('infoPanelStatus').style.color = status.color;
+
+            // Update mask color
+            const maskRect = document.getElementById('maskRect');
+            if (maskRect) {
+                maskRect.style.fill = status.color;
+            }
+
+            // Fetch and update weather
+            const weather = await fetchWeather(lat, lng);
+            document.getElementById('infoPanelHumidity').textContent =
+                weather.humidity ? `${weather.humidity}%` : '--%';
+            document.getElementById('infoPanelTemp').textContent =
+                weather.temp ? `${weather.temp}°C` : '--°C';
+
+            // Update health recommendations - always show for locations
+            recPanel.style.display = 'block';
+
+            let alertHtml = '';
+            if (recs.alert) {
+                alertHtml = `
+                    <div class="health-rec-group danger">
+                        <div class="health-rec-label">⚠️ ${recs.alert}</div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('healthRecContent').innerHTML = `
+                ${alertHtml}
+                <div class="health-rec-group warning">
+                    <div class="health-rec-label">👥 Nhóm người bình thường:</div>
+                    <div class="health-rec-text">${recs.general}</div>
+                </div>
+                <div class="health-rec-group info">
+                    <div class="health-rec-label">🫁 Nhóm người nhạy cảm:</div>
+                    <div class="health-rec-text">${recs.sensitive}</div>
+                </div>
+                ${nearestStation ? `
+                <div class="health-rec-group" style="background:rgba(99,102,241,0.1);border-left-color:#6366f1;">
+                    <div class="health-rec-label">📡 Trạm quan trắc gần nhất:</div>
+                    <div class="health-rec-text">${nearestStation.name.split(',')[0]}</div>
+                </div>
+                ` : ''}
+            `;
+
+            // Reset station selector since this is a custom location
+            const stationSelectorEl = document.getElementById('stationSelector');
+            if (stationSelectorEl) stationSelectorEl.value = '';
+        }
+
+        // ===== IDW CALCULATION FOR LOCATION AQI =====
+        function getConfidenceLevel(distanceKm) {
+            if (distanceKm <= 30) {
+                return { level: 'high', percent: 95, message: 'Dữ liệu chính xác', color: '#22c55e', icon: '🟢' };
+            } else if (distanceKm <= 100) {
+                return { level: 'medium', percent: 70, message: 'Ước tính gần đúng', color: '#eab308', icon: '🟡' };
+            } else if (distanceKm <= 200) {
+                return { level: 'low', percent: 40, message: 'Ước tính sơ bộ', color: '#f97316', icon: '🟠' };
+            } else {
+                return { level: 'very_low', percent: 20, message: 'Không có trạm gần', color: '#ef4444', icon: '🔴' };
+            }
+        }
+
+        function idwCalc(lat, lng, stations) {
+            const power = 2.0, maxDist = 1500;
+            let num = 0, den = 0, hasNearby = false;
+            let nearestStation = null, nearestDist = Infinity;
+
+            for (const s of stations) {
+                if (typeof s.aqi !== 'number' || s.aqi < 0) continue;
+                const dist = distKm(lat, lng, s.lat, s.lng);
+
+                // Track nearest station
+                if (dist < nearestDist) {
+                    nearestDist = dist;
+                    nearestStation = s;
+                }
+
+                if (dist > maxDist) continue;
+                hasNearby = true;
+                if (dist < 1) return {
+                    aqi: s.aqi,
+                    nearest: s,
+                    distance: dist,
+                    confidence: getConfidenceLevel(dist)
+                };
+
+                const w = 1 / Math.pow(dist, power);
+                num += s.aqi * w;
+                den += w;
+            }
+
+            if (!hasNearby || den === 0) {
+                // Fallback: use nearest station even if far
+                if (nearestStation) {
+                    return {
+                        aqi: nearestStation.aqi,
+                        nearest: nearestStation,
+                        distance: nearestDist,
+                        estimated: true,
+                        confidence: getConfidenceLevel(nearestDist)
+                    };
+                }
+                return null;
+            }
+
+            return {
+                aqi: Math.round(num / den),
+                nearest: nearestStation,
+                distance: nearestDist,
+                estimated: true,
+                confidence: getConfidenceLevel(nearestDist)
+            };
+        }
+
+        function distKm(lat1, lng1, lat2, lng2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        // ===== LOCATION AQI MARKER =====
+        function getAQILevel(aqi) {
+            if (aqi <= 50) return { level: 'Tốt', color: '#00e400', icon: '😊' };
+            if (aqi <= 100) return { level: 'Trung bình', color: '#ffff00', icon: '😐' };
+            if (aqi <= 150) return { level: 'Kém', color: '#ff7e00', icon: '😷' };
+            if (aqi <= 200) return { level: 'Xấu', color: '#ff0000', icon: '😨' };
+            if (aqi <= 300) return { level: 'Rất xấu', color: '#8f3f97', icon: '🤮' };
+            return { level: 'Nguy hiểm', color: '#7e0023', icon: '☠️' };
+        }
+
+        // IDW for predictions at any location
+        function idwPrediction(lat, lng, stations, hour) {
+            const power = 2.0, maxDist = 1500;
+            let num = 0, den = 0, hasData = false;
+
+            for (const s of stations) {
+                // Get prediction for this hour
+                let pred = null;
+                if (s.predictions && typeof s.predictions[hour] === 'number') {
+                    pred = s.predictions[hour];
+                } else if (typeof s.prediction === 'number') {
+                    pred = s.prediction;
+                } else if (typeof s.aqi === 'number') {
+                    pred = s.aqi; // Fallback to current AQI
+                }
+
+                if (pred === null) continue;
+
+                const dist = distKm(lat, lng, s.lat, s.lng);
+                if (dist > maxDist) continue;
+                hasData = true;
+                if (dist < 1) return Math.round(pred);
+
+                const w = 1 / Math.pow(dist, power);
+                num += pred * w;
+                den += w;
+            }
+
+            return hasData && den > 0 ? Math.round(num / den) : null;
+        }
+
+        async function showLocationAQI(lat, lng, placeName) {
+            // Remove old location marker
+            if (locationMarker) {
+                map.removeLayer(locationMarker);
+            }
+
+            // Call backend API for location AQI (includes satellite data)
+            try {
+                const response = await fetch(`${API_URL}/location-aqi?lat=${lat}&lng=${lng}`);
+                if (!response.ok) {
+                    showToast('⚠️ Không có dữ liệu AQI cho khu vực này');
+                    return;
+                }
+                const result = await response.json();
+
+                const aqi = result.aqi;
+                const nearest = result.nearest_station || {};
+                const distance = result.distance_km || 0;
+                const confidence = result.confidence || {};
+                const satelliteData = result.satellite_data;
+                const hasHybrid = result.hybrid_source || false;
+
+                const aqiInfo = getAQILevel(aqi);
+                const color = getAQIColor(aqi);
+
+                // Calculate predictions for this location
+                const pred1h = idwPrediction(lat, lng, allStations, 1);
+                const pred6h = idwPrediction(lat, lng, allStations, 6);
+                const pred12h = idwPrediction(lat, lng, allStations, 12);
+                const pred24h = idwPrediction(lat, lng, allStations, 24);
+
+                // Create custom icon for location marker
+                const iconHtml = `
+                    <div style="
+                        background: ${color};
+                        border: 3px solid white;
+                        border-radius: 50%;
+                        width: 50px;
+                        height: 50px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 18px;
+                        font-weight: bold;
+                        color: ${aqi > 100 ? 'white' : '#1a1a1a'};
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    ">
+                        ${aqi}
+                    </div>
+                `;
+
+                const customIcon = L.divIcon({
+                    html: iconHtml,
+                    className: 'location-aqi-marker',
+                    iconSize: [50, 50],
+                    iconAnchor: [25, 25]
+                });
+
+                locationMarker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+
+                // Build satellite data section if available
+                let satelliteSection = '';
+                if (satelliteData) {
+                    const satAqi = satelliteData.aqi;
+                    const satColor = getAQIColor(satAqi);
+                    satelliteSection = `
+                        <div style="background:linear-gradient(135deg,#8b5cf6,#6366f1); padding:10px; border-radius:8px; margin-top:10px;">
+                            <div style="font-size:12px; font-weight:600; color:white; margin-bottom:6px;">
+                                🛰️ Dữ liệu vệ tinh (OpenWeatherMap)
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <div style="font-size:24px; font-weight:800; color:white;">${satAqi}</div>
+                                    <div style="font-size:10px; color:rgba(255,255,255,0.8);">${satelliteData.owm_aqi_label || 'N/A'}</div>
+                                </div>
+                                <div style="text-align:right; font-size:10px; color:rgba(255,255,255,0.8);">
+                                    <div>PM2.5: ${satelliteData.pm25 || '--'} μg/m³</div>
+                                    <div>PM10: ${satelliteData.pm10 || '--'} μg/m³</div>
+                                    <div>O₃: ${satelliteData.o3 || '--'} μg/m³</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Create popup content with predictions
+                const popupContent = `
+                    <div class="popup-header" style="background:${color}">
+                        <div class="popup-name">${placeName || 'Vị trí tìm kiếm'}</div>
+                    </div>
+                    <div class="popup-body">
+                        <div style="text-align:center; padding:10px 0;">
+                            <div style="font-size:12px; color:var(--text-muted); margin-bottom:5px;">
+                                ${aqiInfo.icon} Chỉ số AQI ${hasHybrid ? '(Trạm mặt đất)' : 'hiện tại'}
+                            </div>
+                            <div style="font-size:38px; font-weight:800; color:${color};">${aqi}</div>
+                            <div style="font-size:13px; font-weight:600; color:${color};">${aqiInfo.level}</div>
+                            ${confidence.message ? `
+                            <div style="margin-top:8px; padding:6px 12px; background:${confidence.color}22; border:1px solid ${confidence.color}; border-radius:20px; display:inline-block;">
+                                <span style="font-size:11px; color:${confidence.color}; font-weight:600;">
+                                    ${confidence.level === 'very_low' ? '🔴' : confidence.level === 'low' ? '🟠' : confidence.level === 'medium' ? '🟡' : '🟢'} ${confidence.message} (${confidence.percent}%)
+                                </span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        
+                        ${satelliteSection}
+                        
+                        <div style="background:var(--glass); padding:10px; border-radius:8px; margin-top:10px;">
+                            <div style="font-size:12px; font-weight:600; color:var(--text-primary); margin-bottom:8px;">
+                                🔮 Dự báo AQI
+                            </div>
+                            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; text-align:center;">
+                                <div style="background:var(--bg-secondary); padding:6px; border-radius:6px;">
+                                    <div style="font-size:10px; color:var(--text-muted);">${new Date(Date.now() + 1 * 60 * 60 * 1000).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</div>
+                                    <div style="font-size:16px; font-weight:700; color:${getAQIColor(pred1h)};">${pred1h || '--'}</div>
+                                </div>
+                                <div style="background:var(--bg-secondary); padding:6px; border-radius:6px;">
+                                    <div style="font-size:10px; color:var(--text-muted);">${new Date(Date.now() + 6 * 60 * 60 * 1000).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</div>
+                                    <div style="font-size:16px; font-weight:700; color:${getAQIColor(pred6h)};">${pred6h || '--'}</div>
+                                </div>
+                                <div style="background:var(--bg-secondary); padding:6px; border-radius:6px;">
+                                    <div style="font-size:10px; color:var(--text-muted);">${new Date(Date.now() + 12 * 60 * 60 * 1000).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</div>
+                                    <div style="font-size:16px; font-weight:700; color:${getAQIColor(pred12h)};">${pred12h || '--'}</div>
+                                </div>
+                                <div style="background:var(--bg-secondary); padding:6px; border-radius:6px;">
+                                    <div style="font-size:10px; color:var(--text-muted);">${new Date(Date.now() + 24 * 60 * 60 * 1000).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</div>
+                                    <div style="font-size:16px; font-weight:700; color:${getAQIColor(pred24h)};">${pred24h || '--'}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background:var(--glass); padding:8px; border-radius:8px; margin-top:8px;">
+                            <div style="font-size:11px; color:var(--text-muted);">
+                                📍 Trạm gần nhất: <strong>${(nearest.name || 'N/A').split(',')[0]}</strong>
+                            </div>
+                            <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">
+                                📏 Khoảng cách: <strong>${distance.toFixed ? distance.toFixed(1) : distance} km</strong>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:8px; margin-top:10px;">
+                            <button onclick="saveFavorite('${(placeName || 'Vị trí').replace(/'/g, "\\'")}', ${lat}, ${lng})" 
+                                style="flex:1; padding:8px; border:none; border-radius:8px; background:linear-gradient(135deg,#ec4899,#f43f5e); color:white; font-size:12px; font-weight:600; cursor:pointer;">
+                                💖 Lưu yêu thích
+                            </button>
+                            <button onclick="saveAlert('${(placeName || 'Vị trí').replace(/'/g, "\\'")}', ${lat}, ${lng}, ${aqi > 100 ? aqi : 100})" 
+                                style="flex:1; padding:8px; border:none; border-radius:8px; background:linear-gradient(135deg,#f59e0b,#eab308); color:white; font-size:12px; font-weight:600; cursor:pointer;">
+                                🔔 Đặt cảnh báo
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                locationMarker.bindPopup(popupContent, { maxWidth: 320 }).openPopup();
+                updateHealth(aqi);
+
+                // Update the Info Panel on the left side for this location
+                await updateInfoPanelForLocation(placeName, lat, lng, aqi, nearest);
+
+            } catch (error) {
+                console.error('Error fetching location AQI:', error);
+                // Fallback to client-side IDW
+                const result = idwCalc(lat, lng, allStations);
+                if (!result) {
+                    showToast('⚠️ Không có dữ liệu AQI cho khu vực này');
+                    return;
+                }
+                // Show with old method as fallback
+                const { aqi, nearest, distance, confidence } = result;
+                const aqiInfo = getAQILevel(aqi);
+                const color = getAQIColor(aqi);
+
+                const iconHtml = `<div style="background:${color};border:3px solid white;border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;color:${aqi > 100 ? 'white' : '#1a1a1a'};box-shadow:0 4px 15px rgba(0,0,0,0.3);">${aqi}</div>`;
+                const customIcon = L.divIcon({ html: iconHtml, className: 'location-aqi-marker', iconSize: [50, 50], iconAnchor: [25, 25] });
+                locationMarker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+                locationMarker.bindPopup(`<div class="popup-header" style="background:${color}"><div class="popup-name">${placeName || 'Vị trí'}</div></div><div class="popup-body"><div style="text-align:center;padding:20px;"><div style="font-size:38px;font-weight:800;color:${color};">${aqi}</div><div style="font-size:13px;color:${color};">${aqiInfo.level}</div></div></div>`, { maxWidth: 320 }).openPopup();
+                updateHealth(aqi);
+
+                // Update Info Panel for fallback case too
+                await updateInfoPanelForLocation(placeName, lat, lng, aqi, nearest);
+            }
+        }
+
+
+        // ===== THEME =====
+        function toggleTheme() {
+            const isDark = document.body.dataset.theme === 'dark';
+            document.body.dataset.theme = isDark ? 'light' : 'dark';
+            // OSM doesn't have dark mode, so we just toggle body theme for UI elements
+            showToast(isDark ? '☀️ Chế độ sáng' : '🌙 Chế độ tối');
+        }
+
+        // ===== AI MODE =====
+        function toggleAIMode() {
+            isAIMode = document.getElementById('aiToggle').checked;
+            renderMap(allStations);
+            // Update location marker if exists
+            if (locationMarker) {
+                const latlng = locationMarker.getLatLng();
+                showLocationAQI(latlng.lat, latlng.lng);
+            }
+            showToast(isAIMode ? '🔮 Chế độ AI Dự báo' : '🌍 Chế độ Thực tế');
+        }
+
+        // ===== HELPERS =====
+        function getAQIColor(aqi) {
+            if (!aqi || aqi === 'N/A') return '#6b7280';
+            if (aqi <= 50) return '#00e400';
+            if (aqi <= 100) return '#ffff00';
+            if (aqi <= 150) return '#ff7e00';
+            if (aqi <= 200) return '#ff0000';
+            if (aqi <= 300) return '#8f3f97';
+            return '#7e0023';
+        }
+
+        function updateHealth(aqi) {
+            const card = document.getElementById('healthCard');
+            const content = document.getElementById('healthContent');
+            if (!aqi || aqi === 'N/A') { card.classList.remove('active'); return; }
+            let html = '';
+            if (aqi <= 50) html = '<div class="health-item"><i class="fas fa-face-smile" style="color:#00e400"></i><span>Không khí tuyệt vời!</span></div>';
+            else if (aqi <= 100) html = '<div class="health-item"><i class="fas fa-face-meh" style="color:#ffff00"></i><span>Chất lượng trung bình.</span></div>';
+            else if (aqi <= 150) html = '<div class="health-item"><i class="fas fa-mask-face" style="color:#ff7e00"></i><span><strong>Đeo khẩu trang</strong> khi ra ngoài.</span></div>';
+            else html = '<div class="health-item"><i class="fas fa-triangle-exclamation" style="color:#ff0000"></i><span><strong>CẢNH BÁO:</strong> Hạn chế ra ngoài.</span></div>';
+            content.innerHTML = html;
+            card.classList.add('active');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        // ===== LOAD DATA =====
+        async function loadStations() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            try {
+                console.log('🔄 Loading stations from:', `${API_URL}/stations`);
+                console.log('🔄 Loading stats from:', `${API_URL}/stats`);
+
+                const [stationsRes, statsRes] = await Promise.all([
+                    fetch(`${API_URL}/stations`),
+                    fetch(`${API_URL}/stats`)
+                ]);
+
+                console.log('📥 Stations response status:', stationsRes.status);
+                console.log('📥 Stats response status:', statsRes.status);
+
+                if (!stationsRes.ok || !statsRes.ok) {
+                    throw new Error(`HTTP error! stations: ${stationsRes.status}, stats: ${statsRes.status}`);
+                }
+
+                allStations = await stationsRes.json();
+                const stats = await statsRes.json();
+
+                console.log('✅ Stations loaded:', allStations.length);
+                console.log('✅ Stats loaded:', stats);
+
+                // Safe update stats elements (may not exist in UI)
+                const statTotal = document.getElementById('statTotal');
+                const statAvg = document.getElementById('statAvg');
+                const statGood = document.getElementById('statGood');
+                const statBad = document.getElementById('statBad');
+
+                if (statTotal) statTotal.textContent = stats.total_stations;
+                if (statAvg) statAvg.textContent = stats.avg_aqi;
+                if (statGood) statGood.textContent = stats.good + stats.moderate;
+                if (statBad) statBad.textContent = stats.unhealthy + stats.very_unhealthy + stats.hazardous;
+
+                renderMap(allStations);
+                updateRanking(allStations);
+                populateStationSelector(allStations);
+
+                // Refresh IDW layer if enabled
+                if (idwCanvasLayer && idwEnabled) {
+                    idwCanvasLayer.setStations(allStations);
+                }
+
+                document.getElementById('loadingOverlay').style.display = 'none';
+                showToast('✅ Dữ liệu đã cập nhật!');
+            } catch (e) {
+                console.error('❌ LoadStations Error:', e);
+                console.error('❌ Error message:', e.message);
+                console.error('❌ Error stack:', e.stack);
+                document.getElementById('loadingOverlay').style.display = 'none';
+                showToast('❌ Lỗi kết nối server');
+            }
+        }
+
+        // ===== RENDER MAP =====
+        function renderMap(stations) {
+            markersCluster.clearLayers();
+            markerMap = {};
+
+            stations.forEach(st => {
+                const displayVal = isAIMode ? st.prediction : st.aqi;
+                const color = getAQIColor(displayVal);
+                const status = typeof displayVal === 'number' ? getAQIStatus(displayVal) : { level: 'N/A', color: '#6b7280' };
+
+                const marker = L.circleMarker([st.lat, st.lng], {
+                    radius: 8, fillColor: color, color: '#ffffff', weight: 2, fillOpacity: 0.9
+                });
+
+                markerMap[st.uid] = marker;
+
+                // Enhanced popup with weather placeholder
+                const popup = `
+                    <div class="popup-header" style="background:${color}">
+                        <div class="popup-name">${st.name}</div>
+                        <div style="font-size:10px;opacity:0.8;margin-top:2px;">Địa chỉ: ${st.name}</div>
+                    </div>
+                    <div class="popup-body">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div>
+                                <span style="font-size:13px;color:var(--text-muted);">AQI</span>
+                                <span style="font-size:28px;font-weight:800;color:${status.color};margin-left:8px;">${st.aqi}</span>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:16px;font-weight:600;color:${status.color};">${status.level}</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:16px;padding:10px;background:var(--glass);border-radius:8px;margin-bottom:10px;">
+                            <div style="display:flex;align-items:center;gap:6px;">
+                                <i class="fas fa-droplet" style="color:#3b82f6;"></i>
+                                <span id="popup-humidity-${st.uid}" style="font-size:13px;">-- %</span>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:6px;">
+                                <i class="fas fa-temperature-half" style="color:#ef4444;"></i>
+                                <span id="popup-temp-${st.uid}" style="font-size:13px;">--°C</span>
+                            </div>
+                        </div>
+                        <div class="popup-metrics">
+                            <div class="popup-metric"><div class="popup-metric-label">Hiện tại</div><div class="popup-metric-value">${st.aqi}</div></div>
+                            <div class="popup-metric"><div class="popup-metric-label">Dự báo 1h</div><div class="popup-metric-value">${st.prediction || '--'}</div></div>
+                        </div>
+                        <div style="background:var(--glass); padding:10px; border-radius:8px; margin-top:10px;">
+                            <div style="font-size:12px; font-weight:600; color:var(--text-primary); margin-bottom:8px;">
+                                🔮 Dự báo AQI
+                            </div>
+                            <div id="prediction-grid-${st.uid}" style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; text-align:center;">
+                                <div style="background:var(--bg-secondary); padding:6px; border-radius:6px;">
+                                    <div style="font-size:10px; color:var(--text-muted);">1h</div>
+                                    <div style="font-size:14px; font-weight:700; color:var(--text-primary);" id="pred1h-${st.uid}">--</div>
+                                </div>
+                                <div style="background:var(--bg-secondary); padding:6px; border-radius:6px;">
+                                    <div style="font-size:10px; color:var(--text-muted);">6h</div>
+                                    <div style="font-size:14px; font-weight:700; color:var(--text-primary);" id="pred6h-${st.uid}">--</div>
+                                </div>
+                                <div style="background:var(--bg-secondary); padding:6px; border-radius:6px;">
+                                    <div style="font-size:10px; color:var(--text-muted);">12h</div>
+                                    <div style="font-size:14px; font-weight:700; color:var(--text-primary);" id="pred12h-${st.uid}">--</div>
+                                </div>
+                                <div style="background:var(--bg-secondary); padding:6px; border-radius:6px;">
+                                    <div style="font-size:10px; color:var(--text-muted);">24h</div>
+                                    <div style="font-size:14px; font-weight:700; color:var(--text-primary);" id="pred24h-${st.uid}">--</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="popup-chart"><canvas id="chart-${st.uid}"></canvas></div>
+                    </div>`;
+
+                marker.bindPopup(popup, { maxWidth: 320 });
+
+                marker.on('click', async () => {
+                    updateHealth(st.aqi);
+                    // Update info panel when clicking on station
+                    const stationSelectorEl = document.getElementById('stationSelector');
+                    if (stationSelectorEl) stationSelectorEl.value = st.uid;
+                    await updateInfoPanel(st);
+                });
+
+                marker.on('popupopen', async () => {
+                    // Fetch weather data for popup
+                    const weather = await fetchWeather(st.lat, st.lng);
+                    const humidityEl = document.getElementById(`popup-humidity-${st.uid}`);
+                    const tempEl = document.getElementById(`popup-temp-${st.uid}`);
+                    if (humidityEl) humidityEl.textContent = weather.humidity ? `${weather.humidity}%` : '--%';
+                    if (tempEl) tempEl.textContent = weather.temp ? `${weather.temp}°C` : '--°C';
+
+                    // Fetch predictions
+                    try {
+                        const predRes = await fetch(`${API_URL}/predictions/${st.uid}`);
+                        const predData = await predRes.json();
+                        if (predData.predictions) {
+                            const p = predData.predictions;
+                            const pred1hEl = document.getElementById(`pred1h-${st.uid}`);
+                            const pred6hEl = document.getElementById(`pred6h-${st.uid}`);
+                            const pred12hEl = document.getElementById(`pred12h-${st.uid}`);
+                            const pred24hEl = document.getElementById(`pred24h-${st.uid}`);
+                            // API returns keys as numbers: 1, 6, 12, 24
+                            if (pred1hEl) { pred1hEl.textContent = p[1] || p['1'] || '--'; pred1hEl.style.color = getAQIColor(p[1] || p['1']); }
+                            if (pred6hEl) { pred6hEl.textContent = p[6] || p['6'] || '--'; pred6hEl.style.color = getAQIColor(p[6] || p['6']); }
+                            if (pred12hEl) { pred12hEl.textContent = p[12] || p['12'] || '--'; pred12hEl.style.color = getAQIColor(p[12] || p['12']); }
+                            if (pred24hEl) { pred24hEl.textContent = p[24] || p['24'] || '--'; pred24hEl.style.color = getAQIColor(p[24] || p['24']); }
+                        }
+                    } catch (e) { console.error('Prediction fetch error:', e); }
+
+                    // Chart
+                    if (currentChart) currentChart.destroy();
+                    try {
+                        const res = await fetch(`${API_URL}/history/${st.uid}`);
+                        const data = await res.json();
+                        const canvas = document.getElementById(`chart-${st.uid}`);
+                        if (!canvas) return;
+                        currentChart = new Chart(canvas.getContext('2d'), {
+                            type: 'line',
+                            data: { labels: data.map(d => new Date(d.timestamp).getHours() + 'h'), datasets: [{ data: data.map(d => d.aqi), borderColor: color, borderWidth: 2, pointRadius: 0, tension: 0.4 }] },
+                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
+                        });
+                    } catch (e) { }
+                });
+                markersCluster.addLayer(marker);
+            });
+            map.addLayer(markersCluster);
+        }
+
+        // ===== RANKING =====
+        function updateRanking(stations) {
+            const valid = stations.filter(s => typeof s.aqi === 'number').sort((a, b) => b.aqi - a.aqi).slice(0, 10);
+            document.getElementById('rankingList').innerHTML = valid.map((st, i) => {
+                const color = getAQIColor(st.aqi);
+                return `<div class="ranking-item" onclick="focusStation(${st.uid},${st.lat},${st.lng})">
+                    <div class="rank-num">${i + 1}</div>
+                    <div class="rank-info"><div class="rank-name">${st.name.split(',')[0]}</div></div>
+                    <div class="rank-aqi" style="background:${color}">${st.aqi}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function focusStation(uid, lat, lng) {
+            map.flyTo([lat, lng], 14);
+            map.once('moveend', () => { const m = markerMap[uid]; if (m) markersCluster.zoomToShowLayer(m, () => m.openPopup()); });
+        }
+
+        // ===== SEARCH & AUTOCOMPLETE =====
+        let searchResultsMarkers = [];
+        let searchTimeout = null;
+        let currentSuggestions = [];
+        let selectedSuggestionIndex = -1;
+
+        function handleSearchInput(event) {
+            const q = event.target.value.trim();
+
+            // Clear previous timeout
+            if (searchTimeout) clearTimeout(searchTimeout);
+
+            if (q.length < 2) {
+                hideSuggestions();
+                return;
+            }
+
+            // Debounce: wait 300ms after user stops typing
+            searchTimeout = setTimeout(() => fetchSuggestions(q), 300);
+        }
+
+        async function fetchSuggestions(query) {
+            const suggestionsEl = document.getElementById('searchSuggestions');
+            currentSuggestions = [];
+            selectedSuggestionIndex = -1;
+
+            // Show loading
+            suggestionsEl.innerHTML = '<div class="search-loading"><i class="fas fa-spinner fa-spin"></i> Đang tìm...</div>';
+            suggestionsEl.classList.add('active');
+
+            // 1. Search local stations first
+            const stationResults = allStations
+                .filter(s => s.name.toLowerCase().includes(query.toLowerCase()))
+                .slice(0, 3)
+                .map(s => ({
+                    type: 'station',
+                    title: s.name.split(',')[0],
+                    subtitle: s.name,
+                    lat: s.lat,
+                    lng: s.lng,
+                    uid: s.uid,
+                    aqi: s.aqi
+                }));
+
+            // 2. Search via Nominatim
+            let locationResults = [];
+            try {
+                const params = new URLSearchParams({
+                    format: 'json',
+                    q: query,
+                    limit: '5',
+                    addressdetails: '1',
+                    'accept-language': 'vi',
+                    viewbox: '92,28,142,-11',
+                    bounded: '0'
+                });
+
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?${params.toString()}`);
+                const data = await res.json();
+
+                locationResults = data.map(item => ({
+                    type: 'location',
+                    title: formatPlaceName(item),
+                    subtitle: item.display_name,
+                    lat: +item.lat,
+                    lng: +item.lon
+                }));
+            } catch (e) {
+                console.error('Geocoding error:', e);
+            }
+
+            // Combine results
+            currentSuggestions = [...stationResults, ...locationResults];
+
+            if (currentSuggestions.length === 0) {
+                suggestionsEl.innerHTML = '<div class="search-loading">Không tìm thấy kết quả</div>';
+                return;
+            }
+
+            // Render suggestions
+            suggestionsEl.innerHTML = currentSuggestions.map((item, index) => `
+                <div class="suggestion-item" data-index="${index}" onclick="selectSuggestion(${index})">
+                    <div class="suggestion-icon ${item.type}">
+                        <i class="fas fa-${item.type === 'station' ? 'broadcast-tower' : 'map-marker-alt'}"></i>
+                    </div>
+                    <div class="suggestion-text">
+                        <div class="suggestion-title">${item.title}</div>
+                        <div class="suggestion-subtitle">${item.subtitle.substring(0, 60)}${item.subtitle.length > 60 ? '...' : ''}</div>
+                    </div>
+                    ${item.aqi && typeof item.aqi === 'number' ? `<div class="suggestion-aqi" style="background:${getAQIColor(item.aqi)}">${item.aqi}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function handleSearchKeydown(event) {
+            const suggestionsEl = document.getElementById('searchSuggestions');
+
+            if (!suggestionsEl.classList.contains('active') || currentSuggestions.length === 0) {
+                if (event.key === 'Enter') {
+                    handleSearch();
+                }
+                return;
+            }
+
+            if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                selectedSuggestionIndex = Math.min(selectedSuggestionIndex + 1, currentSuggestions.length - 1);
+                updateSelectedSuggestion();
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                selectedSuggestionIndex = Math.max(selectedSuggestionIndex - 1, -1);
+                updateSelectedSuggestion();
+            } else if (event.key === 'Enter') {
+                event.preventDefault();
+                if (selectedSuggestionIndex >= 0) {
+                    selectSuggestion(selectedSuggestionIndex);
+                } else {
+                    handleSearch();
+                }
+            } else if (event.key === 'Escape') {
+                hideSuggestions();
+            }
+        }
+
+        function updateSelectedSuggestion() {
+            document.querySelectorAll('.suggestion-item').forEach((el, i) => {
+                el.classList.toggle('selected', i === selectedSuggestionIndex);
+            });
+
+            // Scroll into view if needed
+            const selected = document.querySelector('.suggestion-item.selected');
+            if (selected) {
+                selected.scrollIntoView({ block: 'nearest' });
+            }
+        }
+
+        async function selectSuggestion(index) {
+            const item = currentSuggestions[index];
+            if (!item) return;
+
+            hideSuggestions();
+            document.getElementById('searchInput').value = item.title;
+
+            // Clear previous search markers
+            searchResultsMarkers.forEach(m => map.removeLayer(m));
+            searchResultsMarkers = [];
+
+            if (item.type === 'station') {
+                // It's a station - focus on it
+                focusStation(item.uid, item.lat, item.lng);
+                const stationSelectorEl = document.getElementById('stationSelector');
+                if (stationSelectorEl) stationSelectorEl.value = item.uid;
+                const station = allStations.find(s => s.uid === item.uid);
+                if (station) await updateInfoPanel(station);
+            } else {
+                // It's a location - show AQI
+                map.flyTo([item.lat, item.lng], 15);
+                setTimeout(() => showLocationAQI(item.lat, item.lng, item.title), 800);
+            }
+        }
+
+        function showSuggestionsIfAny() {
+            const suggestionsEl = document.getElementById('searchSuggestions');
+            if (currentSuggestions.length > 0) {
+                suggestionsEl.classList.add('active');
+            }
+        }
+
+        function hideSuggestions() {
+            document.getElementById('searchSuggestions').classList.remove('active');
+        }
+
+        async function handleSearch() {
+            hideSuggestions();
+            const q = document.getElementById('searchInput').value.trim();
+            if (!q) return;
+
+
+            // Clear previous search results
+            searchResultsMarkers.forEach(m => map.removeLayer(m));
+            searchResultsMarkers = [];
+
+            // Check if it's a station name first
+            const found = allStations.find(s => s.name.toLowerCase().includes(q.toLowerCase()));
+            if (found) {
+                focusStation(found.uid, found.lat, found.lng);
+                const stationSelectorEl = document.getElementById('stationSelector');
+                if (stationSelectorEl) stationSelectorEl.value = found.uid;
+                await updateInfoPanel(found);
+                return;
+            }
+
+            // Otherwise, search for any location via Nominatim geocoding
+            try {
+                showToast('🔍 Đang tìm kiếm...');
+
+                // Enhanced search with ASEAN viewbox and more results
+                const params = new URLSearchParams({
+                    format: 'json',
+                    q: q,
+                    limit: '5',  // Get more results
+                    addressdetails: '1',  // Get detailed address
+                    'accept-language': 'vi',  // Vietnamese language
+                    // Viewbox covering ASEAN + part of China/India (approximate)
+                    viewbox: '92,28,142,-11',
+                    bounded: '0'  // Prefer but don't limit to viewbox
+                });
+
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?${params.toString()}`);
+                const data = await res.json();
+
+                if (data.length === 0) {
+                    showToast('⚠️ Không tìm thấy địa điểm. Thử tìm với từ khóa khác.');
+                    return;
+                }
+
+                if (data.length === 1) {
+                    // Single result - go directly
+                    const lat = +data[0].lat;
+                    const lng = +data[0].lon;
+                    const placeName = formatPlaceName(data[0]);
+
+                    map.flyTo([lat, lng], 15);
+                    setTimeout(() => showLocationAQI(lat, lng, placeName), 1000);
+                } else {
+                    // Multiple results - show all and let user choose
+                    showToast(`📍 Tìm thấy ${data.length} kết quả. Click để chọn.`);
+
+                    // Fit map to show all results
+                    const bounds = L.latLngBounds(data.map(d => [+d.lat, +d.lon]));
+                    map.fitBounds(bounds, { padding: [50, 50] });
+
+                    // Add markers for each result
+                    data.forEach((item, index) => {
+                        const lat = +item.lat;
+                        const lng = +item.lon;
+                        const placeName = formatPlaceName(item);
+
+                        const marker = L.marker([lat, lng], {
+                            icon: L.divIcon({
+                                className: 'search-result-marker',
+                                html: `<div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);">${index + 1}</div>`,
+                                iconSize: [28, 28],
+                                iconAnchor: [14, 14]
+                            })
+                        }).addTo(map);
+
+                        marker.bindPopup(`
+                            <div style="padding:10px;min-width:200px;">
+                                <div style="font-weight:600;margin-bottom:8px;">${placeName}</div>
+                                <div style="font-size:11px;color:#666;margin-bottom:10px;">${item.display_name}</div>
+                                <button onclick="selectSearchResult(${lat},${lng},'${placeName.replace(/'/g, "\\'")}'); return false;" 
+                                    style="width:100%;padding:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
+                                    📍 Xem AQI tại đây
+                                </button>
+                            </div>
+                        `);
+
+                        searchResultsMarkers.push(marker);
+                    });
+                }
+            } catch (e) {
+                console.error('Search error:', e);
+                showToast('❌ Lỗi kết nối. Vui lòng thử lại.');
+            }
+        }
+
+        function formatPlaceName(item) {
+            // Build a nice place name from address details
+            const addr = item.address || {};
+            const parts = [];
+
+            if (addr.road) parts.push(addr.road);
+            if (addr.house_number) parts[0] = `${addr.house_number} ${parts[0] || ''}`;
+            if (addr.suburb || addr.neighbourhood) parts.push(addr.suburb || addr.neighbourhood);
+            if (addr.city || addr.town || addr.village) parts.push(addr.city || addr.town || addr.village);
+            if (addr.state || addr.province) parts.push(addr.state || addr.province);
+
+            if (parts.length === 0) {
+                return item.display_name.split(',').slice(0, 3).join(', ');
+            }
+
+            return parts.slice(0, 3).join(', ');
+        }
+
+        function selectSearchResult(lat, lng, placeName) {
+            // Clear search markers
+            searchResultsMarkers.forEach(m => map.removeLayer(m));
+            searchResultsMarkers = [];
+
+            // Zoom to location and show AQI
+            map.flyTo([lat, lng], 15);
+            setTimeout(() => showLocationAQI(lat, lng, placeName), 800);
+        }
+
+        function locateUser() {
+            if (!navigator.geolocation) return showToast('❌ GPS không khả dụng');
+            showToast('🛰️ Đang định vị...');
+            navigator.geolocation.getCurrentPosition(async (p) => {
+                const lat = p.coords.latitude;
+                const lng = p.coords.longitude;
+                map.flyTo([lat, lng], 13);
+
+                // Get real address using reverse geocoding
+                let placeName = 'Vị trí của bạn';
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=vi&addressdetails=1`);
+                    const data = await res.json();
+                    console.log('Reverse geocoding result:', data);
+
+                    if (data && data.address) {
+                        const addr = data.address;
+                        const parts = [];
+
+                        // Try to get the most specific location first
+                        if (addr.amenity) parts.push(addr.amenity);
+                        else if (addr.building) parts.push(addr.building);
+                        else if (addr.house_number && addr.road) parts.push(`${addr.house_number} ${addr.road}`);
+                        else if (addr.road) parts.push(addr.road);
+
+                        // Add district/ward
+                        if (addr.suburb) parts.push(addr.suburb);
+                        else if (addr.neighbourhood) parts.push(addr.neighbourhood);
+                        else if (addr.quarter) parts.push(addr.quarter);
+                        else if (addr.district) parts.push(addr.district);
+
+                        // Add city
+                        if (addr.city) parts.push(addr.city);
+                        else if (addr.town) parts.push(addr.town);
+                        else if (addr.village) parts.push(addr.village);
+                        else if (addr.county) parts.push(addr.county);
+                        else if (addr.state) parts.push(addr.state);
+
+                        if (parts.length > 0) {
+                            placeName = parts.slice(0, 3).join(', ');
+                        } else if (data.display_name) {
+                            // Fallback to display_name if no parts found
+                            placeName = data.display_name.split(',').slice(0, 3).join(', ');
+                        }
+                    } else if (data && data.display_name) {
+                        placeName = data.display_name.split(',').slice(0, 3).join(', ');
+                    }
+                    console.log('Final place name:', placeName);
+                } catch (e) {
+                    console.error('Reverse geocoding error:', e);
+                }
+
+                // Show AQI at user location with real address
+                setTimeout(() => {
+                    showLocationAQI(lat, lng, placeName);
+                }, 1000);
+            }, () => showToast('❌ Không thể lấy vị trí'));
+        }
+
+        // ===== INIT =====
+        loadStations();
+        setInterval(loadStations, 60000);
+
+        // ===== AUTHENTICATION =====
+        let currentUser = null;
+        let authToken = localStorage.getItem('airwatch_token');
+
+        // Check auth on load
+        if (authToken) {
+            checkAuthStatus();
+        }
+
+        async function checkAuthStatus() {
+            try {
+                const res = await fetch(`${API_URL}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (res.ok) {
+                    currentUser = await res.json();
+                    updateUserUI();
+                } else {
+                    localStorage.removeItem('airwatch_token');
+                    authToken = null;
+                }
+            } catch (e) {
+                console.error('Auth check failed:', e);
+            }
+        }
+
+        function updateUserUI() {
+            const userBtn = document.getElementById('userBtnText');
+            if (currentUser) {
+                userBtn.textContent = currentUser.name || currentUser.email.split('@')[0];
+            } else {
+                userBtn.textContent = 'Đăng nhập';
+            }
+        }
+
+        function toggleUserMenu() {
+            if (!currentUser) {
+                document.getElementById('loginModal').classList.add('active');
+                return;
+            }
+            document.getElementById('userMenu').classList.toggle('active');
+        }
+
+        function toggleFullscreen() {
+            document.body.classList.toggle('fullscreen-mode');
+            const icon = document.getElementById('toggleUIIcon');
+            const isFullscreen = document.body.classList.contains('fullscreen-mode');
+            icon.className = isFullscreen ? 'fas fa-compress' : 'fas fa-expand';
+            showToast(isFullscreen ? '🗺️ Chế độ toàn màn hình' : '📊 Hiện giao diện');
+        }
+
+        function toggleRankingPanel() {
+            const panel = document.getElementById('rankingPanel');
+            const toggle = document.getElementById('rankingToggle');
+            const isVisible = panel.style.display !== 'none';
+            panel.style.display = isVisible ? 'none' : 'block';
+            toggle.checked = !isVisible;
+        }
+
+        function closeAuthModal(event) {
+            if (event.target.classList.contains('auth-modal')) {
+                document.getElementById('loginModal').classList.remove('active');
+                document.getElementById('registerModal').classList.remove('active');
+            }
+        }
+
+        function switchToRegister() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('registerModal').classList.add('active');
+        }
+
+        function switchToLogin() {
+            document.getElementById('registerModal').classList.remove('active');
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
+            const errorDiv = document.getElementById('loginError');
+
+            btn.disabled = true;
+            btn.textContent = 'Đang đăng nhập...';
+            errorDiv.classList.remove('show');
+
+            try {
+                const res = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    authToken = data.access_token;
+                    localStorage.setItem('airwatch_token', authToken);
+                    currentUser = data.user;
+                    updateUserUI();
+                    document.getElementById('loginModal').classList.remove('active');
+                    showToast('✅ Đăng nhập thành công!');
+                } else if (data.detail === 'EMAIL_NOT_VERIFIED') {
+                    // Email chưa xác thực - hiển thị OTP modal
+                    pendingEmail = email;
+                    document.getElementById('loginModal').classList.remove('active');
+                    showOTPModal(email);
+                    showToast('📧 Mã xác thực đã được gửi đến email của bạn');
+                } else {
+                    errorDiv.textContent = data.detail || 'Đăng nhập thất bại';
+                    errorDiv.classList.add('show');
+                }
+            } catch (e) {
+                errorDiv.textContent = 'Lỗi kết nối server';
+                errorDiv.classList.add('show');
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Đăng nhập';
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const btn = document.getElementById('registerBtn');
+            const errorDiv = document.getElementById('registerError');
+
+            btn.disabled = true;
+            btn.textContent = 'Đang tạo tài khoản...';
+            errorDiv.classList.remove('show');
+
+            try {
+                const res = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, name })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    // Đăng ký thành công - mở modal OTP
+                    pendingEmail = email;
+                    document.getElementById('registerModal').classList.remove('active');
+                    showOTPModal(email);
+                    showToast('📧 ' + data.message);
+                } else {
+                    errorDiv.textContent = data.detail || 'Đăng ký thất bại';
+                    errorDiv.classList.add('show');
+                }
+            } catch (e) {
+                errorDiv.textContent = 'Lỗi kết nối server';
+                errorDiv.classList.add('show');
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Tạo tài khoản';
+        }
+
+        // ===== OTP HANDLING =====
+        let pendingEmail = null;
+        let otpCountdownInterval = null;
+        let otpCountdownSeconds = 60;
+
+        function showOTPModal(email) {
+            pendingEmail = email;
+            document.getElementById('otpEmailDisplay').textContent = `Nhập mã 6 số đã gửi đến ${email}`;
+            document.getElementById('otpModal').classList.add('active');
+            document.getElementById('otpError').classList.remove('show');
+            document.getElementById('otpSuccess').classList.remove('show');
+
+            // Clear OTP inputs
+            const inputs = document.querySelectorAll('.otp-input');
+            inputs.forEach(input => input.value = '');
+            inputs[0].focus();
+
+            // Start countdown
+            startOTPCountdown();
+        }
+
+        function closeOTPModal() {
+            document.getElementById('otpModal').classList.remove('active');
+            if (otpCountdownInterval) {
+                clearInterval(otpCountdownInterval);
+            }
+        }
+
+        function handleOTPInput(event) {
+            const input = event.target;
+            const index = parseInt(input.dataset.index);
+            const value = input.value;
+
+            // Only allow digits
+            input.value = value.replace(/[^0-9]/g, '');
+
+            // Move to next input
+            if (input.value && index < 5) {
+                const inputs = document.querySelectorAll('.otp-input');
+                inputs[index + 1].focus();
+            }
+
+            // Auto-submit when all filled
+            const allInputs = document.querySelectorAll('.otp-input');
+            const otp = Array.from(allInputs).map(i => i.value).join('');
+            if (otp.length === 6) {
+                handleVerifyOTP();
+            }
+        }
+
+        function handleOTPKeydown(event) {
+            const input = event.target;
+            const index = parseInt(input.dataset.index);
+
+            // Handle backspace
+            if (event.key === 'Backspace' && !input.value && index > 0) {
+                const inputs = document.querySelectorAll('.otp-input');
+                inputs[index - 1].focus();
+            }
+        }
+
+        async function handleVerifyOTP() {
+            const inputs = document.querySelectorAll('.otp-input');
+            const otp = Array.from(inputs).map(i => i.value).join('');
+            const btn = document.getElementById('verifyOTPBtn');
+            const errorDiv = document.getElementById('otpError');
+            const successDiv = document.getElementById('otpSuccess');
+
+            if (otp.length !== 6) {
+                errorDiv.textContent = 'Vui lòng nhập đủ 6 số';
+                errorDiv.classList.add('show');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Đang xác thực...';
+            errorDiv.classList.remove('show');
+
+            try {
+                const res = await fetch(`${API_URL}/auth/verify`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingEmail, otp })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    authToken = data.access_token;
+                    localStorage.setItem('airwatch_token', authToken);
+                    currentUser = data.user;
+                    updateUserUI();
+
+                    successDiv.textContent = '✅ Xác thực thành công!';
+                    successDiv.classList.add('show');
+
+                    setTimeout(() => {
+                        closeOTPModal();
+                        showToast('🎉 Đăng ký và xác thực thành công!');
+                    }, 1000);
+                } else {
+                    errorDiv.textContent = data.detail || 'Xác thực thất bại';
+                    errorDiv.classList.add('show');
+                }
+            } catch (e) {
+                errorDiv.textContent = 'Lỗi kết nối server';
+                errorDiv.classList.add('show');
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Xác thực';
+        }
+
+        function startOTPCountdown() {
+            otpCountdownSeconds = 60;
+            updateCountdownDisplay();
+
+            if (otpCountdownInterval) {
+                clearInterval(otpCountdownInterval);
+            }
+
+            otpCountdownInterval = setInterval(() => {
+                otpCountdownSeconds--;
+                updateCountdownDisplay();
+
+                if (otpCountdownSeconds <= 0) {
+                    clearInterval(otpCountdownInterval);
+                }
+            }, 1000);
+        }
+
+        function updateCountdownDisplay() {
+            const countdownDiv = document.getElementById('otpCountdown');
+            const timerSpan = document.getElementById('countdownTimer');
+
+            if (otpCountdownSeconds > 0) {
+                timerSpan.textContent = otpCountdownSeconds;
+                countdownDiv.innerHTML = `Gửi lại mã sau <span id="countdownTimer">${otpCountdownSeconds}</span>s`;
+            } else {
+                countdownDiv.innerHTML = `<a onclick="resendOTP()">Gửi lại mã</a>`;
+            }
+        }
+
+        async function resendOTP() {
+            if (otpCountdownSeconds > 0) return;
+
+            try {
+                const res = await fetch(`${API_URL}/auth/resend-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingEmail })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    showToast('📧 Mã mới đã được gửi!');
+                    startOTPCountdown();
+
+                    // Clear inputs
+                    const inputs = document.querySelectorAll('.otp-input');
+                    inputs.forEach(input => input.value = '');
+                    inputs[0].focus();
+                } else {
+                    showToast('❌ ' + (data.detail || 'Không thể gửi lại mã'));
+                }
+            } catch (e) {
+                showToast('❌ Lỗi kết nối server');
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('airwatch_token');
+            authToken = null;
+            currentUser = null;
+            updateUserUI();
+            document.getElementById('userMenu').classList.remove('active');
+            showToast('👋 Đã đăng xuất');
+        }
+
+        // Close menus when clicking outside
+        document.addEventListener('click', (e) => {
+            const userBtn = document.getElementById('userBtn');
+            const userMenu = document.getElementById('userMenu');
+            if (!userBtn.contains(e.target) && !userMenu.contains(e.target)) {
+                userMenu.classList.remove('active');
+            }
+        });
+
+        // ===== FAVORITES =====
+        async function showFavorites() {
+            document.getElementById('userMenu').classList.remove('active');
+            document.getElementById('favoritesModal').classList.add('active');
+            await loadFavorites();
+        }
+
+        async function loadFavorites() {
+            const container = document.getElementById('favoritesList');
+            try {
+                const res = await fetch(`${API_URL}/user/favorites`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (!res.ok) throw new Error();
+                const favorites = await res.json();
+
+                if (favorites.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align:center;color:var(--text-muted);padding:30px;">
+                            <i class="fas fa-heart" style="font-size:40px;margin-bottom:10px;opacity:0.3;"></i>
+                            <p>Chưa có vị trí yêu thích</p>
+                            <p style="font-size:12px;margin-top:5px;">Tìm kiếm và lưu vị trí từ bản đồ</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = favorites.map(f => `
+                    <div class="favorite-item">
+                        <div class="favorite-info" onclick="goToFavorite(${f.lat}, ${f.lng}, '${f.name.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="favorite-name">${f.name}</span>
+                        </div>
+                        <button class="favorite-delete" onclick="deleteFavorite(${f.id})" title="Xóa">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `).join('');
+            } catch {
+                container.innerHTML = '<div style="color:#ef4444;padding:20px;text-align:center;">Lỗi tải dữ liệu</div>';
+            }
+        }
+
+        function goToFavorite(lat, lng, name) {
+            document.getElementById('favoritesModal').classList.remove('active');
+            map.flyTo([lat, lng], 13);
+            setTimeout(() => showLocationAQI(lat, lng, name), 1000);
+        }
+
+        async function deleteFavorite(id) {
+            if (!confirm('Xóa vị trí này?')) return;
+            try {
+                const res = await fetch(`${API_URL}/user/favorites/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    throw new Error(data.detail || 'Không thể xóa');
+                }
+                showToast('🗑️ Đã xóa');
+                loadFavorites();
+            } catch (err) {
+                console.error('Delete error:', err);
+                showToast(`❌ ${err.message || 'Lỗi xóa'}`);
+            }
+        }
+
+        async function saveFavorite(name, lat, lng) {
+            if (!authToken) {
+                document.getElementById('loginModal').classList.add('active');
+                return;
+            }
+            try {
+                const res = await fetch(`${API_URL}/user/favorites`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ name, lat, lng })
+                });
+                if (res.ok) {
+                    showToast('💖 Đã lưu vị trí yêu thích!');
+                } else {
+                    const data = await res.json();
+                    showToast(data.detail || '❌ Không thể lưu');
+                }
+            } catch {
+                showToast('❌ Lỗi kết nối');
+            }
+        }
+
+        // ===== ALERTS =====
+        async function showAlerts() {
+            document.getElementById('userMenu').classList.remove('active');
+            document.getElementById('alertsModal').classList.add('active');
+            await loadAlerts();
+        }
+
+        async function loadAlerts() {
+            const container = document.getElementById('alertsList');
+            try {
+                const res = await fetch(`${API_URL}/user/alerts`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (!res.ok) throw new Error();
+                const alerts = await res.json();
+
+                if (alerts.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align:center;color:var(--text-muted);padding:30px;">
+                            <i class="fas fa-bell" style="font-size:40px;margin-bottom:10px;opacity:0.3;"></i>
+                            <p>Chưa có cảnh báo nào</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = alerts.map(a => `
+                    <div class="favorite-item">
+                        <div class="favorite-info">
+                            <i class="fas fa-bell" style="color:#f59e0b;"></i>
+                            <div>
+                                <span class="favorite-name">${a.name}</span>
+                                <div style="font-size:11px;color:var(--text-muted);">Ngưỡng: AQI > ${a.threshold}</div>
+                            </div>
+                        </div>
+                        <button class="favorite-delete" onclick="deleteAlert(${a.id})" title="Xóa">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `).join('');
+            } catch {
+                container.innerHTML = '<div style="color:#ef4444;padding:20px;text-align:center;">Lỗi tải dữ liệu</div>';
+            }
+        }
+
+        async function deleteAlert(id) {
+            if (!confirm('Xóa cảnh báo này?')) return;
+            try {
+                await fetch(`${API_URL}/user/alerts/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                showToast('🗑️ Đã xóa cảnh báo');
+                loadAlerts();
+            } catch {
+                showToast('❌ Lỗi xóa');
+            }
+        }
+
+        async function saveAlert(name, lat, lng, threshold = 100) {
+            if (!authToken) {
+                document.getElementById('loginModal').classList.add('active');
+                return;
+            }
+            try {
+                const res = await fetch(`${API_URL}/user/alerts`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ name, lat, lng, threshold })
+                });
+                if (res.ok) {
+                    showToast('🔔 Đã đặt cảnh báo AQI!');
+                } else {
+                    const data = await res.json();
+                    showToast(data.detail || '❌ Không thể tạo cảnh báo');
+                }
+            } catch {
+                showToast('❌ Lỗi kết nối');
+            }
+        }
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('✅ Service Worker registered'))
+                .catch(err => console.warn('Service Worker registration failed:', err));
+        }
+    </script>
+</body>
+
+</html>
