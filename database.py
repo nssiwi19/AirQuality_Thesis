@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Database URL - supports both PostgreSQL and SQLite
+# On Railway: uses DATABASE_URL env var (PostgreSQL)
+# Local: falls back to SQLite
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./airwatch_users.db")
 
 # Handle PostgreSQL URL from Railway/Heroku (postgres:// -> postgresql://)
