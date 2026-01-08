@@ -34,32 +34,41 @@ class RegisterResponse(BaseModel):
 @router.post("/register", response_model=RegisterResponse)
 def register(data: UserRegister, db: Session = Depends(get_db)):
     """Đăng ký tài khoản mới - không yêu cầu xác thực email"""
-    # Check if email exists
-    existing = db.query(User).filter(User.email == data.email).first()
-    if existing:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email đã được sử dụng"
+    try:
+        # Check if email exists
+        existing = db.query(User).filter(User.email == data.email).first()
+        if existing:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email đã được sử dụng"
+            )
+        
+        # Create user (verified immediately - no OTP required)
+        user = User(
+            email=data.email,
+            password_hash=hash_password(data.password),
+            name=data.name,
+            is_verified=True,  # Auto-verified
+            is_active=True
         )
-    
-    # Create user (verified immediately - no OTP required)
-    user = User(
-        email=data.email,
-        password_hash=hash_password(data.password),
-        name=data.name,
-        is_verified=True,  # Auto-verified
-        is_active=True
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    
-    logging.info(f"New user registered: {user.email}")
-    return RegisterResponse(
-        message=f"Đăng ký thành công! Bạn có thể đăng nhập ngay.",
-        email=data.email,
-        requires_verification=False
-    )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        
+        logging.info(f"New user registered: {user.email}")
+        return RegisterResponse(
+            message=f"Đăng ký thành công! Bạn có thể đăng nhập ngay.",
+            email=data.email,
+            requires_verification=False
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Registration error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Lỗi hệ thống: {str(e)}"
+        )
 
 
 
